@@ -1,0 +1,23 @@
+# #################################################################### #
+# README                                                               #
+# #################################################################### #
+
+Version 1.0 de brazo mecánico con el fin de probar openGL.
+
+
+
+# Teclas para utilizar el brazo mecánico
+########################################
+
+A: Selecciona el movimiento del hombro;
+S: Selecciona el movimiento del codo;
+D: Selecciona el movimiento de la muñeca;
+
+Para realizar los movimientos debe utilizarse el pad numérico:
+
+4 y 6(flecha izquierda y derecha): posicionamiento horizontal del brazo;
+8 y 2 (flecha arriba y abajo): posicionamiento vertical del brazo;
++: abre las pinzas;
+-: cierra las pinzas;
+
+NOTA: en el modo D solo se habilita el movimiento con las teclas 4 y 6.
