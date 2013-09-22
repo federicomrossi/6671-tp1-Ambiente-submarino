@@ -166,7 +166,7 @@ void Scene::onKeyDown(int nKey, char cAscii)
 		this->gradoMano -= 1;
 	}
 
-		
+
 	// Selección de movimiento del HOMBRO
 	else if(cAscii == 'a' || cAscii == 'A')
 		this->modoMovimiento = 1;

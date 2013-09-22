@@ -42,8 +42,8 @@ Cube::~Cube() { }
 void Cube::create()
 {
 	// Cargamos los shaders del objeto
-	this->loadShaderPrograms("DiffuseShadingVShader.vert",
-							 "DiffuseShadingFShader.frag");
+	this->loadShaderPrograms("shaders/DiffuseShadingVShader.vert",
+							 "shaders/DiffuseShadingFShader.frag");
 
 	// Creamos el objeto
 

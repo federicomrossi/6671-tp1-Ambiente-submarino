@@ -29,13 +29,7 @@ class Scene
 {
 private:
 
-    glm::mat4 view_matrix;				// Camera view position
-
-    // BORRAR
-	GLuint programHandle;
-	GLuint vertShader;
-	GLuint fragShader;
-	// END BORRAR
+	glm::mat4 view_matrix;				// Camera view position
 
 	// Objetos
 	Grid grid;						// Grilla
