@@ -38,13 +38,16 @@ public:
 	~SpiralSphere();
 
 	// Crea un objeto.
-	// PRE: 'radius' es el radio de la esfera; 'loops' ...; 'segmentsPerLoop' .... [Completar documentacion]
-	void create(const float radius, const unsigned int loops, const unsigned int segmentsPerLoop);
+	// PRE: 'radius' es el radio de la esfera; 'loops' ...; 'segmentsPerLoop' .
+	// ... [Completar documentacion]
+	void create(const float radius, const unsigned int loops, 
+		const unsigned int segmentsPerLoop);
 
 	// Renderiza el cubo (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
-	void render(glm::mat4 model_matrix, glm::mat4 &view_matrix);
+	void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+		glm::mat4 &projection_matrix);
 };
 
 #endif

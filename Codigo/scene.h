@@ -54,13 +54,12 @@ private:
 	GLfloat gradoMunieca;			// Muñeca
 	GLfloat gradoMano;				// Mano
 
-	void dibujarHombro(glm::mat4 m);
-	void dibujarBrazo(glm::mat4 m);
-	void dibujarCodo(glm::mat4 m);
-	void dibujarAntebrazo(glm::mat4 m);
-	void dibujarMunieca(glm::mat4 m);
-	void dibujarMano(glm::mat4 m);
-	void changeObjectColor(float r, float g, float b);
+	void dibujarHombro(glm::mat4 m, glm::mat4 &projection_matrix);
+	void dibujarBrazo(glm::mat4 m, glm::mat4 &projection_matrix);
+	void dibujarCodo(glm::mat4 m, glm::mat4 &projection_matrix);
+	void dibujarAntebrazo(glm::mat4 m, glm::mat4 &projection_matrix);
+	void dibujarMunieca(glm::mat4 m, glm::mat4 &projection_matrix);
+	void dibujarMano(glm::mat4 m, glm::mat4 &projection_matrix);
 	// FIN TEMPORALES
 
 public:

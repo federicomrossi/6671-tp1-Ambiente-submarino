@@ -43,7 +43,7 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 {
 	// ********************************************
 	// Compiling the shader programms
-	//*********************************************
+	// ********************************************
 
 	// Do your GLEW experiments here:
 	if (GLEW_ARB_shading_language_100) 
@@ -171,4 +171,19 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 				glUseProgram(this->programHandle);
 		}
 	}
+}
+
+
+// Cambia el color del objeto
+// PRE: 'r', 'g' y 'b' corresponden al color en RGB.
+void ObjectDibujable::changeObjectColor(float r, float g, float b)
+{
+	glm::vec3 diffuse_reflectivity = glm::vec3(r, g, b);
+
+	GLuint location_diffuse_reflectivity = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_diffuse_reflectivity >= 0) 
+		glUniform3fv(location_diffuse_reflectivity, 1, 
+			&diffuse_reflectivity[0]); 
 }

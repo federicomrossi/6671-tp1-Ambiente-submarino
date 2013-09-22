@@ -47,7 +47,12 @@ public:
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
-	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix) = 0;
+	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
+		glm::mat4 &projection_matrix) = 0;
+
+	// Cambia el color del objeto
+	// PRE: 'r', 'g' y 'b' corresponden al color en RGB.
+	void changeObjectColor(float r, float g, float b);
 };
 
 #endif
