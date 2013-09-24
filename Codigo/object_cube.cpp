@@ -18,6 +18,18 @@
 
 
 
+// Constantes de CONFIGURACION
+namespace {
+	
+	// Ruta del archivo del vertex shader
+	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	
+	// Ruta del archivo del fragment shader
+	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	
+}
+
+
 
 
 /* ****************************************************************************
@@ -42,8 +54,8 @@ Cube::~Cube() { }
 void Cube::create()
 {
 	// Cargamos los shaders del objeto
-	this->loadShaderPrograms("shaders/DiffuseShadingVShader.vert",
-							 "shaders/DiffuseShadingFShader.frag");
+	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
+							 FILE_FRAG_SHADER.c_str());
 
 	// Creamos el objeto
 

@@ -60,8 +60,8 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 		// Load vertex Shader
 		this->vertShader = glCreateShader (GL_VERTEX_SHADER);
 		
-		if (0 == this->vertShader)
-			std::cout << "Error creating vertex shader" << std::endl;
+		// if (0 == this->vertShader)
+		// 	std::cout << "Error creating vertex shader" << std::endl;
 
 		std::ifstream v_shader_file(vertShaderFile.c_str(), std::ifstream::in);
 		std::string v_str((std::istreambuf_iterator<char>(v_shader_file)), 
@@ -80,7 +80,9 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 
 		if(GL_FALSE == vs_compilation_result)
 		{
+			// Informe de error por salida estandar
 			std::cout << "Vertex shader compilation failed!\n" << std::endl;
+			
 			GLint logLen;
 			glGetShaderiv( this->vertShader, GL_INFO_LOG_LENGTH, &logLen );
 			
@@ -97,6 +99,7 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 		 // Load fragment Shader
 		this->fragShader = glCreateShader (GL_FRAGMENT_SHADER);
 
+		// Informe de error por salida estandar
 		if(0 == this->fragShader)
 			std::cout << "Error creating fragment shader" << std::endl;
 
@@ -117,7 +120,9 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 
 		if(GL_FALSE == fs_compilation_result)
 		{
+			// Informe de error por salida estandar
 			std::cout << "Fragment shader compilation failed!\n" << std::endl;
+			
 			GLint logLen;
 			glGetShaderiv( this->fragShader, GL_INFO_LOG_LENGTH, &logLen );
 			
@@ -141,7 +146,10 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 		this->programHandle = glCreateProgram();
 		
 		if (0 == this->programHandle)
+		{
+			// Informe de error por salida estandar
 			std::cout << "Error creating program object" << std::endl;
+		}
 		else
 		{
 			glAttachShader(this->programHandle, this->vertShader);
@@ -153,7 +161,9 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 			
 			if(GL_FALSE == status)
 			{
+				// Informe de error por salida estandar
 				std::cout << "Failed to link shader program!\n" << std::endl;
+				
 				GLint logLen;
 				glGetProgramiv(this->programHandle, GL_INFO_LOG_LENGTH, 
 					&logLen);
