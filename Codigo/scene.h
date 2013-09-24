@@ -32,29 +32,7 @@ private:
 	glm::mat4 view_matrix;				// Camera view position
 
 	// Objetos
-	Grid grid;						// Grilla
-	Cube cube;						// Cubo
-	SpiralSphere spiralSphere;		// Esfera
-
-	// Modo de movimiento
-	int modoMovimiento;
-
-	// TEMPORALES (Nota: cada objeto debe ser separado en clases individuales 
-	// y no dejarlos definidos aquí)
-	GLfloat gradoHombro;			// Hombro
-	GLfloat gradoCodo;				// Codo
-	GLfloat gradoBrazo;				// Brazo
-	GLfloat gradoAntebrazo;			// Muñeca
-	GLfloat gradoMunieca;			// Muñeca
-	GLfloat gradoMano;				// Mano
-
-	void dibujarHombro(glm::mat4 m, glm::mat4 &projection_matrix);
-	void dibujarBrazo(glm::mat4 m, glm::mat4 &projection_matrix);
-	void dibujarCodo(glm::mat4 m, glm::mat4 &projection_matrix);
-	void dibujarAntebrazo(glm::mat4 m, glm::mat4 &projection_matrix);
-	void dibujarMunieca(glm::mat4 m, glm::mat4 &projection_matrix);
-	void dibujarMano(glm::mat4 m, glm::mat4 &projection_matrix);
-	// FIN TEMPORALES
+	// (Definir atributos relacionados con objetos AQUI)
 
 public:
 

@@ -28,15 +28,6 @@
 // Constructor
 Scene::Scene()
 {
-	// Inicializamos atributos de movimiento
-	this->modoMovimiento = 1;
-
-	this->gradoHombro = 0.0f;
-	this->gradoBrazo = 45.0f;
-	this->gradoCodo = 0.0f;
-	this->gradoAntebrazo = 45.0f;
-	this->gradoMano = 45.0f;
-
 	// View (camera) Matrix
 	this->view_matrix = glm::lookAt(glm::vec3 ( 8.0, 0.0, 5.0 ),
 									glm::vec3 ( 0.0, 0.0, 0.0 ),
@@ -51,10 +42,7 @@ Scene::~Scene() { }
 // Inicializa la escena.
 void Scene::initialize()
 {
-	this->grid.create(10);							// Grilla
-	this->spiralSphere.create(1.0, 32, 32);			// Esfera
-	this->cube.create();							// Cubo    
-
+	// Establecemos un color inicial para la escena
 	glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
@@ -68,7 +56,7 @@ void Scene::render(GLuint height, GLuint width)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Projection Matrix
+	// Matriz de projeccion
 	glm::mat4 projection_matrix = glm::mat4 ( 1.0f );
 	projection_matrix = glm::infinitePerspective( 52.0f , 
 		(float)width / (float)height, 0.1f);
@@ -78,8 +66,9 @@ void Scene::render(GLuint height, GLuint width)
 	// OBJETOS DE LA ESCENA
 	///////////////////////////////////////////////////////////////////////////
 	
-	
 
+	
+	///////////////////////////////////////////////////////////////////////////
 
 	glutSwapBuffers();
 }

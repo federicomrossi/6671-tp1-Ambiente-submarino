@@ -9,13 +9,25 @@
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <glm/glm.hpp> 
-#include <glm/gtc/matrix_transform.hpp> 
-#include <glm/gtx/transform2.hpp> 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform2.hpp>
 #include <glm/gtx/projection.hpp>
 
 #include "object_spiralSphere.h"
 
+
+
+// Constantes de CONFIGURACION
+namespace {
+	
+	// Ruta del archivo del vertex shader
+	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	
+	// Ruta del archivo del fragment shader
+	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	
+}
 
 
 
@@ -44,8 +56,8 @@ void SpiralSphere::create(const float radius, const unsigned int loops,
 	const unsigned int segmentsPerLoop)
 {
 	// Cargamos los shaders del objeto
-	this->loadShaderPrograms("shaders/DiffuseShadingVShader.vert",
-							 "shaders/DiffuseShadingFShader.frag");
+	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
+							 FILE_FRAG_SHADER.c_str());
 
 	// Creamos el objeto
 
