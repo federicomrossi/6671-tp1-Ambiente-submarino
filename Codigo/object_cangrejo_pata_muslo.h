@@ -14,9 +14,7 @@
 
 
 // Objetos
-#include "object_spiralSphere.h"
-
-
+#include "object_cube.h"
 
 
 
@@ -38,7 +36,7 @@ private:
 	unsigned int muslo_index_buffer_size;
 
 	// Objetos
-	SpiralSphere spiralSphere;			// Esfera
+	Cube cube;			// Esfera
 
 public:
 
@@ -54,7 +52,8 @@ public:
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
-	virtual void render(glm::mat4 model_matrix, GLuint &programHandle);
+	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+		glm::mat4 &projection_matrix);
 };
 
 #endif

@@ -18,6 +18,18 @@
 
 
 
+// Constantes de CONFIGURACION
+namespace {
+	
+	// Ruta del archivo del vertex shader
+	const std::string FILE_VERT_SHADER = "shaders/VERT_SHADER_FILENAME.vert";
+	
+	// Ruta del archivo del fragment shader
+	const std::string FILE_FRAG_SHADER = "shaders/FRAG_SHADER_FILENAME.frag";
+	
+}
+
+
 
 
 /* ****************************************************************************
@@ -45,10 +57,11 @@ void CangrejoPata::create()
 }
 
 
-// Renderiza el objeto (lo dibuja).
+// Renderiza el cubo (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void CangrejoPata::render(glm::mat4 model_matrix, GLuint &programHandle)
+void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+	glm::mat4 &projection_matrix)
 {
-
+	
 }

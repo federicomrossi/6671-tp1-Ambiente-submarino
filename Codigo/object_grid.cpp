@@ -203,4 +203,5 @@ void Grid::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		this->grid_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }

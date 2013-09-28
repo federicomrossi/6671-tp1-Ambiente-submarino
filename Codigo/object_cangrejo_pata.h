@@ -15,7 +15,6 @@
 
 
 
-
 /* ****************************************************************************
  * DECLARACIÓN DE LA CLASE
  * ***************************************************************************/
@@ -46,7 +45,8 @@ public:
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
-	virtual void render(glm::mat4 model_matrix, GLuint &programHandle);
+	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+		glm::mat4 &projection_matrix);
 };
 
 #endif

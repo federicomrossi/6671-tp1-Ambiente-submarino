@@ -1,0 +1,655 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"model_",
+				"model_matrix"
+			],
+			[
+				"model_matrix_",
+				"model_matrix_eje_coordenado"
+			],
+			[
+				"eje",
+				"ejeCoordenado"
+			],
+			[
+				"segmento",
+				"segmento_1"
+			],
+			[
+				"seg",
+				"segmento_1"
+			],
+			[
+				"pro",
+				"projection_matrix"
+			],
+			[
+				"model",
+				"model_matrix"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "object_eje_coordenado.h",
+			"settings":
+			{
+				"buffer_size": 979,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scene.h",
+			"settings":
+			{
+				"buffer_size": 1316,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scene.cpp",
+			"settings":
+			{
+				"buffer_size": 3873,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cube.h",
+			"settings":
+			{
+				"buffer_size": 991,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cube.cpp",
+			"settings":
+			{
+				"buffer_size": 6814,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_spiralSphere.h",
+			"settings":
+			{
+				"buffer_size": 1149,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_spiralSphere.cpp",
+			"settings":
+			{
+				"buffer_size": 6626,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "PREGUNTAS\n=========\n\n- Por que la view matrix se genera en el constructor y se guarda como un atributo y no así la matrix de proyección?\n\n- Como generar un cilindro?\n\n- Como generar un cono con tapa base?\n\n\n Usar bezier para hacer las curvas\n Para curvas cerradas conviene usar curvas B-Spline",
+			"settings":
+			{
+				"buffer_size": 293,
+				"line_ending": "Unix",
+				"name": "PREGUNTAS"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 72.0,
+		"selected_items":
+		[
+			[
+				"set shader",
+				"Set Syntax: Unity ShaderLab"
+			],
+			[
+				"",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 111.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myApplication.cpp",
+		"/run/media/federicorossi/Archivos/Federico/Prueba/tp.c",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Informe/66.20 - TP - Informe.tex",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/01.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/02.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/03.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/04.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/index_.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/modelo.html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/web1 (mejorando.la).html",
+		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/web (mejorando.la).html",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Codigo/pgm.h",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Codigo/pgm.c",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Codigo/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Codigo/OrgaCompus.c",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Codigo/tp0.c",
+		"/run/media/federicorossi/Archivos/Federico/Prueba/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/lista.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/listaref.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/receptor.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/pila.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/receptor.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/regla.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/regla.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rinsert.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rinsert.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rlowercase.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rprint.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rlowercase.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rprint.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrepeat.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrepeat.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrevert.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrotate.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrevert.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrotate.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/ruppercase.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/ruppercase.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_archivo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_archivo.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tp.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_archivo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_archivo.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_salida_estandar.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_salida_estandar.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/word_mangling.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/word_mangling.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/cola.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/cola.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/dijkstra.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/dijkstra.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/grafo.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/grafo.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/lista.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/lista.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/router.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/01/Codigo/multas.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/README",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/tp.c",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/router.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/05 - Grupal/Codigo/common_manejador_de_archivos.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_servidor.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glApplication.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_controlador_de_tareas.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_conexion_cliente.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_conexion_cliente.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_convertir.h",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_socket.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_socket.h",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/Informe/66.20 - TP - Informe.tex",
+		"/home/federicorossi/Descargas/TP SO (1)/Codigo/bin/scripts/IniciarU.sh",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/DiffuseShadingVShader.vert",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/DiffuseShadingFShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/.gitignore",
+		"/home/federicorossi/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/federicorossi/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pata.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pata.h",
+		"/home/federicorossi/Descargas/bootinfoscript-061/stdout",
+		"/run/media/federicorossi/Archivos/Federico/FIUBA/Conexion internet",
+		"/run/media/federicorossi/Windows8_OS/Boot/BCD.LOG",
+		"/usr/share/gnome-shell/theme/gnome-shell.css"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"this->size",
+			"mX",
+			"piralS",
+			",\n",
+			"4",
+			"m",
+			"sParametro",
+			"sComando",
+			"s",
+			"getline",
+			"args",
+			"n",
+			"comando",
+			"Comando",
+			"comando",
+			"archivo",
+			"split",
+			"mMuslo",
+			"CangrejoPataMuslo",
+			"OBJECT_CANGREJO_PATA_MUSLO_H",
+			"CangrejoPataMuslo",
+			" ",
+			"object_cangrejo_pata",
+			"grid",
+			"BasicFShader_200",
+			"regNombre",
+			"ARCHIVO_REG_ARCHIVOS",
+			"programHandle",
+			"(0.796, 1, 0.6);",
+			"(0.796, 1, 0.6);\n	// Renderizamos",
+			"(0.796, 1, 0.6);",
+			"programHandle",
+			"render",
+			"grid",
+			"size",
+			"programHandle",
+			"cube.render",
+			"programHandle",
+			" ",
+			"Cube",
+			"Scene",
+			"CangrejoPata",
+			"pata",
+			"CangrejoPata",
+			"_p",
+			"Cube",
+			"cube",
+			"Cube",
+			"cube",
+			"Cube",
+			"CUBE",
+			"rgba"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "object_eje_coordenado.h",
+					"settings":
+					{
+						"buffer_size": 979,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								126,
+								126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scene.h",
+					"settings":
+					{
+						"buffer_size": 1316,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								688,
+								688
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 122.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "scene.cpp",
+					"settings":
+					{
+						"buffer_size": 3873,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1320,
+								1320
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 525.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "object_cube.h",
+					"settings":
+					{
+						"buffer_size": 991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								979,
+								979
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "object_cube.cpp",
+					"settings":
+					{
+						"buffer_size": 6814,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								935,
+								935
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 64.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "object_spiralSphere.h",
+					"settings":
+					{
+						"buffer_size": 1149,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								403,
+								403
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 117.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "object_spiralSphere.cpp",
+					"settings":
+					{
+						"buffer_size": 6626,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4109,
+								4109
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1909.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"settings":
+					{
+						"buffer_size": 293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								206,
+								206
+							]
+						],
+						"settings":
+						{
+							"auto_name": "PREGUNTAS",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.925484351714,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

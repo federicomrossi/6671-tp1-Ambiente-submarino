@@ -12,9 +12,9 @@
 #include <vector>
 
 // Objetos
+#include "object_eje_coordenado.h"
 #include "object_grid.h"
-#include "object_cube.h"
-#include "object_spiralSphere.h"
+// #include "object_cangrejo_pata_muslo.h"
 
 
 
@@ -33,6 +33,13 @@ private:
 
 	// Objetos
 	// (Definir atributos relacionados con objetos AQUI)
+
+	// TEMPORAL
+	EjeCoordenado ejeCoordenado;
+	Grid grid;
+	// CangrejoPataMuslo cangrejo;
+	GLfloat grado;
+	// FIN TEMPORAL
 
 public:
 
