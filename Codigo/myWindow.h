@@ -45,6 +45,9 @@ public:
 	
 	// Mouse up event handler.
 	virtual void OnMouseUp(int button, int x, int y);
+
+	// Called when Mouse is moved (without pressing any button)
+	virtual void OnMouseMove(int x, int y);
 	
 	// Mouse wheel event handler.
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);

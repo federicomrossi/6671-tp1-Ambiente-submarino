@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"hoja",
+				"hojaTipo01"
+			],
+			[
+				"pezAle",
+				"pezAletaTrasera"
+			],
+			[
+				"targe",
+				"cameraTargetX"
+			],
+			[
+				"cameraPosI",
+				"cameraPositionX"
+			],
+			[
+				"mouse",
+				"mouseSpeed"
+			],
+			[
+				"hori",
+				"horizontalAngle"
+			],
+			[
+				"onMouse",
+				"OnMouseWheel"
+			],
+			[
+				"cameraT",
+				"cameraTargetZ"
+			],
+			[
+				"cameraTarget",
+				"cameraTargetY"
+			],
+			[
+				"camera",
+				"cameraTarget"
+			],
+			[
+				"PROJE",
+				"projection_matrix"
+			],
+			[
+				"object",
+				"object_normal_buffer"
+			],
+			[
 				"model_",
 				"model_matrix"
 			],
@@ -36,18 +84,10 @@
 	"buffers":
 	[
 		{
-			"file": "object_eje_coordenado.h",
-			"settings":
-			{
-				"buffer_size": 979,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "scene.h",
 			"settings":
 			{
-				"buffer_size": 1316,
+				"buffer_size": 2267,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +95,7 @@
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 3873,
+				"buffer_size": 6879,
 				"line_ending": "Unix"
 			}
 		},
@@ -68,36 +108,75 @@
 			}
 		},
 		{
-			"file": "object_cube.cpp",
+			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 6814,
+				"buffer_size": 4019,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "object_planta_acuatica.h",
+			"settings":
+			{
+				"buffer_size": 1045,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_spiralSphere.h",
+			"file": "object_planta_acuatica.cpp",
 			"settings":
 			{
-				"buffer_size": 1149,
+				"buffer_size": 2101,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_spiralSphere.cpp",
+			"file": "object_planta_hoja_tipo01.cpp",
 			"settings":
 			{
-				"buffer_size": 6626,
+				"buffer_size": 1479,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "PREGUNTAS\n=========\n\n- Por que la view matrix se genera en el constructor y se guarda como un atributo y no así la matrix de proyección?\n\n- Como generar un cilindro?\n\n- Como generar un cono con tapa base?\n\n\n Usar bezier para hacer las curvas\n Para curvas cerradas conviene usar curvas B-Spline",
+			"file": "object_planta_hoja_tipo01.h",
 			"settings":
 			{
-				"buffer_size": 293,
-				"line_ending": "Unix",
-				"name": "PREGUNTAS"
+				"buffer_size": 931,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib_matematica.h",
+			"settings":
+			{
+				"buffer_size": 917,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib_matematica.cpp",
+			"settings":
+			{
+				"buffer_size": 1294,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_TEST.h",
+			"settings":
+			{
+				"buffer_size": 1058,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_TEST.cpp",
+			"settings":
+			{
+				"buffer_size": 10450,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -107,6 +186,14 @@
 		"height": 72.0,
 		"selected_items":
 		[
+			[
+				"set c++",
+				"Set Syntax: C++"
+			],
+			[
+				"set C++",
+				"Set Syntax: C++"
+			],
 			[
 				"set shader",
 				"Set Syntax: Unity ShaderLab"
@@ -133,13 +220,63 @@
 	},
 	"file_history":
 	[
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene (copia).cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myApplication.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myApplication.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.h",
+		"/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/Mover_B.pl",
+		"/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/mi.txt",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/client_main.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_convertir.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_lock.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/word_mangling.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tp.cpp",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.cpp",
+		"/home/federicorossi/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/glutWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glApplication.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/main.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.h",
+		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/tp0/codigo/imagen.pgm",
 		"/run/media/federicorossi/Archivos/Federico/Prueba/tp.c",
 		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Informe/66.20 - TP - Informe.tex",
 		"/run/media/federicorossi/Archivos/Webserver/Desarrollos y pruebas/HTML5 & CSS3/01.html",
@@ -161,7 +298,6 @@
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/Makefile",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.h",
@@ -188,15 +324,12 @@
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_archivo.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tp.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_archivo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_archivo.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_salida_estandar.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/tx_salida_estandar.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/word_mangling.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/word_mangling.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/cola.c",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/cola.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/dijkstra.h",
@@ -211,45 +344,10 @@
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/README",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/tp.c",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/router.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/Makefile",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/Makefile",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/05 - Grupal/Codigo/common_manejador_de_archivos.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_servidor.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glApplication.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_controlador_de_tareas.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_conexion_cliente.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/server_conexion_cliente.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_convertir.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_socket.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/04/Codigo/common_socket.h",
-		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/Informe/66.20 - TP - Informe.tex",
-		"/home/federicorossi/Descargas/TP SO (1)/Codigo/bin/scripts/IniciarU.sh",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/DiffuseShadingVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/DiffuseShadingFShader.frag",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/.gitignore",
-		"/home/federicorossi/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
-		"/home/federicorossi/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pata.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pata.h",
-		"/home/federicorossi/Descargas/bootinfoscript-061/stdout",
-		"/run/media/federicorossi/Archivos/Federico/FIUBA/Conexion internet",
-		"/run/media/federicorossi/Windows8_OS/Boot/BCD.LOG",
-		"/usr/share/gnome-shell/theme/gnome-shell.css"
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/Makefile"
 	],
 	"find":
 	{
@@ -267,6 +365,85 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"mPez",
+			"Roca",
+			"acuatica",
+			"roca",
+			"mPez",
+			"m",
+			"PezAletaDorsal",
+			"Pez",
+			"PEZ",
+			"0.0",
+			"0.2",
+			"0.5",
+			"DIMENSIONS",
+			"2.0",
+			"pez",
+			"grid",
+			"PezAletaLateral",
+			"PEZ_ALETA_LATERAL",
+			"mPez",
+			"ez",
+			"1.0",
+			"0.9",
+			"pez",
+			"object_pez",
+			"pez",
+			"0.5",
+			"changeObjectColor",
+			"float",
+			"PezOjo",
+			"PEZ_OJO",
+			"mAletaLateralDer",
+			"dorsal",
+			"mAletaLateralDer",
+			"Der",
+			"mAletaDorsal",
+			"Trasera",
+			"TRASERA",
+			"Trasera",
+			"trasera",
+			"Trasera",
+			"TRASERA",
+			"object_pez_ojo",
+			"piralSphere",
+			"Ojo",
+			"OJO",
+			"0.1",
+			"0.05",
+			"direction",
+			"GLfloat ",
+			"Der",
+			"model_matrix_eje_coordenado",
+			"0.1",
+			"cuerpo",
+			"2.0",
+			"Cuerpo",
+			"cuerpo",
+			"Cuerpo",
+			"CUERPO",
+			"object_pez",
+			"cangrejo_pata",
+			"pez",
+			"Pez",
+			"pata",
+			"CangrejoPata",
+			"CANGREJO_PATA",
+			"t",
+			"1",
+			"object_vertex_buffer",
+			"x",
+			"cube",
+			"cube_normal_buffer",
+			"test",
+			"grid",
+			"GRID",
+			"grid",
+			"Grid",
+			"grid",
+			"Grid",
+			"grid",
 			"this->size",
 			"mX",
 			"piralS",
@@ -315,13 +492,10 @@
 			"Cube",
 			"cube",
 			"Cube",
-			"cube",
-			"Cube",
-			"CUBE",
-			"rgba"
+			"cube"
 		],
 		"highlight": true,
-		"in_selection": false,
+		"in_selection": true,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -336,23 +510,251 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "object_eje_coordenado.h",
+					"file": "scene.h",
 					"settings":
 					{
-						"buffer_size": 979,
+						"buffer_size": 2267,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								126,
-								126
+								332,
+								332
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 164.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scene.cpp",
+					"settings":
+					{
+						"buffer_size": 6879,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4826,
+								4826
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2106.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "object_cube.h",
+					"settings":
+					{
+						"buffer_size": 991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								666,
+								666
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 235.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 4019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								442,
+								442
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 972.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "object_planta_acuatica.h",
+					"settings":
+					{
+						"buffer_size": 1045,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								291,
+								291
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 273.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "object_planta_acuatica.cpp",
+					"settings":
+					{
+						"buffer_size": 2101,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1490,
+								1490
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 507.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "object_planta_hoja_tipo01.cpp",
+					"settings":
+					{
+						"buffer_size": 1479,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1416,
+								1416
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 468.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "object_planta_hoja_tipo01.h",
+					"settings":
+					{
+						"buffer_size": 931,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								255,
+								255
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 234.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 8,
+					"file": "lib_matematica.h",
+					"settings":
+					{
+						"buffer_size": 917,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								886,
+								886
 							]
 						],
 						"settings":
@@ -367,79 +769,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "scene.h",
+					"buffer": 9,
+					"file": "lib_matematica.cpp",
 					"settings":
 					{
-						"buffer_size": 1316,
+						"buffer_size": 1294,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								688,
-								688
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 122.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scene.cpp",
-					"settings":
-					{
-						"buffer_size": 3873,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1320,
-								1320
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 525.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 3,
-					"file": "object_cube.h",
-					"settings":
-					{
-						"buffer_size": 991,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								979,
-								979
+								1012,
+								1012
 							]
 						],
 						"settings":
@@ -454,19 +796,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "object_cube.cpp",
+					"buffer": 10,
+					"file": "object_TEST.h",
 					"settings":
 					{
-						"buffer_size": 6814,
+						"buffer_size": 1058,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								935,
-								935
+								491,
+								491
 							]
 						],
 						"settings":
@@ -475,25 +817,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 64.0,
+						"translation.y": 195.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "object_spiralSphere.h",
+					"buffer": 11,
+					"file": "object_TEST.cpp",
 					"settings":
 					{
-						"buffer_size": 1149,
+						"buffer_size": 10450,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								403,
-								403
+								845,
+								845
 							]
 						],
 						"settings":
@@ -502,34 +844,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 117.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "object_spiralSphere.cpp",
-					"settings":
-					{
-						"buffer_size": 6626,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4109,
-								4109
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1909.0,
+						"translation.y": 663.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -539,38 +854,6 @@
 		{
 			"sheets":
 			[
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 7,
-					"settings":
-					{
-						"buffer_size": 293,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								206,
-								206
-							]
-						],
-						"settings":
-						{
-							"auto_name": "PREGUNTAS",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -640,11 +923,15 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"",
+				"/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/tp.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"show_minimap": true,
 	"show_open_files": false,

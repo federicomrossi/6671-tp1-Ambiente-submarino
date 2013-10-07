@@ -27,8 +27,10 @@ glutWindow::glutWindow(void)
    
    //-------------------------------------------
    // #TODO: Use Parameters to setup this stuff: 
-   this->height = 360;
-   this->width = 640;
+   this->width = 1024;
+   this->height = 576;
+   // this->width = 640;
+   // this->height = 360;
    glutInitWindowSize(this->width, this->height);
    glutInitWindowPosition ( 100, 100 );
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);

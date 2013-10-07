@@ -40,7 +40,7 @@ Scene::Scene()
 
 	cameraPositionX = 8.0;
 	cameraPositionY = 0.0;
-	cameraPositionZ = 1.0;
+	cameraPositionZ = 3.0;
 	cameraTargetX = 0.0;
 	cameraTargetY = 0.0;
 	cameraTargetZ = 0.0;
@@ -57,13 +57,10 @@ void Scene::initialize()
 	this->grado = 0.0f;
 	this->ejeCoordenado.create(2);
 	this->grid.create(10);
-	this->superficie.create();
-	this->cangrejo.create();
 	this->pez.create();
-	this->roca.create();
-	this->plantaAcuatica.create();
 	// this->test.create(10);
 
+	// this->cangrejo.create();
 
 	// Establecemos un color inicial para la escena
 	glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
@@ -79,8 +76,8 @@ void Scene::render(GLuint height, GLuint width)
 {
 	//////////////////////////////
 
-	// this->horizontalAngle += this->mouseSpeed * 0.005f * float(1024/2 - this->xpos);
-	// this->verticalAngle += this->mouseSpeed * 0.005f * float(576/2 - this->ypos);
+	this->horizontalAngle += this->mouseSpeed * 0.005f * float(1024/2 - this->xpos);
+	this->verticalAngle += this->mouseSpeed * 0.005f * float(576/2 - this->ypos);
 
 	///////////////////////////////	
 
@@ -93,21 +90,44 @@ void Scene::render(GLuint height, GLuint width)
 	);
 
 
+	// // Where you want to look at, in world space
+	// glm::vec3 cameraTarget = glm::vec3(
+	// 	this->cameraTargetX,
+	// 	this->cameraTargetY,
+	// 	this->cameraTargetZ
+	// );
+
 	// Where you want to look at, in world space
-	glm::vec3 cameraTarget = glm::vec3(
-		this->cameraTargetX,
-		this->cameraTargetY,
-		this->cameraTargetZ
+	this->cameraTarget = glm::vec3(
+		cos(this->verticalAngle) * sin(this->horizontalAngle),
+		sin(this->verticalAngle),
+		cos(this->verticalAngle) * cos(this->horizontalAngle)
+	);
+
+
+	// Right vector
+	this->right = glm::vec3(
+		sin(this->horizontalAngle - 3.14f/2.0f),
+		0,
+		cos(this->horizontalAngle - 3.14f/2.0f)
 	);
 
 	// Probably glm::vec3(0,1,0), but (0,,0) would make you looking 
 	// upside-down, which can be great too
 	glm::vec3 upVector = glm::vec3(0.0, 0.0, 1.0);
+	// glm::vec3 upVector = glm::cross(this->right, this->cameraTarget);
+
+	// // View (camera) Matrix
+	// this->view_matrix = glm::lookAt(
+	// 	cameraPosition,
+	// 	cameraTarget,
+	// 	upVector
+	// );
 
 	// View (camera) Matrix
 	this->view_matrix = glm::lookAt(
-		cameraPosition,
-		cameraTarget,
+		this->position,
+		this->position + this->cameraTarget,
 		upVector
 	);
 
@@ -115,12 +135,21 @@ void Scene::render(GLuint height, GLuint width)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// PERSPECTIVA INFINITA
-	glm::mat4 projection_matrix = glm::infinitePerspective(
+	// Matriz de projeccion
+	glm::mat4 projection_matrix = glm::mat4 (1.0f);
+	projection_matrix = glm::perspective(
 		30.0f,
 		(float)width / (float)height,
-		0.1f
+		0.1f,
+		100.0f
 	);
+
+	// // PERSPECTIVA INFINITA
+	// projection_matrix = glm::infinitePerspective(
+	// 	30.0f,
+	// 	(float)width / (float)height,
+	// 	0.1f
+	// );
 
 	// // PERSPECTIVA
 	// projection_matrix = glm::perspective(
@@ -156,47 +185,29 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Drawing Grid
 	glm::mat4 model_matrix_grid = glm::mat4(1.0f);
-	this->grid.changeObjectColor(128, 128, 128);
+	this->grid.changeObjectColor(0.5, 0.5, 0.5);
 	this->grid.render(model_matrix_grid, this->view_matrix, projection_matrix);
 
-	// Dibujamos la superficie
-	glm::mat4 mSuperficie = glm::mat4(1.0f);
-	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
-
-	// Dibujamos cangrejo
-	glm::mat4 mCangrejo = glm::mat4(1.0f);
-	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 
 	// Dibujamos el pez
 	glm::mat4 mPez = glm::mat4(1.0f);
-	mPez = glm::translate(mPez, glm::vec3(0.3, 1.6, 1.0));
-	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
-	mPez = glm::rotate(mPez, 15.0f, glm::vec3(0.0, 0.0, 1.0));
-	mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
+	mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.0) );
+	mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->pez.render(mPez, this->view_matrix, projection_matrix);
 
-	// Dibujamos rocas
-	glm::mat4 mRoca = glm::mat4(1.0f);
-	mRoca = glm::translate(mRoca, glm::vec3(2.0, 2.0, 0.0));
-	mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.3, 0.3));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::translate(mRoca, glm::vec3(1.0, 0.0, 0.3));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::translate(mRoca, glm::vec3(0.0, 1.1, -0.6));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	// // Drawing TEST
+	// glm::mat4 model_matrix_test = glm::mat4(1.0f);
+	// this->test.changeObjectColor(1.0, 0.0, 0.0);
+	// this->test.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
 
-	// Dibujamos una planta
-	glm::mat4 mPlanta = glm::mat4(1.0f);
-	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
-	mPlanta = glm::rotate(mPlanta, -45.0f, glm::vec3(0.0, 0.0, 1.0));
-	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
-	// Drawing TEST
-	glm::mat4 model_matrix_test = glm::mat4(1.0f);
-	this->test.changeObjectColor(255, 0, 0);
-	this->test.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
+	// // Dibujamos cangrejo
+	// glm::mat4 model_matrix_cangrejo = glm::mat4(1.0f);
 
+	// // Cambiamos el color de la grilla
+	// this->cangrejo.changeObjectColor(0.796, 0.65, 0.6);
+	// this->cangrejo.render(model_matrix_cangrejo, this->view_matrix, 
+	// 	projection_matrix);
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -233,41 +244,37 @@ void Scene::onKeyDown(int nKey, char cAscii)
 
 	// Adelante
 	if(cAscii == 'w')
-	{
-		this->cameraPositionX -= 0.07;
-		this->cameraTargetX -= 0.07;
-	}
+		// this->cameraPositionX -= 0.5;
+		this->position += this->cameraTarget * 0.05f * this->speed;
+
 	// Atras
 	else if(cAscii == 's')
-	{
-		this->cameraPositionX += 0.07;
-		this->cameraTargetX += 0.07;
-	}
+		// this->cameraPositionX += 0.5;
+		this->position -= this->cameraTarget * 0.05f * this->speed;
 
 	// Derecha
 	else if(cAscii == 'd')
-	{
-		this->cameraPositionY += 0.07;
-		this->cameraTargetY += 0.07;
-	}
+		// this->cameraPositionY += 0.5;
+		this->position += this->right * 0.05f * this->speed;
+
 	// Izquierda
 	else if(cAscii == 'a')
-	{
-		this->cameraPositionY -= 0.07;
-		this->cameraTargetY -= 0.07;
-	}
+		// this->cameraPositionY -= 0.5;
+		this->position -= this->right * 0.05f * this->speed;
 
-	if(cAscii == '+') 
-		this->grado--;
-	else if(cAscii == '-') 	
-		this->grado++;
+	std::cout << "Se movio" << std::endl;
+
+	// if(cAscii == '+') 
+	// 	this->grado--;
+	// else if(cAscii == '-') 	
+	// 	this->grado++;
 }
 
 
 // Manejador del evento de movimiento de la rueda del mouse
 void Scene::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y)
 {
-	std::cout << nWheelNumber << std::endl;
+
 } 
 
 

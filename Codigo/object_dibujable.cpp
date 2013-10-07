@@ -185,10 +185,11 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 
 
 // Cambia el color del objeto
-// PRE: 'r', 'g' y 'b' corresponden al color en RGB.
-void ObjectDibujable::changeObjectColor(float r, float g, float b)
+// PRE: 'r', 'g' y 'b' corresponden al color en RGB, es decir, a un valor
+// entre 0 y 255.
+void ObjectDibujable::changeObjectColor(int r, int g, int b)
 {
-	glm::vec3 diffuse_reflectivity = glm::vec3(r, g, b);
+	glm::vec3 diffuse_reflectivity = glm::vec3(r/255.0, g/255.0, b/255.0);
 
 	GLuint location_diffuse_reflectivity = glGetUniformLocation(
 		this->programHandle, "Kd");

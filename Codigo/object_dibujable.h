@@ -51,8 +51,9 @@ public:
 		glm::mat4 &projection_matrix) = 0;
 
 	// Cambia el color del objeto
-	// PRE: 'r', 'g' y 'b' corresponden al color en RGB.
-	void changeObjectColor(float r, float g, float b);
+	// PRE: 'r', 'g' y 'b' corresponden al color en RGB, es decir, a un valor
+	// entre 0 y 255.
+	void changeObjectColor(int r, int g, int b);
 };
 
 #endif

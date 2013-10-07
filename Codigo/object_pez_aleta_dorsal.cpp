@@ -1,5 +1,5 @@
 /*  
- *  CLASS CANGREJOPATA
+ *  CLASS PEZ_ALETA_DORSAL
  */
 
 
@@ -14,7 +14,7 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 
-#include "object_cangrejo_pata_muslo.h"
+#include "object_pez_aleta_dorsal.h"
 
 
 
@@ -38,39 +38,30 @@ namespace {
 
 
 // Constructor
-CangrejoPataMuslo::CangrejoPataMuslo()
-{
-	this->muslo_index_buffer = NULL;
-	this->muslo_vertex_buffer = NULL;
-	this->muslo_normal_buffer = NULL;
-}
+PezAletaDorsal::PezAletaDorsal() { }
 
 
 // Destructor
-CangrejoPataMuslo::~CangrejoPataMuslo() { }
+PezAletaDorsal::~PezAletaDorsal() { }
 
 
 // Crea un objeto
-void CangrejoPataMuslo::create() 
+void PezAletaDorsal::create()
 {
-	// this->spiralSphere.create(1.0, 32, 32);			// Esfera
+	// Creamos la esfera
 	this->cube.create();
 }
 
 
-// Renderiza el cubo (lo dibuja).
+// Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// Renderizamos esfera que representa la muñeca
-	glm::mat4 mMuslo = glm::mat4 ( 1.0f );
-	mMuslo = glm::scale(mMuslo, glm::vec3(3.0f, 3.0f, 3.0f));
-	mMuslo = glm::rotate (mMuslo, -30.0f, glm::vec3(0.0, 0.0, 1.0));
-	mMuslo = glm::rotate (mMuslo, 10.0f, glm::vec3(0.0, 1.0, 0.0));
-
-	// this->spiralSphere.render(model_, view_matrix, projection_matrix);
-	this->cube.changeObjectColor(230, 230, 230);
-	this->cube.render(mMuslo, view_matrix, projection_matrix);
-}	
+	// Damos forma y la renderizamos
+	this->cube.changeObjectColor(33, 59, 148);
+	glm::mat4 m = glm::mat4(1.0f);
+	m = glm::scale(model_matrix, glm::vec3(1.2, 0.01, 0.3));
+	this->cube.render(m, view_matrix, projection_matrix);
+}

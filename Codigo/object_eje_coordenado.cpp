@@ -66,7 +66,7 @@ void EjeCoordenado::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// CENTRO DEL EJE
 	glm::mat4 mCentro = glm::mat4(1.0f);
 	mCentro = glm::scale(model_matrix, glm::vec3(0.05f, 0.05f, 0.05f));
-	this->sphere.changeObjectColor(1.0, 1.0, 1.0);
+	this->sphere.changeObjectColor(255, 255, 255);
 	this->sphere.render(mCentro, view_matrix, projection_matrix);
 
 
@@ -77,7 +77,7 @@ void EjeCoordenado::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mX = glm::translate(model_matrix, glm::vec3(axisSize / 2.0, 0.0, 0.0));
 	mX = glm::scale(mX, glm::vec3(axisSize, 
 		axisSize * 0.02f, axisSize * 0.02f));
-	this->cube.changeObjectColor(1.0, 0.0, 0.0);
+	this->cube.changeObjectColor(255, 0.0, 0.0);
 	this->cube.render(mX, view_matrix, projection_matrix);
 
 	// EJE Y (Verde)
@@ -86,7 +86,7 @@ void EjeCoordenado::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mY = glm::rotate(mY, -90.0f, glm::vec3(0.0, 0.0, 1.0));
 	mY = glm::scale(mY, glm::vec3(axisSize, 
 		axisSize * 0.02f, axisSize * 0.02f));
-	this->cube.changeObjectColor(0.0, 1.0, 0.0);
+	this->cube.changeObjectColor(0.0, 255, 0.0);
 	this->cube.render(mY, view_matrix, projection_matrix);
 
 	// EJE Z (Azul)
@@ -95,6 +95,6 @@ void EjeCoordenado::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mZ = glm::rotate(mZ, -90.0f, glm::vec3(0.0, 1.0, 0.0));
 	mZ = glm::scale(mZ, glm::vec3(axisSize, 
 		axisSize * 0.02f, axisSize * 0.02f));
-	this->cube.changeObjectColor(0.0, 0.0, 1.0);
+	this->cube.changeObjectColor(0.0, 0.0, 255);
 	this->cube.render(mZ, view_matrix, projection_matrix);
 }
