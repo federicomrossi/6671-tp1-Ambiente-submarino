@@ -1,10 +1,10 @@
 /*  
- *  CLASS CANGREJO
+ *  CLASS CANGREJO_PINZA
  */  
 
 
-#ifndef OBJECT_CANGREJO_H
-#define OBJECT_CANGREJO_H
+#ifndef OBJECT_CANGREJO_PINZA_H
+#define OBJECT_CANGREJO_PINZA_H
 
 
 #include <glm/glm.hpp> 
@@ -12,14 +12,9 @@
 #include <vector>
 #include "object_dibujable.h"
 
-// Objetos
 #include "object_eje_coordenado.h"
-#include "object_cangrejo_cuerpo.h"
-#include "object_cangrejo_pata.h"
-#include "object_cangrejo_ojo.h"
-#include "object_cangrejo_pinza.h"
-
-
+#include "object_spiralSphere.h"
+#include "object_cube.h"
 
 
 
@@ -28,23 +23,29 @@
  * ***************************************************************************/
 
 
-class Cangrejo : public ObjectDibujable
+class CangrejoPinza : public ObjectDibujable
 {
 private:
 
+	GLfloat* pinza_vertex_buffer;
+	GLfloat* pinza_normal_buffer;
+	GLuint* pinza_index_buffer;
+	unsigned int pinza_vertex_buffer_size;
+	unsigned int pinza_normal_buffer_size;
+	unsigned int pinza_index_buffer_size;
+
+	// Objetos
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
-	CangrejoCuerpo cangrejoCuerpo;
-	CangrejoPata cangrejoPata;
-	CangrejoOjo cangrejoOjo;
-	CangrejoPinza cangrejoPinza;
+	SpiralSphere spiralSphere;
+	Cube cube;
 
 public:
 
 	// Constructor
-	Cangrejo();
+	CangrejoPinza();
 
 	// Destructor
-	~Cangrejo();
+	~CangrejoPinza();
 
 	// Crea un objeto
 	virtual void create();

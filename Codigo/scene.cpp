@@ -165,8 +165,8 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos cangrejo
 	glm::mat4 mCangrejo = glm::mat4(1.0f);
-	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.0, -2.0, 0.8));
-	// mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
+	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -1.0, 0.4));
+	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
 	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 
