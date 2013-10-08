@@ -15,6 +15,7 @@
 // Objetos
 #include "object_eje_coordenado.h"
 #include "object_cangrejo_cuerpo.h"
+#include "object_cangrejo_pata.h"
 
 
 
@@ -31,6 +32,7 @@ private:
 
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
 	CangrejoCuerpo cangrejoCuerpo;
+	CangrejoPata cangrejoPata;
 
 public:
 

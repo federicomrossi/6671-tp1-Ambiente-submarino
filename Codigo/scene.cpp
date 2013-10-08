@@ -40,7 +40,7 @@ Scene::Scene()
 
 	cameraPositionX = 8.0;
 	cameraPositionY = 0.0;
-	cameraPositionZ = 1.0;
+	cameraPositionZ = 3.0;
 	cameraTargetX = 0.0;
 	cameraTargetY = 0.0;
 	cameraTargetZ = 0.0;
@@ -165,6 +165,8 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos cangrejo
 	glm::mat4 mCangrejo = glm::mat4(1.0f);
+	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.0, -2.0, 0.8));
+	// mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
 	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 

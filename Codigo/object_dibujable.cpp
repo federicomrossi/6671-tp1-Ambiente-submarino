@@ -48,13 +48,13 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 	// Do your GLEW experiments here:
 	if (GLEW_ARB_shading_language_100) 
 	{ 
-		std::cout << "GLEW_ARB_shading_language_100" << std::endl;
+		// std::cout << "GLEW_ARB_shading_language_100" << std::endl;
 		const GLubyte* sVersion = glGetString(GL_SHADING_LANGUAGE_VERSION_ARB);
 		
 		if (glGetError() != GL_INVALID_ENUM)
 		{
 			std::string version((char*)sVersion);
-			std::cout << version.c_str() << std::endl;
+			// std::cout << version.c_str() << std::endl;
 		}
 
 		// Load vertex Shader

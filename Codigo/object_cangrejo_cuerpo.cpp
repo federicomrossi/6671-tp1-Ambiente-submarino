@@ -61,7 +61,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 {
 	// Damos forma del cuerpo a la esfera y la renderizamos
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
-	mCuerpo = glm::scale(model_matrix, glm::vec3(1.0, 1.1, 0.5));
+	mCuerpo = glm::scale(model_matrix, glm::vec3(1.2, 1.1, 0.5));
 	mCuerpo = glm::rotate(mCuerpo, 15.0f, glm::vec3(0.0, 1.0, 0.0));
 	this->spiralSphere.changeObjectColor(20, 143, 4);
 	this->spiralSphere.render(mCuerpo, view_matrix, projection_matrix);

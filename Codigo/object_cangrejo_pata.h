@@ -12,6 +12,8 @@
 #include <vector>
 #include "object_dibujable.h"
 
+#include "object_eje_coordenado.h"
+#include "object_spiralSphere.h"
 
 
 
@@ -30,6 +32,10 @@ private:
 	unsigned int pata_vertex_buffer_size;
 	unsigned int pata_normal_buffer_size;
 	unsigned int pata_index_buffer_size;
+
+	// Objetos
+	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
+	SpiralSphere spiralSphere;
 
 public:
 

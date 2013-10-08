@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"proj",
+				"projection_matrix"
+			],
+			[
 				"hoja",
 				"hojaTipo01"
 			],
@@ -87,7 +91,7 @@
 			"file": "scene.h",
 			"settings":
 			{
-				"buffer_size": 2267,
+				"buffer_size": 2241,
 				"line_ending": "Unix"
 			}
 		},
@@ -95,71 +99,55 @@
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 6879,
+				"buffer_size": 7000,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_cube.h",
+			"file": "object_cangrejo_cuerpo.h",
 			"settings":
 			{
-				"buffer_size": 991,
+				"buffer_size": 944,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Makefile",
+			"file": "object_cangrejo_cuerpo.cpp",
 			"settings":
 			{
-				"buffer_size": 4019,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "object_planta_acuatica.h",
-			"settings":
-			{
-				"buffer_size": 1045,
+				"buffer_size": 1604,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_planta_acuatica.cpp",
+			"file": "object_cangrejo.h",
 			"settings":
 			{
-				"buffer_size": 2101,
+				"buffer_size": 1048,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_planta_hoja_tipo01.cpp",
+			"file": "object_cangrejo.cpp",
 			"settings":
 			{
-				"buffer_size": 1479,
+				"buffer_size": 3691,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_planta_hoja_tipo01.h",
+			"file": "object_cangrejo_pata.h",
 			"settings":
 			{
-				"buffer_size": 931,
+				"buffer_size": 1209,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "lib_matematica.h",
+			"file": "object_cangrejo_pata.cpp",
 			"settings":
 			{
-				"buffer_size": 917,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "lib_matematica.cpp",
-			"settings":
-			{
-				"buffer_size": 1294,
+				"buffer_size": 2880,
 				"line_ending": "Unix"
 			}
 		},
@@ -177,6 +165,14 @@
 			{
 				"buffer_size": 10450,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 4144,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -220,6 +216,18 @@
 	},
 	"file_history":
 	[
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
@@ -234,13 +242,8 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.h",
@@ -340,14 +343,7 @@
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/lista.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/Makefile",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/router.c",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/01/Codigo/multas.c",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/README",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/tp.c",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/02/Codigo/router.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/Makefile",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/Makefile"
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/01/Codigo/multas.c"
 	],
 	"find":
 	{
@@ -365,6 +361,31 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"01",
+			"mPataDer",
+			"mPataDer01",
+			"der",
+			"Der",
+			"der",
+			"Der",
+			"der",
+			"Der",
+			"01",
+			"mPataDer02",
+			"mPataDer",
+			"mEntrepierna",
+			"5",
+			"mMuslo",
+			"mPataDer",
+			"model_matrix",
+			"mPez",
+			"cangrejo",
+			"_pata",
+			"mPez",
+			"Pez",
+			"PEZ",
+			"Pez",
+			"PEZ",
 			"mPez",
 			"Roca",
 			"acuatica",
@@ -467,32 +488,7 @@
 			"CangrejoPataMuslo",
 			" ",
 			"object_cangrejo_pata",
-			"grid",
-			"BasicFShader_200",
-			"regNombre",
-			"ARCHIVO_REG_ARCHIVOS",
-			"programHandle",
-			"(0.796, 1, 0.6);",
-			"(0.796, 1, 0.6);\n	// Renderizamos",
-			"(0.796, 1, 0.6);",
-			"programHandle",
-			"render",
-			"grid",
-			"size",
-			"programHandle",
-			"cube.render",
-			"programHandle",
-			" ",
-			"Cube",
-			"Scene",
-			"CangrejoPata",
-			"pata",
-			"CangrejoPata",
-			"_p",
-			"Cube",
-			"cube",
-			"Cube",
-			"cube"
+			"grid"
 		],
 		"highlight": true,
 		"in_selection": true,
@@ -518,15 +514,15 @@
 					"file": "scene.h",
 					"settings":
 					{
-						"buffer_size": 2267,
+						"buffer_size": 2241,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								332,
-								332
+								276,
+								276
 							]
 						],
 						"settings":
@@ -535,7 +531,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 164.0,
+						"translation.y": 663.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -545,15 +541,15 @@
 					"file": "scene.cpp",
 					"settings":
 					{
-						"buffer_size": 6879,
+						"buffer_size": 7000,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4826,
-								4826
+								4077,
+								4077
 							]
 						],
 						"settings":
@@ -562,25 +558,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2106.0,
+						"translation.y": 2025.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "object_cube.h",
+					"file": "object_cangrejo_cuerpo.h",
 					"settings":
 					{
-						"buffer_size": 991,
+						"buffer_size": 944,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								666,
-								666
+								626,
+								626
 							]
 						],
 						"settings":
@@ -589,85 +585,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 235.0,
+						"translation.y": 117.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Makefile",
+					"file": "object_cangrejo_cuerpo.cpp",
 					"settings":
 					{
-						"buffer_size": 4019,
+						"buffer_size": 1604,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								442,
-								442
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage",
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 972.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 4,
-					"file": "object_planta_acuatica.h",
-					"settings":
-					{
-						"buffer_size": 1045,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								291,
-								291
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 273.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "object_planta_acuatica.cpp",
-					"settings":
-					{
-						"buffer_size": 2101,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1490,
-								1490
+								1402,
+								1402
 							]
 						],
 						"settings":
@@ -680,108 +616,27 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "object_planta_hoja_tipo01.cpp",
-					"settings":
-					{
-						"buffer_size": 1479,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1416,
-								1416
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 468.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "object_planta_hoja_tipo01.h",
-					"settings":
-					{
-						"buffer_size": 931,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								255,
-								255
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 234.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
-					"buffer": 8,
-					"file": "lib_matematica.h",
+					"buffer": 4,
+					"file": "object_cangrejo.h",
 					"settings":
 					{
-						"buffer_size": 917,
+						"buffer_size": 1048,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								886,
-								886
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "lib_matematica.cpp",
-					"settings":
-					{
-						"buffer_size": 1294,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1012,
-								1012
+								621,
+								621
 							]
 						],
 						"settings":
@@ -796,7 +651,94 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 5,
+					"file": "object_cangrejo.cpp",
+					"settings":
+					{
+						"buffer_size": 3691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2646,
+								2646
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 966.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "object_cangrejo_pata.h",
+					"settings":
+					{
+						"buffer_size": 1209,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								806,
+								806
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "object_cangrejo_pata.cpp",
+					"settings":
+					{
+						"buffer_size": 2880,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2877,
+								2877
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 944.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 8,
 					"file": "object_TEST.h",
 					"settings":
 					{
@@ -823,7 +765,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 9,
 					"file": "object_TEST.cpp",
 					"settings":
 					{
@@ -852,8 +794,36 @@
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 10,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 4144,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								259,
+								259
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 39.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

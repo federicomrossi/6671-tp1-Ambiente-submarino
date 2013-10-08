@@ -53,15 +53,55 @@ CangrejoPata::~CangrejoPata() { }
 // Crea un objeto
 void CangrejoPata::create()
 {
-	
+	// Creamos el eje coordenado
+	this->ejeCoordenado.create(1);
+
+	// Creamos la esfera
+	this->spiralSphere.create(0.5, 32, 32);	
 }
 
 
-// Renderiza el cubo (lo dibuja).
+// Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
 void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	
+	// Dibujamos el eje coordenado
+	this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
+
+	glm::mat4 m = glm::mat4(1.0f);
+
+	// Damos forma al objeto y la renderizamos
+	glm::mat4 mMuslo = glm::mat4(1.0f);
+	m = glm::translate(model_matrix, glm::vec3(0.0, -0.35, 0.0));
+	mMuslo = glm::scale(m, glm::vec3(0.4, 0.7, 0.4));
+	this->spiralSphere.changeObjectColor(255, 255, 255);
+	this->spiralSphere.render(mMuslo, view_matrix, projection_matrix);
+
+	// Reposicionamos
+	m = glm::translate(m, glm::vec3(0.0, -0.25, 0.0));
+	m = glm::rotate(m, 45.0f, glm::vec3(1.0, 0.0, 0.0));
+
+	// Dibujamos el eje coordenado
+	this->ejeCoordenado.render(m, view_matrix, projection_matrix);
+
+	glm::mat4 mEntrepierna = glm::mat4(1.0f);
+	mEntrepierna = glm::translate(m, glm::vec3(0.0, -0.425, 0.0));
+	mEntrepierna = glm::scale(mEntrepierna, glm::vec3(0.3, 0.85, 0.3));
+	this->spiralSphere.changeObjectColor(255, 255, 255);
+	this->spiralSphere.render(mEntrepierna, view_matrix, projection_matrix);
+
+	// Reposicionamos
+	m = glm::translate(m, glm::vec3(0.0, -0.75, 0.0));
+	m = glm::rotate(m, 60.0f, glm::vec3(1.0, 0.0, 0.0));
+
+	// Dibujamos el eje coordenado
+	this->ejeCoordenado.render(m, view_matrix, projection_matrix);
+
+	glm::mat4 mPie = glm::mat4(1.0f);
+	mPie = glm::translate(m, glm::vec3(0.0, -0.25, 0.0));
+	mPie = glm::scale(mPie, glm::vec3(0.2, 0.5, 0.2));
+	this->spiralSphere.changeObjectColor(255, 255, 255);
+	this->spiralSphere.render(mPie, view_matrix, projection_matrix);
 }
