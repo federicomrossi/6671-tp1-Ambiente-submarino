@@ -17,7 +17,13 @@ public:
 	// Cálculo de la cantidad de combinaciones de m elementos tomados de a n.
 	static int combinaciones(int m, int n);
 
-	// Calculo de punto en una curva utilizando el método de Bezier
+	// Método que calcula el producto vectorial entre dos vectores
+	// tridimensionales.
+	// PRE: 'u' y 'v' son los dos vectores que se deben multiplicar.
+	// POST: se devuelve un vector normal a 'u' y 'v';
+	static float* productoVectorial(float u[3], float v[3]);
+
+	// Cálculo de punto en una curva utilizando el método de Bezier
 	// (implementación con algoritmo de Berstein).
 	// PRE: "n" es el grado de polinomio a utilizar; "t" es un valor entre 0 y
 	// 1 que define el parámetro de la curva (dependiendo de cual sea el valor 
@@ -25,7 +31,16 @@ public:
 	// control inicial y 1 el punto de control final); "p" es un puntero a un 
 	// arreglo que contiene las coordenadas de los puntos de control.
 	// POST: se devuelve el valor de la coordenada del punto sobre la curva.
-	static float bezier(float t, float *p);
+	static float curvaBezier(float t, float p[4]);
+
+	// Cálculo de punto en una superficie utilizando el método de Bezier.
+	static float superficieBezier(float u, float v, float p[4][4]);
+
+	// 
+	static float curvaBSpline(float u, float p[3]);
+
+	// 
+	static float superficieBSpline();
 };
 
 

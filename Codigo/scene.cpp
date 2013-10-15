@@ -56,7 +56,7 @@ void Scene::initialize()
 {
 	this->grado = 0.0f;
 	this->ejeCoordenado.create(2);
-	this->grid.create(10);
+	this->grid.create(20);
 	this->superficie.create();
 	this->cangrejo.create();
 	this->pez.create();
@@ -172,7 +172,7 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos el pez
 	glm::mat4 mPez = glm::mat4(1.0f);
-	mPez = glm::translate(mPez, glm::vec3(0.3, 1.6, 1.0));
+	mPez = glm::translate(mPez, glm::vec3(-0.1, 1.6, 1.0));
 	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
 	mPez = glm::rotate(mPez, 15.0f, glm::vec3(0.0, 0.0, 1.0));
 	mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
@@ -194,10 +194,10 @@ void Scene::render(GLuint height, GLuint width)
 	mPlanta = glm::rotate(mPlanta, -45.0f, glm::vec3(0.0, 0.0, 1.0));
 	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
-	// Drawing TEST
-	glm::mat4 model_matrix_test = glm::mat4(1.0f);
-	this->test.changeObjectColor(255, 0, 0);
-	this->test.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
+	// // Drawing TEST
+	// glm::mat4 model_matrix_test = glm::mat4(1.0f);
+	// this->test.changeObjectColor(255, 0, 0);
+	// this->test.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
 
 
 

@@ -59,14 +59,83 @@ void Test::create(int size)
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
+
+
+	// ////////////////// TEST 1
+
 	
+	// // Creamos el objeto
+
+	// if (this->object_vertex_buffer != NULL)
+	// 	delete this->object_vertex_buffer;
+
+	// this->object_normal_buffer_size = 21;
+	// this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
+
+
+	// if (this->object_index_buffer != NULL)
+	// 	delete this->object_index_buffer;
+
+	// // Puntos de control
+	// float pc0x = 0.0;
+	// float pc0y = 0.0;
+
+	// float pc1x = 0.0;
+	// float pc1y = 2.0;
+
+	// float pc2x = 2.0;
+	// float pc2y = 2.0;
+
+	// float pc3x = 2.0;
+	// float pc3y = 0.0;
+
+	// float centroX = 1.0;
+	// float centroY = 0.0;
+
+	// float pcx[] = {pc0x, pc1x, pc2x, pc3x};
+	// float pcy[] = {pc0y, pc1y, pc2y, pc3y};
+
+	// int DIMENSIONS = 3;
+	// int ESTIRAMIENTO = 2;
+
+	// this->object_vertex_buffer_size = DIMENSIONS * 21 * ESTIRAMIENTO;
+	// this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
+
+	// this->object_index_buffer_size = 42;
+	// this->object_index_buffer = new GLuint[this->object_index_buffer_size];
+
+	// int i = 0;
+	// double PASO = 0.05;
+
+	// for(float t = 0.0; t <= (1.0 + PASO); t += PASO)
+	// {
+	// 	float ppx = Matematica::curvaBezier(t, pcx);
+	// 	float ppy = Matematica::curvaBezier(t, pcy);
+
+	// 	std::cout << t << " - " << ppx << "," << ppy << std::endl;
+
+	// 	this->object_vertex_buffer[i++] = ppx;
+	// 	this->object_vertex_buffer[i++] = ppy;
+	// 	this->object_vertex_buffer[i++] = 0.0;
+
+	// 	this->object_vertex_buffer[i++] = ppx;
+	// 	this->object_vertex_buffer[i++] = ppy;
+	// 	this->object_vertex_buffer[i++] = 1.0;
+	// }
+
+
+	// for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
+	// 	this->object_index_buffer[i] = i;
+	// }
+
+
+
+	// ///////////////// TEST 2
+
 	// Creamos el objeto
 
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
-
-	// this->object_vertex_buffer_size = 27;
-	// this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	this->object_normal_buffer_size = 21;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
@@ -75,211 +144,178 @@ void Test::create(int size)
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	// this->object_index_buffer_size = 7;
-	// this->object_index_buffer = new GLuint[this->object_index_buffer_size];
-
-
-	// this->object_vertex_buffer[0] = 2;
-	// this->object_vertex_buffer[1] = 0;
-	// this->object_vertex_buffer[2] = 0;
-
-	// this->object_vertex_buffer[3] = 1;
-	// this->object_vertex_buffer[4] = 1;
-	// this->object_vertex_buffer[5] = 2;
-
-	// this->object_vertex_buffer[6] = 2;
-	// this->object_vertex_buffer[7] = 2;
-	// this->object_vertex_buffer[8] = 0;
-
-	// this->object_vertex_buffer[9] = 0;
-	// this->object_vertex_buffer[10] = 2;
-	// this->object_vertex_buffer[11] = 0;
-
-	// this->object_vertex_buffer[12] = 0;
-	// this->object_vertex_buffer[13] = 0;
-	// this->object_vertex_buffer[14] = 0;
-
-	// this->object_vertex_buffer[15] = 1;
-	// this->object_vertex_buffer[16] = 1;
-	// this->object_vertex_buffer[17] = 2;
-
-	// this->object_vertex_buffer[18] = 2;
-	// this->object_vertex_buffer[19] = 0;
-	// this->object_vertex_buffer[20] = 0;
-
-
-	///////////////////////////////////////////////////////////////
-
-	// int paso = 45;
-	// int grado = 0;
-
-	// this->object_vertex_buffer_size = 360/paso;
-	// this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
-
-	// this->object_index_buffer_size = 360/paso;
-	// this->object_index_buffer = new GLuint[this->object_index_buffer_size];
-
-
-	// this->object_vertex_buffer[0] = 0;
-	// this->object_vertex_buffer[1] = 0;
-	// this->object_vertex_buffer[2] = 0;
-
-	// for(int i = 3; grado < 360; i++)
-	// {
-	// 	// std::cout << "Grado: " << grado << std::endl;
-	// 	this->object_vertex_buffer[i] = std::sin(grado);
-	// 	this->object_vertex_buffer[++i] = std::cos(grado);
-	// 	this->object_vertex_buffer[++i] = 0;
-
-	// 	grado += paso;
-	// }
-
-	// unsigned int i;
-
-	// for(i=0; i< this->object_index_buffer_size; i++)
-	// 	this->object_index_buffer[i] = i;
-
 	// Puntos de control
-	float pc0x = 0.0;
-	float pc0y = 0.0;
+	float pcx[4][4];
+	float pcy[4][4];
+	float pcz[4][4];
 
-	float pc1x = 0.0;
-	float pc1y = 2.0;
+	pcx[0][0] = 0;
+	pcy[0][0] = 0;
+	pcz[0][0] = 1;
 
-	float pc2x = 2.0;
-	float pc2y = 2.0;
+	pcx[0][1] = 0;
+	pcy[0][1] = 2;
+	pcz[0][1] = 2;
+	
+	pcx[0][2] = 0;
+	pcy[0][2] = 3;
+	pcz[0][2] = 1.5;
 
-	float pc3x = 2.0;
-	float pc3y = 0.0;
+	pcx[0][3] = 0;
+	pcy[0][3] = 5;
+	pcz[0][3] = 0;
 
-	// float pc4x = 2.0;
-	// float pc4y = -2.0;
 
-	// float pc5x = 0.0;
-	// float pc5y = -2.0;
 
-	float centroX = 1.0;
-	float centroY = 0.0;
+	pcx[1][0] = 1;
+	pcy[1][0] = 0;
+	pcz[1][0] = 1;
 
-	float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-	float pcy[] = {pc0y, pc1y, pc2y, pc3y};
+	pcx[1][1] = 1;
+	pcy[1][1] = 2;
+	pcz[1][1] = 2;
 
-	// float pcx[] = {pc0x, pc1x, pc2x, pc3x, pc4x, pc5x};
-	// float pcy[] = {pc0y, pc1y, pc2y, pc3y, pc4y, pc5y};
+	pcx[1][2] = 1;
+	pcy[1][2] = 3;
+	pcz[1][2] = 1.5;
+
+	pcx[1][3] = 1;
+	pcy[1][3] = 5;
+	pcz[1][3] = 0;
+
+
+
+	pcx[2][0] = 2;
+	pcy[2][0] = 0;
+	pcz[2][0] = 1;
+
+	pcx[2][1] = 2;
+	pcy[2][1] = 2;
+	pcz[2][1] = 2;
+
+	pcx[2][2] = 2;
+	pcy[2][2] = 3;
+	pcz[2][2] = 1.5;
+
+	pcx[2][3] = 2;
+	pcy[2][3] = 5;
+	pcz[2][3] = 0;
+
+
+	pcx[3][0] = 3;
+	pcy[3][0] = 0;
+	pcz[3][0] = 1;
+
+	pcx[3][1] = 3;
+	pcy[3][1] = 2;
+	pcz[3][1] = 2;
+
+	pcx[3][2] = 3;
+	pcy[3][2] = 3;
+	pcz[3][2] = 1.5;
+
+	pcx[3][3] = 3;
+	pcy[3][3] = 5;
+	pcz[3][3] = 0;
+
 
 
 
 	int DIMENSIONS = 3;
-	int ESTIRAMIENTO = 2;
+	int ESTIRAMIENTO = 4;
 
-	this->object_vertex_buffer_size = DIMENSIONS * 21 * ESTIRAMIENTO;
+	this->object_vertex_buffer_size = DIMENSIONS * 27 * ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
-	this->object_index_buffer_size = 42;
+	this->object_index_buffer_size = 24 + 2;
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	int i = 0;
-	double PASO = 0.05;
+	double PASO = 0.5;
 
-	for(float t = 0.0; t <= (1.0 + PASO); t += PASO)
+	for(float u = 0.0; u <= (1.0); u += PASO)
 	{
-		float ppx = Matematica::bezier(t, pcx);
-		float ppy = Matematica::bezier(t, pcy);
+		for(float v = 0.0; v <= (1.0); v += PASO)
+		{
+			float ppx = Matematica::superficieBezier(u, v, pcx);
+			float ppy = Matematica::superficieBezier(u, v, pcy);
+			float ppz = Matematica::superficieBezier(u, v, pcz);
 
-		std::cout << t << " - " << ppx << "," << ppy << std::endl;
+			std::cout << u << " - " << ppx << "," << ppy << "," << ppz << std::endl;
 
-		this->object_vertex_buffer[i++] = ppx;
-		this->object_vertex_buffer[i++] = ppy;
-		this->object_vertex_buffer[i++] = 0.0;
-
-		this->object_vertex_buffer[i++] = ppx;
-		this->object_vertex_buffer[i++] = ppy;
-		this->object_vertex_buffer[i++] = 1.0;
-	}
-
-	// float ppx = Matematica::bezier(0.99999, pcx);
-	// float ppy = Matematica::bezier(0.99999, pcy);
-
-	// this->object_vertex_buffer[i++] = ppx;
-	// this->object_vertex_buffer[i++] = ppy;
-	// this->object_vertex_buffer[i++] = 0.0;
-
-	// this->object_vertex_buffer[i++] = ppx;
-	// this->object_vertex_buffer[i++] = ppy;
-	// this->object_vertex_buffer[i++] = 1.0;
-
-
-	for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
-		this->object_index_buffer[i] = i;
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
 	}
 
 
-	/////////////////////////////////////////////////////////////
-
-	// float p1x = 0.0;
-	// float p1y = 0.0;
-
-	// float p2x = 3.0;
-	// float p2y = 12.0;
-
-	// float p3x = 12.0;
-	// float p3y = 1.0;
-
-	// float p4x = 15.0;
-	// float p4y = 15.0;
-
-	// float px[] = {p1x, p2x, p3x, p4x};
-	// float py[] = {p1y, p2y, p3y, p4y};
-
-	// for(float t = 0.0; t <= 1.0; t += 0.1)
-	// {
-	// 	float ppx = Matematica::bezier(3, t, px);
-	// 	float ppy = Matematica::bezier(3, t, py);
-	// 	// std::cout << ppx << "," << ppy << std::endl;
+	// for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
+	// 	this->object_index_buffer[i] = i;
 	// }
 
 
-	///////////////////////////////////////////////////////////////////
+	int a = int((1 / PASO) + 1);
 
-	// this->object_vertex_buffer[0] = std::sin(0);
-	// this->object_vertex_buffer[1] = std::cos(0);
-	// this->object_vertex_buffer[2] = 0;
+	int j = 0;
+	int index = 0;
 
-	// this->object_vertex_buffer[3] = std::sin(45);
-	// this->object_vertex_buffer[4] = std::cos(45);
-	// this->object_vertex_buffer[5] = 0;
+	for(int k = 0; k < (j + (a - 1)); k++)
+	{
+		for(int i = j; i < a; i++)
+		{
+			this->object_index_buffer[index++] = i;
+			this->object_index_buffer[index++] = i + 3;
 
-	// this->object_vertex_buffer[6] = std::sin(90);
-	// this->object_vertex_buffer[7] = std::cos(90);
-	// this->object_vertex_buffer[8] = 0;
+			if(i == a - 1)
+				this->object_index_buffer[index++] = i + 3;
 
-	// this->object_vertex_buffer[9] = std::sin(135);
-	// this->object_vertex_buffer[10] = std::cos(135);
-	// this->object_vertex_buffer[11] = 0;
+			j++;
+		}
 
-	// this->object_vertex_buffer[12] = std::sin(180);
-	// this->object_vertex_buffer[13] = std::cos(180);
-	// this->object_vertex_buffer[14] = 0;
-
-	// this->object_vertex_buffer[15] = std::sin(225);
-	// this->object_vertex_buffer[16] = std::cos(225);
-	// this->object_vertex_buffer[17] = 0;
-
-	// this->object_vertex_buffer[18] = std::sin(270);
-	// this->object_vertex_buffer[19] = std::cos(270);
-	// this->object_vertex_buffer[20] = 0;
-
-	// this->object_vertex_buffer[21] = std::sin(270);
-	// this->object_vertex_buffer[22] = std::cos(270);
-	// this->object_vertex_buffer[23] = 0;
-
-	// this->object_vertex_buffer[24] = 0;
-	// this->object_vertex_buffer[25] = 0;
-	// this->object_vertex_buffer[26] = 0;
+		j += a;
+	}
 
 
 
-	///////////////////////////////////////////////////////////////
+	// this->object_index_buffer[0] = 0;
+	// this->object_index_buffer[1] = 1;
+	// this->object_index_buffer[2] = 3;
+
+	// this->object_index_buffer[3] = 1;
+	// this->object_index_buffer[4] = 3;
+	// this->object_index_buffer[5] = 4;
+
+	// this->object_index_buffer[6] = 1;
+	// this->object_index_buffer[7] = 4;
+	// this->object_index_buffer[8] = 2;
+
+	// this->object_index_buffer[9] = 4;
+	// this->object_index_buffer[10] = 2;
+	// this->object_index_buffer[11] = 5;
+
+
+	// this->object_index_buffer[12] = 3;
+	// this->object_index_buffer[13] = 4;
+	// this->object_index_buffer[14] = 6;
+
+	// this->object_index_buffer[15] = 4;
+	// this->object_index_buffer[16] = 6;
+	// this->object_index_buffer[17] = 7;
+
+	// this->object_index_buffer[18] = 4;
+	// this->object_index_buffer[19] = 5;
+	// this->object_index_buffer[20] = 7;
+
+	// this->object_index_buffer[21] = 5;
+	// this->object_index_buffer[22] = 7;
+	// this->object_index_buffer[23] = 8;
+	
+
+
+
+	// NORMALES
+
 
 	this->object_normal_buffer[0] = 0.5f;
 	this->object_normal_buffer[1] = 0.5f;
@@ -308,12 +344,6 @@ void Test::create(int size)
 	this->object_normal_buffer[18] = -0.5f;
 	this->object_normal_buffer[19] = -0.5f;
 	this->object_normal_buffer[20] = 0.2f;
-
-
-
-
-	// for (unsigned int i=0; i< this->object_index_buffer_size; i++)
-	// 	this->object_index_buffer[i] = i;
 }
 
 

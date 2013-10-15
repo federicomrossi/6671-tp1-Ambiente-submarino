@@ -13,8 +13,9 @@
 #include "object_dibujable.h"
 
 // Objetos
+// DEBUG
 #include "object_cube.h"
-
+// END DEBUG
 
 
 /* ****************************************************************************
@@ -26,9 +27,18 @@ class PlantaHojaTipo01 : public ObjectDibujable
 {
 private:
 
+	GLfloat* object_vertex_buffer;
+	GLfloat* object_normal_buffer;
+	GLuint* object_index_buffer;
+	unsigned int object_vertex_buffer_size;
+	unsigned int object_normal_buffer_size;
+	unsigned int object_index_buffer_size;
+
 	// Objetos
+	// DEBUG
 	Cube cube;		// Cubo
-	
+	// END DEBUG
+
 public:
 
 	// Constructor

@@ -55,60 +55,42 @@ PlantaHojaTipo01::~PlantaHojaTipo01() { }
 // Crea un objeto
 void PlantaHojaTipo01::create()
 {
+	// // DEBUG
+	// // Creamos la esfera
+	// this->cube.create();
+	// // END DEBUG
+
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
 
-	// Puntos de control de la CURVA DE GROSOR
+	// Creamos el objeto
 
-	float grosor_pc0x = 0.0;
-	float grosor_pc0y = 0.0;
+	// Puntos de control
+	float pc0x = 0.0;
+	float pc0y = 0.0;
 
-	float grosor_pc1x = 4.0;
-	float grosor_pc1y = 0.5;
+	float pc1x = -1.0;
+	float pc1y = 2.0;
 
-	float grosor_pc2x = 4.5;
-	float grosor_pc2y = 0.0;
+	float pc2x = -1.0;
+	float pc2y = 4.0;
 
-	float grosor_pc3x = 10.0;
-	float grosor_pc3y = 0.0;
+	float pc3x = 0.0;
+	float pc3y = 6.0;
 
-	float grosor_pcx[] = {grosor_pc0x, grosor_pc1x, grosor_pc2x, grosor_pc3x};
-	float grosor_pcy[] = {grosor_pc0y, grosor_pc1y, grosor_pc2y, grosor_pc3y};
-
-
-	// Puntos de control de la CURVA DE DEFORMACIÓN
-
-	float deformacion_pc0x = 0.0;
-	float deformacion_pc0y = 0.0;
-
-	float deformacion_pc1x = 3.0;
-	float deformacion_pc1y = 0.6;
-
-	float deformacion_pc2x = 7.5;
-	float deformacion_pc2y = -0.1;
-
-	float deformacion_pc3x = 10.0;
-	float deformacion_pc3y = 0.0;
-
-	float deformacion_pcx[] = {deformacion_pc0x, deformacion_pc1x,
-		deformacion_pc2x, deformacion_pc3x};
-	float deformacion_pcy[] = {deformacion_pc0y, deformacion_pc1y,
-		deformacion_pc2y, deformacion_pc3y};
-
-
-
-	// CREACIÓN DEL OBJETO
+	float pcx[] = {pc0x, pc1x, pc2x, pc3x};
+	float pcy[] = {pc0y, pc1y, pc2y, pc3y};
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.25;
+	float PASO = 0.1;
 
 	// Valores para cálculos (no modificar)
 	int CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
-	int ESTIRAMIENTO = 60;
-	int OBJ_ALTURA = 5;
+	int ESTIRAMIENTO = 3;
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -120,17 +102,19 @@ void PlantaHojaTipo01::create()
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = DIMENSIONES * CANT_PUNTOS 
-		* (ESTIRAMIENTO-1);
+	this->object_index_buffer_size = 2 * CANT_PUNTOS * (ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
-	this->object_normal_buffer_size = DIMENSIONES * CANT_PUNTOS 
-		* (ESTIRAMIENTO-1);
+	this->object_normal_buffer_size = 2 * CANT_PUNTOS * (ESTIRAMIENTO-1);
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
-	// Unimos los puntos
+	std::cout << "PUNTOS: " << 2 * CANT_PUNTOS * (ESTIRAMIENTO-1) << std::endl;
 
+
+
+	// Unimos los puntos
+	
 	int malla[ESTIRAMIENTO][CANT_PUNTOS];
 
 	int e = 0;
@@ -141,39 +125,12 @@ void PlantaHojaTipo01::create()
 
 	int i = 0;
 
-	for(int k = 0; k < ESTIRAMIENTO; k++)
-	{
-		float distancia = Matematica::curvaBezier((k * 1.0) / (ESTIRAMIENTO-1),
-			grosor_pcy);
+	for(int k = 0; k < ESTIRAMIENTO; k++) {
+		for(int j = 0; j < CANT_PUNTOS; j++) {
 
-		float deformacion = Matematica::curvaBezier((k * 1.0) /  (ESTIRAMIENTO-1), deformacion_pcy);
-
-		// Puntos de control
-		float pc0x = 0.0 * distancia + deformacion;
-		float pc0y = -1.0 * distancia;
-		float pc0z = k;
-
-		float pc1x = -0.6 * distancia + deformacion;
-		float pc1y = -1.0 * distancia / 2.0;
-		float pc1z = k;
-
-		float pc2x = -0.6 * distancia + deformacion;
-		float pc2y = 1.0 * distancia / 2.0;
-		float pc2z = k;
-
-		float pc3x = 0.0 * distancia + deformacion;
-		float pc3y = 1.0 * distancia;
-		float pc3z = k;
-
-		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-
-
-		for(int j = 0; j < CANT_PUNTOS; j++) 
-		{
 			float ppx = Matematica::curvaBezier(j * PASO, pcx);
 			float ppy = Matematica::curvaBezier(j * PASO, pcy);
-			float ppz = k * 0.05f;
+			float ppz = k * 0.5f;
 
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
@@ -190,6 +147,8 @@ void PlantaHojaTipo01::create()
 		if(sentido == 1)
 		{
 			for(int j=0; j <= (CANT_PUNTOS-1); j++) {
+				std::cout << i << j << ", ";
+				std::cout << i+1 << j << std::endl;
 				this->object_index_buffer[k++] = malla[i][j];
 				this->object_index_buffer[k++] = malla[i+1][j];
 			}
@@ -199,47 +158,34 @@ void PlantaHojaTipo01::create()
 		else if(sentido == -1)
 		{
 			for(int j=(CANT_PUNTOS-1); j >= 0; j--) {
+				std::cout << i << j << ", ";
+				std::cout << i+1 << j << std::endl;
 				this->object_index_buffer[k++] = malla[i][j];
 				this->object_index_buffer[k++] = malla[i+1][j];
 			}
 
 			sentido = 1;
 		}
+
+		std::cout << std::endl;
 	}
+
+	std::cout << "K: " << k << std::endl;
+
+
+
+
+	// for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
+	// 	this->object_index_buffer[i] = i;
+	// }
 
 
 	// NORMALES
-	k = 0;
 
-	for(int i=0; i < (ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	for(int j = 0; j < this->object_normal_buffer_size; j++)
+		this->object_normal_buffer[i] = 0.0f;
 
-
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
-		}
-	}
+	std::cout << "PASOO" << std::endl;
 }
 
 
