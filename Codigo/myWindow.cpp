@@ -35,11 +35,15 @@ void myWindow::OnRender(void)
 {
 	// Renderizamos escena
 	this->scene.render(this->height, this->width);
+	this->Repaint();
 }
 
 
 void  myWindow::OnIdle()
 {
+	// while(true) {
+	// 	this->dra
+	// }
 }
 
 

@@ -12,10 +12,8 @@
 #include <vector>
 #include "object_dibujable.h"
 
-// Objetos
-// DEBUG
-#include "object_cube.h"
-// END DEBUG
+
+
 
 
 /* ****************************************************************************
@@ -27,6 +25,7 @@ class PlantaHojaTipo01 : public ObjectDibujable
 {
 private:
 
+	// Buffers
 	GLfloat* object_vertex_buffer;
 	GLfloat* object_normal_buffer;
 	GLuint* object_index_buffer;
@@ -34,10 +33,15 @@ private:
 	unsigned int object_normal_buffer_size;
 	unsigned int object_index_buffer_size;
 
-	// Objetos
-	// DEBUG
-	Cube cube;		// Cubo
-	// END DEBUG
+	// Puntos de control del movimiento
+	float motion_pcx[4];
+	float motion_pcy[4];
+	float motion_pcz[4];
+	int sentido_motion;		// Señalador que indica el sentido de t
+
+	// Caracteristicas del objeto
+	float ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
+
 
 public:
 

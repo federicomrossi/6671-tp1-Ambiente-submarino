@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"ESTIRAMIENTO",
+				"ESTIRAMIENTO-1"
+			],
+			[
 				"objec",
 				"object_vertex_buffer"
 			],
@@ -95,7 +99,23 @@
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 7108,
+				"buffer_size": 7010,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_planta_hoja_tipo01 (copia).cpp",
+			"settings":
+			{
+				"buffer_size": 6542,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib_matematica.h",
+			"settings":
+			{
+				"buffer_size": 1420,
 				"line_ending": "Unix"
 			}
 		},
@@ -103,7 +123,7 @@
 			"file": "lib_matematica.cpp",
 			"settings":
 			{
-				"buffer_size": 2145,
+				"buffer_size": 2553,
 				"line_ending": "Unix"
 			}
 		},
@@ -119,18 +139,23 @@
 			"file": "object_planta_acuatica.cpp",
 			"settings":
 			{
-				"buffer_size": 2122,
+				"buffer_size": 2356,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "/*  \n *  CLASS PEZ_ALETA_DORSAL\n */\n\n\n#include <iostream>\n#include <fstream>\n#include <vector>\n#include <math.h>\n\n#include <GL/glew.h>\n#include <GL/freeglut.h>\n#include <glm/glm.hpp> \n#include <glm/gtc/matrix_transform.hpp> \n#include <glm/gtx/transform2.hpp> \n#include <glm/gtx/projection.hpp>\n\n#include \"lib_matematica.h\"\n#include \"object_planta_hoja_tipo01.h\"\n\n\n\n// Constantes de CONFIGURACION\nnamespace {\n	\n	// Ruta del archivo del vertex shader\n	const std::string FILE_VERT_SHADER = \"shaders/DiffuseShadingVShader.vert\";\n	\n	// Ruta del archivo del fragment shader\n	const std::string FILE_FRAG_SHADER = \"shaders/DiffuseShadingFShader.frag\";\n	\n}\n\n\n\n\n/* ****************************************************************************\n * DEFINICIÓN DE LA CLASE\n * ***************************************************************************/\n\n\n// Constructor\nPlantaHojaTipo01::PlantaHojaTipo01() \n{\n	this->object_index_buffer = NULL;\n	this->object_normal_buffer = NULL;\n	this->object_vertex_buffer = NULL;\n}\n\n\n// Destructor\nPlantaHojaTipo01::~PlantaHojaTipo01() { }\n\n\n// Crea un objeto\nvoid PlantaHojaTipo01::create()\n{\n	// // DEBUG\n	// // Creamos la esfera\n	// this->cube.create();\n	// // END DEBUG\n\n\n	// Cargamos los shaders del objeto\n	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),\n\n							 FILE_FRAG_SHADER.c_str());\n\n\n	// Creamos el objeto\n\n	// Puntos de control\n	float pc0x = 0.0;\n	float pc0y = 0.0;\n\n	float pc1x = -1.0;\n	float pc1y = 2.0;\n\n	float pc2x = -1.0;\n	float pc2y = 4.0;\n\n	float pc3x = 0.0;\n	float pc3y = 6.0;\n\n	float pcx[] = {pc0x, pc1x, pc2x, pc3x};\n	float pcy[] = {pc0y, pc1y, pc2y, pc3y};\n\n	// Configuración del paso entre un punto y otro.\n	float PASO = 0.05;\n\n	// Valores para cálculos (no modificar)\n	int CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;\n	int DIMENSIONES = 3;\n	int ESTIRAMIENTO = 5;\n\n\n	if (this->object_vertex_buffer != NULL)\n		delete this->object_vertex_buffer;\n\n	this->object_vertex_buffer_size = DIMENSIONES * CANT_PUNTOS * ESTIRAMIENTO;\n	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];\n\n	if (this->object_index_buffer != NULL)\n		delete this->object_index_buffer;\n\n	this->object_index_buffer_size = CANT_PUNTOS * ESTIRAMIENTO;\n	this->object_index_buffer = new GLuint[this->object_index_buffer_size];\n\n	this->object_normal_buffer_size = 1;\n	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];\n\n\n	std::cout << \"PUNTOS: \" << CANT_PUNTOS << std::endl;\n\n	int i = 0;\n\n	float malla[21][]\n\n\n	for(int k = 0; k < ESTIRAMIENTO; k++)\n	{\n		for(int j = 0; j < CANT_PUNTOS; j++)\n		{\n\n			float ppx = Matematica::curvaBezier(j * PASO, pcx);\n			float ppy = Matematica::curvaBezier(j * PASO, pcy);\n			float ppz = k * 0.5f;\n\n			this->object_vertex_buffer[i++] = ppx;\n			this->object_vertex_buffer[i++] = ppy;\n			this->object_vertex_buffer[i++] = ppz;\n			\n			std::cout << ppx << \", \" << ppy << \", \" << ppz << std::endl;\n		}\n	}\n\n	for(unsigned int i=0; i< this->object_index_buffer_size; i++) {\n		this->object_index_buffer[i] = i;\n	}\n\n\n	// NORMALES\n\n	for(int j = 0; j < this->object_normal_buffer_size; j++)\n		this->object_normal_buffer[i] = 0.5f;\n}\n\n\n// Renderiza el objeto (lo dibuja).\n// PRE: 'model_matrix' es la matriz que contiene los datos de cómo\n// debe renderizarce el objeto.\nvoid PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, \n	glm::mat4 &projection_matrix)\n{\n	// Bind View Matrix\n	// ################\n	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,\n		\"ViewMatrix\"); \n\n	if(location_view_matrix >= 0) \n		glUniformMatrix4fv(location_view_matrix, 1, GL_FALSE, \n			&view_matrix[0][0]); \n\n	// Bind Projection Matrix\n	GLuint location_projection_matrix = glGetUniformLocation(\n		this->programHandle, \"ProjectionMatrix\"); \n	\n	if(location_projection_matrix >= 0) \n		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,\n			&projection_matrix[0][0]); \n\n\n\n	// Bind Light Settings\n	// ###################\n\n	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);\n	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);\n	   \n	GLuint location_light_position = glGetUniformLocation(this->programHandle, \n		\"LightPosition\");\n\n	if(location_light_position >= 0) \n		glUniform4fv( location_light_position, 1, &light_position[0]); \n\n	GLuint location_light_intensity = glGetUniformLocation(\n		this->programHandle, \"Ld\");\n\n	if(location_light_intensity >= 0) \n		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); \n\n\n\n	// Normal Matrix\n	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );\n\n	// Bind Normal MAtrix\n	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, \n		\"NormalMatrix\"); \n	if( location_normal_matrix >= 0 ) \n		glUniformMatrix3fv( location_normal_matrix, 1, GL_FALSE, \n			&normal_matrix[0][0]); \n\n	// Bind Model Matrix\n	GLuint location_model_matrix = glGetUniformLocation(this->programHandle, \n		\"ModelMatrix\"); \n	if(location_model_matrix >= 0)\n		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, \n			&model_matrix[0][0]);\n\n	glEnableClientState(GL_VERTEX_ARRAY);\n	glEnableClientState(GL_NORMAL_ARRAY);\n\n	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);\n	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);\n\n	glDrawElements(GL_LINE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, \n		this->object_index_buffer);\n\n	glDisableClientState(GL_VERTEX_ARRAY);\n	glDisableClientState(GL_NORMAL_ARRAY);\n\n\n\n	// // DEBUG\n	// // Damos forma y la renderizamos\n	// this->cube.changeObjectColor(20, 143, 4);\n	// glm::mat4 m = glm::mat4(1.0f);\n	// m = glm::scale(model_matrix, glm::vec3(0.01, 0.2, 3.0));\n	// this->cube.render(m, view_matrix, projection_matrix);\n	// // END DEBUG\n}\n",
 			"file": "object_planta_hoja_tipo01.cpp",
-			"file_size": 5631,
-			"file_write_time": 1381760070000000,
 			"settings":
 			{
-				"buffer_size": 5647,
+				"buffer_size": 8399,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/.tmp/bin/Imprimir_B.pl",
+			"settings":
+			{
+				"buffer_size": 15491,
 				"line_ending": "Unix"
 			}
 		},
@@ -147,14 +172,6 @@
 			"settings":
 			{
 				"buffer_size": 9485,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "lib_matematica.h",
-			"settings":
-			{
-				"buffer_size": 1157,
 				"line_ending": "Unix"
 			}
 		},
@@ -376,6 +393,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"sin(distancia)",
+			"grosor",
+			"u",
+			"ESTIRAMIENTO",
+			"(ESTIRAMIENTO-1)",
+			"4",
 			"i",
 			"location_light_position",
 			"DIMENSIONS",
@@ -497,13 +520,7 @@
 			"Der",
 			"model_matrix_eje_coordenado",
 			"0.1",
-			"cuerpo",
-			"2.0",
-			"Cuerpo",
-			"cuerpo",
-			"Cuerpo",
-			"CUERPO",
-			"object_pez"
+			"cuerpo"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -521,7 +538,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -529,15 +546,15 @@
 					"file": "scene.cpp",
 					"settings":
 					{
-						"buffer_size": 7108,
+						"buffer_size": 7010,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3384,
-								3384
+								4364,
+								4364
 							]
 						],
 						"settings":
@@ -546,25 +563,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2249.0,
+						"translation.y": 2071.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "lib_matematica.cpp",
+					"file": "object_planta_hoja_tipo01 (copia).cpp",
 					"settings":
 					{
-						"buffer_size": 2145,
+						"buffer_size": 6542,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1898,
-								1898
+								1344,
+								1344
 							]
 						],
 						"settings":
@@ -573,7 +590,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 156.0,
+						"translation.y": 741.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "lib_matematica.h",
+					"settings":
+					{
+						"buffer_size": 1420,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								529,
+								529
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "lib_matematica.cpp",
+					"settings":
+					{
+						"buffer_size": 2553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								504,
+								504
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 78.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -581,11 +652,11 @@
 			]
 		},
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "object_dibujable.h",
 					"settings":
 					{
@@ -612,19 +683,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
 					"file": "object_planta_acuatica.cpp",
 					"settings":
 					{
-						"buffer_size": 2122,
+						"buffer_size": 2356,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1143,
-								1143
+								2356,
+								2356
 							]
 						],
 						"settings":
@@ -633,25 +704,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 78.0,
+						"translation.y": 663.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 6,
 					"file": "object_planta_hoja_tipo01.cpp",
 					"settings":
 					{
-						"buffer_size": 5647,
+						"buffer_size": 8399,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2462,
-								2462
+								1726,
+								1726
 							]
 						],
 						"settings":
@@ -660,7 +731,34 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1092.0,
+						"translation.y": 423.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/.tmp/bin/Imprimir_B.pl",
+					"settings":
+					{
+						"buffer_size": 15491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Perl/Perl.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3159.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -672,7 +770,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 5,
+					"buffer": 8,
 					"file": "object_TEST.h",
 					"settings":
 					{
@@ -699,7 +797,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 9,
 					"file": "object_TEST.cpp",
 					"settings":
 					{
@@ -726,34 +824,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "lib_matematica.h",
-					"settings":
-					{
-						"buffer_size": 1157,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1089,
-								1089
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 156.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "scene.h",
 					"settings":
 					{
@@ -786,7 +857,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "Makefile",
 					"settings":
 					{
@@ -813,7 +884,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "object_planta_hoja_tipo01.h",
 					"settings":
 					{
@@ -882,7 +953,7 @@
 		"cols":
 		[
 			0.0,
-			0.296486090776,
+			0.437042459736,
 			1.0
 		],
 		"rows":

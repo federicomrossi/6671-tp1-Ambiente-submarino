@@ -159,40 +159,40 @@ void Scene::render(GLuint height, GLuint width)
 	this->grid.changeObjectColor(128, 128, 128);
 	this->grid.render(model_matrix_grid, this->view_matrix, projection_matrix);
 
-	// Dibujamos la superficie
-	glm::mat4 mSuperficie = glm::mat4(1.0f);
-	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
+	// // Dibujamos la superficie
+	// glm::mat4 mSuperficie = glm::mat4(1.0f);
+	// this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
 
-	// Dibujamos cangrejo
-	glm::mat4 mCangrejo = glm::mat4(1.0f);
-	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -1.0, 0.4));
-	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
-	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
+	// // Dibujamos cangrejo
+	// glm::mat4 mCangrejo = glm::mat4(1.0f);
+	// mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -1.0, 0.4));
+	// mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
+	// mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	// this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 
-	// Dibujamos el pez
-	glm::mat4 mPez = glm::mat4(1.0f);
-	mPez = glm::translate(mPez, glm::vec3(-0.1, 1.6, 1.0));
-	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
-	mPez = glm::rotate(mPez, 15.0f, glm::vec3(0.0, 0.0, 1.0));
-	mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
-	this->pez.render(mPez, this->view_matrix, projection_matrix);
+	// // Dibujamos el pez
+	// glm::mat4 mPez = glm::mat4(1.0f);
+	// mPez = glm::translate(mPez, glm::vec3(-0.1, 1.6, 1.0));
+	// mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
+	// mPez = glm::rotate(mPez, 15.0f, glm::vec3(0.0, 0.0, 1.0));
+	// mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
+	// this->pez.render(mPez, this->view_matrix, projection_matrix);
 
-	// Dibujamos rocas
-	glm::mat4 mRoca = glm::mat4(1.0f);
-	mRoca = glm::translate(mRoca, glm::vec3(2.0, 2.0, 0.0));
-	mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.3, 0.3));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::translate(mRoca, glm::vec3(1.0, 0.0, 0.3));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::translate(mRoca, glm::vec3(0.0, 1.1, -0.6));
-	this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	// // Dibujamos rocas
+	// glm::mat4 mRoca = glm::mat4(1.0f);
+	// mRoca = glm::translate(mRoca, glm::vec3(2.0, 2.0, 0.0));
+	// mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.3, 0.3));
+	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	// mRoca = glm::translate(mRoca, glm::vec3(1.0, 0.0, 0.3));
+	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	// mRoca = glm::translate(mRoca, glm::vec3(0.0, 1.1, -0.6));
+	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
 
 	// Dibujamos una planta
 	glm::mat4 mPlanta = glm::mat4(1.0f);
 	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
 	mPlanta = glm::rotate(mPlanta, -45.0f, glm::vec3(0.0, 0.0, 1.0));
-	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
+	this->plantaAcuatica.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
 
 	// // Drawing TEST
 	// glm::mat4 model_matrix_test = glm::mat4(1.0f);
