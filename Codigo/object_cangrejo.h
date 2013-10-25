@@ -34,9 +34,19 @@ private:
 
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
 	CangrejoCuerpo cangrejoCuerpo;
-	CangrejoPata cangrejoPata;
+	CangrejoPata cangrejoPataDer01;
+	CangrejoPata cangrejoPataDer02;
+	CangrejoPata cangrejoPataDer03;
+	CangrejoPata cangrejoPataIzq01;
+	CangrejoPata cangrejoPataIzq02;
+	CangrejoPata cangrejoPataIzq03;
 	CangrejoOjo cangrejoOjo;
 	CangrejoPinza cangrejoPinza;
+
+	// Movimiento
+	float cuerpoPosZ;					// Posición del cuerpo en eje Z
+	float parametro;
+	int sentidoParametro;
 
 public:
 

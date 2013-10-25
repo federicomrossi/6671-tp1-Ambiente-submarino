@@ -1,10 +1,10 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS PLANTA_HOJA
  */  
 
 
 #ifndef OBJECT_PLANTA_HOJA_TIPO_O1_H
-#define OBJECT_PEZ_ALETA_DORSAL_H
+#define OBJECT_PLANTA_HOJA_TIPO_01_H
 
 
 #include <glm/glm.hpp> 
@@ -37,11 +37,15 @@ private:
 	float motion_pcx[4];
 	float motion_pcy[4];
 	float motion_pcz[4];
+
+	// Atributos del movimiento
+	float amplitud;
+	float velocidad;
 	int sentido_motion;		// Señalador que indica el sentido de t
 
 	// Caracteristicas del objeto
-	float ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
-
+	int CANT_PUNTOS;
+	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
 
 public:
 
@@ -59,6 +63,14 @@ public:
 	// debe renderizarce el objeto.
 	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
+
+	// Permite setear la amplitud de la hoja. Debe setearse antes de crear
+	// el objeto.
+	void setAmplitud(float amplitud);
+
+	// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
+	// antes de crear el objeto.
+	void setVelocidad(float velocidad);
 };
 
 #endif

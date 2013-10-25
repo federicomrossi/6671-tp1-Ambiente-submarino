@@ -4,6 +4,118 @@
 		"selected_items":
 		[
 			[
+				"grad",
+				"pezGradoRotacion"
+			],
+			[
+				"pez",
+				"pezGradoRotacion"
+			],
+			[
+				"grado",
+				"gradoRotacion"
+			],
+			[
+				"cangrejo",
+				"cangrejoSentido"
+			],
+			[
+				"pos",
+				"cuerpoPosZ"
+			],
+			[
+				"min",
+				"minGradoPierna"
+			],
+			[
+				"orie",
+				"orientacion"
+			],
+			[
+				"mAleta",
+				"mAletaLateralIzq"
+			],
+			[
+				"pezAl",
+				"pezAletaDorsal"
+			],
+			[
+				"dis",
+				"distancia_inf"
+			],
+			[
+				"dist",
+				"distancia_sup"
+			],
+			[
+				"mPin",
+				"mPinzaDer"
+			],
+			[
+				"garra",
+				"garraSup"
+			],
+			[
+				"CANT",
+				"CANT_PUNTOS"
+			],
+			[
+				"mPata",
+				"mPataDer01"
+			],
+			[
+				"cant",
+				"CANT_PUNTOS"
+			],
+			[
+				"CANT_",
+				"CANT_CURVAS"
+			],
+			[
+				"mHoj",
+				"mHojaT2"
+			],
+			[
+				"mHoja",
+				"mHojaT3"
+			],
+			[
+				"distancia",
+				"distancia_sup"
+			],
+			[
+				"disa",
+				"distancia_inf"
+			],
+			[
+				"obje",
+				"object_vertex_buffer_size"
+			],
+			[
+				"object_",
+				"object_index_buffer"
+			],
+			[
+				"objectin",
+				"object_index_buffer_size"
+			],
+			[
+				"bu",
+				"object_vertex_buffer_size"
+			],
+			[
+				"vertex",
+				"object_vertex_buffer_size"
+			],
+			[
+				"ESTI",
+				"ESTIRAMIENTO"
+			],
+			[
+				"sentido",
+				"sentido_motion"
+			],
+			[
 				"ESTIRAMIENTO",
 				"ESTIRAMIENTO-1"
 			],
@@ -96,50 +208,18 @@
 	"buffers":
 	[
 		{
+			"file": "scene.h",
+			"settings":
+			{
+				"buffer_size": 2362,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 7010,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "object_planta_hoja_tipo01 (copia).cpp",
-			"settings":
-			{
-				"buffer_size": 6542,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "lib_matematica.h",
-			"settings":
-			{
-				"buffer_size": 1420,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "lib_matematica.cpp",
-			"settings":
-			{
-				"buffer_size": 2553,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "object_dibujable.h",
-			"settings":
-			{
-				"buffer_size": 1209,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "object_planta_acuatica.cpp",
-			"settings":
-			{
-				"buffer_size": 2356,
+				"buffer_size": 7288,
 				"line_ending": "Unix"
 			}
 		},
@@ -147,39 +227,72 @@
 			"file": "object_planta_hoja_tipo01.cpp",
 			"settings":
 			{
-				"buffer_size": 8399,
+				"buffer_size": 10243,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/.tmp/bin/Imprimir_B.pl",
+			"file": "object_planta_hoja_tipo01.h",
 			"settings":
 			{
-				"buffer_size": 15491,
+				"buffer_size": 1700,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_TEST.h",
+			"file": "object_pez_aleta_trasera.h",
 			"settings":
 			{
-				"buffer_size": 1058,
+				"buffer_size": 1699,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_TEST.cpp",
+			"file": "object_pez_aleta_trasera.cpp",
 			"settings":
 			{
-				"buffer_size": 9485,
+				"buffer_size": 10947,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scene.h",
+			"file": "object_pez_aleta_lateral.h",
 			"settings":
 			{
-				"buffer_size": 2241,
+				"buffer_size": 1829,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_pez_aleta_lateral.cpp",
+			"settings":
+			{
+				"buffer_size": 11160,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_roca.cpp",
+			"settings":
+			{
+				"buffer_size": 1358,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Llupercio             \nInventemos09\n",
+			"settings":
+			{
+				"buffer_size": 36,
+				"line_ending": "Unix",
+				"name": "Llupercio"
+			}
+		},
+		{
+			"file": "object_pez_aleta_dorsal.h",
+			"settings":
+			{
+				"buffer_size": 1201,
 				"line_ending": "Unix"
 			}
 		},
@@ -187,15 +300,15 @@
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 4504,
+				"buffer_size": 6963,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "object_planta_hoja_tipo01.h",
+			"file": "object_pez_aleta_dorsal.cpp",
 			"settings":
 			{
-				"buffer_size": 1192,
+				"buffer_size": 8748,
 				"line_ending": "Unix"
 			}
 		}
@@ -248,60 +361,88 @@
 	},
 	"file_history":
 	[
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo02.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo03.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_superior.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_inferior.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_brazo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_antebrazo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_ojo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.h",
+		"/run/media/federicorossi/Archivos/Webserver/fede/Hosting/Datos",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_brazo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_antebrazo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_superior.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_inferior.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.h",
+		"/home/federicorossi/Escritorio/grupo10/.tmp/bin/functions.pm",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo (copia).cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo02.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo03.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST (otra copia).cpp",
+		"/run/media/federicorossi/Archivos/readme",
+		"/run/media/federicorossi/USB/fiuba/comando ejecucion",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST (copia).cpp",
+		"/run/media/federicorossi/Archivos/lupersoft - datos de leo",
 		"/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/.tmp/bin/Imprimir_B.pl",
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/Makefile",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01 (copia).cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/DiffuseShadingFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/BasicFShader_200.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PassThroughVShader_200.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/DiffuseShadingVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.cpp",
 		"/run/media/federicorossi/Archivos/Oficina Lupersoft",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_ojo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_ojo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinzas.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinzas.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_TEST.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_roca.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene (copia).cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/scene.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myWindow.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/myApplication.cpp",
@@ -309,7 +450,6 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glWindow.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glutWindow.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/scene.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_grid.h",
@@ -326,7 +466,6 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/01 - Clase Transformaciones (mejorado)/glutWindow.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/glApplication.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/main.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.h",
 		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/tp0/codigo/imagen.pgm",
 		"/run/media/federicorossi/Archivos/Federico/Prueba/tp.c",
 		"/run/media/federicorossi/Archivos/Federico/66.20 Organizacion de Computadoras/Trabajos Practicos/2C 2013/TP0/Informe/66.20 - TP - Informe.tex",
@@ -346,36 +485,10 @@
 		"/run/media/federicorossi/Archivos/Federico/Prueba/Makefile",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/lista.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/listaref.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/Makefile",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.cpp",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_entrada.h",
 		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_reglas.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/receptor.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/pila.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/receptor.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/regla.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/regla.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rinsert.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rinsert.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rlowercase.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rprint.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rlowercase.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rprint.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrepeat.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrepeat.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrevert.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrotate.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrevert.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rrotate.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/ruppercase.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/ruppercase.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_archivo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_archivo.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.cpp",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/rx_entrada_estandar.h",
-		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/transmisor.h"
+		"/run/media/federicorossi/Archivos/Federico/75.42 Taller de Programacion I/Trabajos practicos/03/Codigo/parser_salida.cpp"
 	],
 	"find":
 	{
@@ -393,134 +506,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"sin(distancia)",
-			"grosor",
-			"u",
-			"ESTIRAMIENTO",
-			"(ESTIRAMIENTO-1)",
-			"4",
-			"i",
-			"location_light_position",
-			"DIMENSIONS",
-			"j",
-			"pp",
-			"2",
-			"3",
-			", ",
-			"u",
-			"pcy",
-			"pc",
-			"u",
-			"t",
-			"b",
-			"mOjoDer",
-			"mPinzaDer",
-			"0.2",
+			"this->orientacion",
+			"this->amplitud",
+			"this->sentido_motion",
+			"gradoRotacion",
+			"this->gradoRotacion",
+			"float ",
+			"0.65",
+			"forma",
+			"sentido",
+			"sentidoMuslo",
 			"1",
-			"mPinzaChica",
-			"mPinzaGrande",
-			"mPinzaDerecha",
-			"mPataDer01",
-			"mEntrepierna",
-			"mMuslo",
-			"Pata",
-			"pata",
-			"Pata",
-			"pata",
-			"Pata",
-			"PATA",
-			"ojo",
-			"mOjo",
-			"25",
-			"0.2",
+			"sentidoMuslo",
+			"rna",
+			"Muslo",
+			"rna",
+			"Pierna",
+			"pierna",
+			"Pierna",
+			"pierna",
+			"Pierna",
+			"min",
+			"0.1",
+			"Muslo",
+			"Pierna",
+			"muslo",
+			"Muslo",
+			"muslo",
+			"Muslo",
+			"muslo",
+			"Muslo",
+			"Der",
+			"45",
+			"90",
+			"int",
+			"tita",
+			" + ",
+			"mCuerpo",
+			"Izq",
+			"mAletaLateralDer",
+			"Der",
+			"Izq",
+			"der",
+			"Der",
+			"mAletaLateralDer",
+			"mAletaLateralIzq",
+			"0.7",
+			"mAletaTrasera",
+			"1.3",
+			" * 0.3",
 			"0.3",
-			"pata",
-			"Cuerpo",
-			"CUERPO",
-			"Cuerpo",
-			"cuerpo",
-			"Cuerpo",
-			"mPataDer03",
-			"mPataDer02",
-			"mPataDer01",
-			"01",
-			"mPataDer",
-			"mPataDer01",
-			"der",
-			"Der",
-			"der",
-			"Der",
-			"der",
-			"Der",
-			"01",
-			"mPataDer02",
-			"mPataDer",
-			"mEntrepierna",
-			"5",
-			"mMuslo",
-			"mPataDer",
-			"model_matrix",
-			"mPez",
-			"cangrejo",
-			"_pata",
-			"mPez",
-			"Pez",
-			"PEZ",
-			"Pez",
-			"PEZ",
-			"mPez",
-			"Roca",
-			"acuatica",
-			"roca",
-			"mPez",
-			"m",
-			"PezAletaDorsal",
-			"Pez",
-			"PEZ",
-			"0.0",
-			"0.2",
-			"0.5",
-			"DIMENSIONS",
-			"2.0",
-			"pez",
-			"grid",
-			"PezAletaLateral",
-			"PEZ_ALETA_LATERAL",
-			"mPez",
-			"ez",
+			"3",
+			" + 0.3",
+			" + ",
 			"1.0",
+			"0.1",
+			"sup",
+			" distancia_sup_",
+			"distancia_sup_pc0y",
+			"distancia_sup_",
+			"distancia_sup_pc0y",
+			"distancia_sup",
+			"OjoIzq",
+			"Trasera",
+			"7.0",
+			"ondulacion",
+			"0.0",
+			"ondulacion_inf",
+			"inf",
+			"distancia",
 			"0.9",
-			"pez",
-			"object_pez",
-			"pez",
+			"0.2",
+			"Matematica::numeroAleatorio(0, 2)",
+			"deformacionX",
+			"deformacion",
+			"this->ESTIRAMIENTO",
+			"deformacion",
+			"	// Puntos de control de la CURVA DE GROSOR\n\n	float grosor_pc0x = 0.0;\n	float grosor_pc0y = 0.0;\n\n	float grosor_pc1x = 8.0;\n	float grosor_pc1y = 0.5;\n\n	float grosor_pc2x = 8.5;\n	float grosor_pc2y = 0.0;\n\n	float grosor_pc3x = 10.0;\n	float grosor_pc3y = 0.0;\n\n	float grosor_pcx[] = {grosor_pc0x, grosor_pc1x, grosor_pc2x, grosor_pc3x};\n	float grosor_pcy[] = {grosor_pc0y, grosor_pc1y, grosor_pc2y, grosor_pc3y};\n\n\n	// Puntos de control de la CURVA DE DEFORMACIÓN\n\n	float deformacion_pc0x = 0.0;\n	float deformacion_pc0y = 0.0;\n\n	float deformacion_pc1x = 3.0;\n	float deformacion_pc1y = 0.6;\n\n	float deformacion_pc2x = 7.5;\n	float deformacion_pc2y = -0.1;\n\n	float deformacion_pc3x = 10.0;\n	float deformacion_pc3y = 0.0;\n\n	float deformacion_pcx[] = {deformacion_pc0x, deformacion_pc1x,\n		deformacion_pc2x, deformacion_pc3x};\n	float deformacion_pcy[] = {deformacion_pc0y, deformacion_pc1y,\n		deformacion_pc2y, deformacion_pc3y};\n",
+			"Cangrejo",
+			"0.3",
+			"y",
+			"mCangrejo",
+			"0.6",
+			"6",
+			"0.6",
+			"0.9",
 			"0.5",
-			"changeObjectColor",
-			"float",
-			"PezOjo",
-			"PEZ_OJO",
-			"mAletaLateralDer",
-			"dorsal",
-			"mAletaLateralDer",
-			"Der",
-			"mAletaDorsal",
-			"Trasera",
-			"TRASERA",
-			"Trasera",
-			"trasera",
-			"Trasera",
-			"TRASERA",
-			"object_pez_ojo",
-			"piralSphere",
-			"Ojo",
-			"OJO",
-			"0.1",
+			"0.8",
+			"Sup",
+			"9",
+			"mGarraSup",
+			"object_cangrejo_pinza_garra_superior",
+			"CangrejoPinzaGarraSuperior",
+			"Superior",
+			"SUPERIOR",
+			"curvatura_sup",
+			"curvatura",
+			"curvatura_",
+			"Pinza",
+			"pinza_brazo",
+			"CangrejoPataPie",
+			"PataPie",
+			"PATA_PIE",
+			"m",
+			"mMuslo",
+			" mMuslo",
+			"antebrazo",
+			"CangrejoPinzabrazo",
+			"CangrejoPinzaAntebrazo",
+			"ANTEBRAZO",
+			"CangrejoPataMuslo",
+			"object_cangrejo_pinza",
+			"mMuslo",
+			"PataMuslo",
+			"PATA_MUSLO",
 			"0.05",
-			"direction",
-			"GLfloat ",
-			"Der",
-			"model_matrix_eje_coordenado",
-			"0.1",
-			"cuerpo"
+			"k",
+			"-1.1",
+			"1",
+			" -1.1",
+			"-1.1",
+			"swith",
+			"message",
+			"0.05f",
+			" -",
+			"0",
+			"-0.6",
+			"15",
+			"35"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -529,7 +642,7 @@
 		"replace_history":
 		[
 		],
-		"reverse": false,
+		"reverse": true,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -538,50 +651,23 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scene.cpp",
+					"file": "scene.h",
 					"settings":
 					{
-						"buffer_size": 7010,
+						"buffer_size": 2362,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4364,
-								4364
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2071.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "object_planta_hoja_tipo01 (copia).cpp",
-					"settings":
-					{
-						"buffer_size": 6542,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1344,
-								1344
+								1436,
+								1436
 							]
 						],
 						"settings":
@@ -596,19 +682,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "lib_matematica.h",
+					"buffer": 1,
+					"file": "scene.cpp",
 					"settings":
 					{
-						"buffer_size": 1420,
+						"buffer_size": 7288,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								529,
-								529
+								4011,
+								4011
 							]
 						],
 						"settings":
@@ -617,25 +703,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1937.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "object_planta_hoja_tipo01.cpp",
+					"settings":
+					{
+						"buffer_size": 10243,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6507,
+								6507
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3289.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "lib_matematica.cpp",
+					"file": "object_planta_hoja_tipo01.h",
 					"settings":
 					{
-						"buffer_size": 2553,
+						"buffer_size": 1700,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								504,
-								504
+								707,
+								707
 							]
 						],
 						"settings":
@@ -644,7 +757,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 78.0,
+						"translation.y": 312.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "object_pez_aleta_trasera.h",
+					"settings":
+					{
+						"buffer_size": 1699,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								936,
+								936
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "object_pez_aleta_trasera.cpp",
+					"settings":
+					{
+						"buffer_size": 10947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7212,
+								7212
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3436.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -652,23 +819,77 @@
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
-					"buffer": 4,
-					"file": "object_dibujable.h",
+					"buffer": 6,
+					"file": "object_pez_aleta_lateral.h",
 					"settings":
 					{
-						"buffer_size": 1209,
+						"buffer_size": 1829,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								426,
-								426
+								1195,
+								1195
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 234.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "object_pez_aleta_lateral.cpp",
+					"settings":
+					{
+						"buffer_size": 11160,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8502,
+								8502
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3976.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "object_roca.cpp",
+					"settings":
+					{
+						"buffer_size": 1358,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								319,
+								319
 							]
 						],
 						"settings":
@@ -681,67 +902,51 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
-					"buffer": 5,
-					"file": "object_planta_acuatica.cpp",
+					"buffer": 9,
 					"settings":
 					{
-						"buffer_size": 2356,
+						"buffer_size": 36,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2356,
-								2356
+								36,
+								36
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"auto_name": "Llupercio",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 663.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
-					"buffer": 6,
-					"file": "object_planta_hoja_tipo01.cpp",
+					"buffer": 10,
+					"file": "object_pez_aleta_dorsal.h",
 					"settings":
 					{
-						"buffer_size": 8399,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1726,
-								1726
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 423.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/run/media/federicorossi/Archivos/Federico/75.08 Sistemas operativos/Trabajo practico/src/grupo10/.tmp/bin/Imprimir_B.pl",
-					"settings":
-					{
-						"buffer_size": 15491,
+						"buffer_size": 1201,
 						"regions":
 						{
 						},
@@ -754,122 +959,29 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Perl/Perl.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3159.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 8,
-					"file": "object_TEST.h",
-					"settings":
-					{
-						"buffer_size": 1058,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								411,
-								411
-							]
-						],
-						"settings":
-						{
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 156.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
-				{
-					"buffer": 9,
-					"file": "object_TEST.cpp",
-					"settings":
-					{
-						"buffer_size": 9485,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1432,
-								1432
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 773.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "scene.h",
-					"settings":
-					{
-						"buffer_size": 2241,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								276,
-								276
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 663.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
 				{
 					"buffer": 11,
 					"file": "Makefile",
 					"settings":
 					{
-						"buffer_size": 4504,
+						"buffer_size": 6963,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1126,
-								1126
+								6630,
+								6630
 							]
 						],
 						"settings":
@@ -885,18 +997,18 @@
 				},
 				{
 					"buffer": 12,
-					"file": "object_planta_hoja_tipo01.h",
+					"file": "object_pez_aleta_dorsal.cpp",
 					"settings":
 					{
-						"buffer_size": 1192,
+						"buffer_size": 8748,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								271,
-								271
+								0,
+								0
 							]
 						],
 						"settings":
@@ -905,7 +1017,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 78.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -915,7 +1027,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -953,7 +1065,7 @@
 		"cols":
 		[
 			0.0,
-			0.437042459736,
+			0.5,
 			1.0
 		],
 		"rows":

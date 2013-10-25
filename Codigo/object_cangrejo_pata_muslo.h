@@ -1,10 +1,10 @@
 /*  
- *  CLASS CANGREJO_CUERPO
+ *  CLASS CANGREJO_PATA_MUSLO
  */  
 
 
-#ifndef OBJECT_CANGREJO_CUERPO_H
-#define OBJECT_CANGREJO_CUERPO_H
+#ifndef OBJECT_CANGREJO_PATA_MUSLO_H
+#define OBJECT_CANGREJO_PATA_MUSLO_H
 
 
 #include <glm/glm.hpp> 
@@ -12,7 +12,8 @@
 #include <vector>
 #include "object_dibujable.h"
 
-
+#include "object_eje_coordenado.h"
+#include "object_spiralSphere.h"
 
 
 
@@ -21,7 +22,7 @@
  * ***************************************************************************/
 
 
-class CangrejoCuerpo : public ObjectDibujable
+class CangrejoPataMuslo : public ObjectDibujable
 {
 private:
 
@@ -39,10 +40,10 @@ private:
 public:
 
 	// Constructor
-	CangrejoCuerpo();
+	CangrejoPataMuslo();
 
 	// Destructor
-	~CangrejoCuerpo();
+	~CangrejoPataMuslo();
 
 	// Crea un objeto
 	virtual void create();

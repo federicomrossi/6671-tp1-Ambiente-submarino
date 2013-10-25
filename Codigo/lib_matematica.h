@@ -23,6 +23,9 @@ public:
 	// POST: se devuelve un vector normal a 'u' y 'v';
 	static float* productoVectorial(float u[3], float v[3]);
 
+	// Función que devuelve un numero aleatorio entre "min" y "max"
+	static float numeroAleatorio(float min, float max);
+
 	// Cálculo de punto en una curva utilizando el método de Bezier
 	// (implementación con algoritmo de Berstein).
 	// PRE: "n" es el grado de polinomio a utilizar; "t" es un valor entre 0 y
@@ -36,7 +39,13 @@ public:
 	// Cálculo de punto en una superficie utilizando el método de Bezier.
 	static float superficieBezier(float u, float v, float p[4][4]);
 
-	// 
+	// Calculo de punto en una curva utilizando el método de B-Spline 
+	// cuadrático uniforme.
+	// PRE: "u" es un valor entre 0 y 1 que define el parámetro de la curva 
+	// (dependiendo de cual sea el valor se devolverá un cierto punto de dicha 
+	// curva); "p" es un puntero a un arreglo que contiene las coordenadas de 
+	// los puntos de control.
+	// POST: se devuelve el valor de la coordenada del punto sobre la curva.
 	static float curvaBSpline(float u, float p[3]);
 
 	// 

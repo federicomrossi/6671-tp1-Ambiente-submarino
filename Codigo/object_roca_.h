@@ -1,10 +1,10 @@
 /*  
- *  CLASS CANGREJO_CUERPO
+ *  CLASS ROCA
  */  
 
 
-#ifndef OBJECT_CANGREJO_CUERPO_H
-#define OBJECT_CANGREJO_CUERPO_H
+#ifndef OBJECT_ROCA_H
+#define OBJECT_ROCA_H
 
 
 #include <glm/glm.hpp> 
@@ -12,7 +12,8 @@
 #include <vector>
 #include "object_dibujable.h"
 
-
+// Objetos
+#include "object_spiralSphere.h"
 
 
 
@@ -21,7 +22,7 @@
  * ***************************************************************************/
 
 
-class CangrejoCuerpo : public ObjectDibujable
+class Roca : public ObjectDibujable
 {
 private:
 
@@ -35,14 +36,14 @@ private:
 	// Caracteristicas del objeto
 	int CANT_PUNTOS;
 	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
-
+	
 public:
 
 	// Constructor
-	CangrejoCuerpo();
+	Roca();
 
 	// Destructor
-	~CangrejoCuerpo();
+	~Roca();
 
 	// Crea un objeto
 	virtual void create();

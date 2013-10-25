@@ -61,289 +61,167 @@ void Test::create(int size)
 							 FILE_FRAG_SHADER.c_str());
 
 
-	// ////////////////// TEST 1
-
-	
-	// // Creamos el objeto
-
-	// if (this->object_vertex_buffer != NULL)
-	// 	delete this->object_vertex_buffer;
-
-	// this->object_normal_buffer_size = 21;
-	// this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
+	// ////////////////// TEST 3
 
 
-	// if (this->object_index_buffer != NULL)
-	// 	delete this->object_index_buffer;
+	// CREACIÓN DEL OBJETO
 
-	// // Puntos de control
-	// float pc0x = 0.0;
-	// float pc0y = 0.0;
+	// Configuración del paso entre un punto y otro.
+	float PASO = 0.01;
+	// Cantidad de curvas que compondran la curva general
+	int CANT_CURVAS = 4;
 
-	// float pc1x = 0.0;
-	// float pc1y = 2.0;
-
-	// float pc2x = 2.0;
-	// float pc2y = 2.0;
-
-	// float pc3x = 2.0;
-	// float pc3y = 0.0;
-
-	// float centroX = 1.0;
-	// float centroY = 0.0;
-
-	// float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-	// float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-
-	// int DIMENSIONS = 3;
-	// int ESTIRAMIENTO = 2;
-
-	// this->object_vertex_buffer_size = DIMENSIONS * 21 * ESTIRAMIENTO;
-	// this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
-
-	// this->object_index_buffer_size = 42;
-	// this->object_index_buffer = new GLuint[this->object_index_buffer_size];
-
-	// int i = 0;
-	// double PASO = 0.05;
-
-	// for(float t = 0.0; t <= (1.0 + PASO); t += PASO)
-	// {
-	// 	float ppx = Matematica::curvaBezier(t, pcx);
-	// 	float ppy = Matematica::curvaBezier(t, pcy);
-
-	// 	std::cout << t << " - " << ppx << "," << ppy << std::endl;
-
-	// 	this->object_vertex_buffer[i++] = ppx;
-	// 	this->object_vertex_buffer[i++] = ppy;
-	// 	this->object_vertex_buffer[i++] = 0.0;
-
-	// 	this->object_vertex_buffer[i++] = ppx;
-	// 	this->object_vertex_buffer[i++] = ppy;
-	// 	this->object_vertex_buffer[i++] = 1.0;
-	// }
+	// Valores para cálculos (no modificar)
+	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
+	int DIMENSIONES = 3;
+	this->ESTIRAMIENTO = 2;
 
 
-	// for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
-	// 	this->object_index_buffer[i] = i;
-	// }
+	// Puntos de control
+	float pc0x = 1.0;
+	float pc0y = -1.0;
+	float pc0z = 0.0;
+
+	float pc1x = -1.0;
+	float pc1y = -1.0;
+	float pc1z = 0.0;
+
+	float pc2x = -1.0;
+	float pc2y = 1.0;
+	float pc2z = 0.0;
+
+	float pc3x = 1.0;
+	float pc3y = 1.0;
+	float pc3z = 0.0;
+
+	// Armamos arreglos para los trozos que conforman la curva
+	float pcx012[] = {pc0x, pc1x, pc2x};
+	float pcx123[] = {pc1x, pc2x, pc3x};
+	float pcx230[] = {pc2x, pc3x, pc0x};
+	float pcx301[] = {pc3x, pc0x, pc1x};
+
+	float pcy012[] = {pc0y, pc1y, pc2y};
+	float pcy123[] = {pc1y, pc2y, pc3y};
+	float pcy230[] = {pc2y, pc3y, pc0y};
+	float pcy301[] = {pc3y, pc0y, pc1y};
 
 
 
-	// ///////////////// TEST 2
-
-	// Creamos el objeto
 
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
 
-	this->object_normal_buffer_size = 21;
-	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
-
+	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
+	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	// Puntos de control
-	float pcx[4][4];
-	float pcy[4][4];
-	float pcz[4][4];
-
-	pcx[0][0] = 0;
-	pcy[0][0] = 0;
-	pcz[0][0] = 1;
-
-	pcx[0][1] = 0;
-	pcy[0][1] = 2;
-	pcz[0][1] = 2;
-	
-	pcx[0][2] = 0;
-	pcy[0][2] = 3;
-	pcz[0][2] = 1.5;
-
-	pcx[0][3] = 0;
-	pcy[0][3] = 5;
-	pcz[0][3] = 0;
-
-
-
-	pcx[1][0] = 1;
-	pcy[1][0] = 0;
-	pcz[1][0] = 1;
-
-	pcx[1][1] = 1;
-	pcy[1][1] = 2;
-	pcz[1][1] = 2;
-
-	pcx[1][2] = 1;
-	pcy[1][2] = 3;
-	pcz[1][2] = 1.5;
-
-	pcx[1][3] = 1;
-	pcy[1][3] = 5;
-	pcz[1][3] = 0;
-
-
-
-	pcx[2][0] = 2;
-	pcy[2][0] = 0;
-	pcz[2][0] = 1;
-
-	pcx[2][1] = 2;
-	pcy[2][1] = 2;
-	pcz[2][1] = 2;
-
-	pcx[2][2] = 2;
-	pcy[2][2] = 3;
-	pcz[2][2] = 1.5;
-
-	pcx[2][3] = 2;
-	pcy[2][3] = 5;
-	pcz[2][3] = 0;
-
-
-	pcx[3][0] = 3;
-	pcy[3][0] = 0;
-	pcz[3][0] = 1;
-
-	pcx[3][1] = 3;
-	pcy[3][1] = 2;
-	pcz[3][1] = 2;
-
-	pcx[3][2] = 3;
-	pcy[3][2] = 3;
-	pcz[3][2] = 1.5;
-
-	pcx[3][3] = 3;
-	pcy[3][3] = 5;
-	pcz[3][3] = 0;
-
-
-
-
-	int DIMENSIONS = 3;
-	int ESTIRAMIENTO = 4;
-
-	this->object_vertex_buffer_size = DIMENSIONS * 27 * ESTIRAMIENTO;
-	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
-
-	this->object_index_buffer_size = 24 + 2;
+	this->object_index_buffer_size = 2* this->CANT_PUNTOS * (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
+	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* (this->ESTIRAMIENTO-1);
+	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
+
+
+	// Unimos los puntos
+
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
+
+	int e = 0;
+	for(int m = 0; m < this->ESTIRAMIENTO; m++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
+			malla[m][n] = e++;
+
+
+
 	int i = 0;
-	double PASO = 0.5;
 
-	for(float u = 0.0; u <= (1.0); u += PASO)
+	// Iteramos sobre cada nivel del objeto
+	for(int q = 0; q < this->ESTIRAMIENTO; q++)
 	{
-		for(float v = 0.0; v <= (1.0); v += PASO)
+		// Segmento 0-1-2 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
-			float ppx = Matematica::superficieBezier(u, v, pcx);
-			float ppy = Matematica::superficieBezier(u, v, pcy);
-			float ppz = Matematica::superficieBezier(u, v, pcz);
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx012);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy012);
+			float ppz = 1.0 * q;
 
-			std::cout << u << " - " << ppx << "," << ppy << "," << ppz << std::endl;
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
 
+		// Segmento 1-2-3 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx123);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
+			float ppz = 1.0 * q;
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
+
+		// Segmento 2-3-0 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx230);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy230);
+			float ppz = 1.0 * q;
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
+
+		// Segmento 3-0-1 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx301);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy301);
+			float ppz = 1.0 * q;
+
+			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 		}
 	}
 
+	int sentido = 1;
+	int k = 0;
 
-	// for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
-	// 	this->object_index_buffer[i] = i;
-	// }
-
-
-	int a = int((1 / PASO) + 1);
-
-	int j = 0;
-	int index = 0;
-
-	for(int k = 0; k < (j + (a - 1)); k++)
+	for(int i=0; i < (this->ESTIRAMIENTO-1); i++)
 	{
-		for(int i = j; i < a; i++)
+		if(sentido == 1)
 		{
-			this->object_index_buffer[index++] = i;
-			this->object_index_buffer[index++] = i + 3;
+			for(int j=0; j <= (this->CANT_PUNTOS-1); j++) {
+				this->object_index_buffer[k++] = malla[i][j];
+				this->object_index_buffer[k++] = malla[i+1][j];
+			}
 
-			if(i == a - 1)
-				this->object_index_buffer[index++] = i + 3;
-
-			j++;
+			sentido = -1;
 		}
+		else if(sentido == -1)
+		{
+			for(int j=(this->CANT_PUNTOS-1); j >= 0; j--) {
+				this->object_index_buffer[k++] = malla[i][j];
+				this->object_index_buffer[k++] = malla[i+1][j];
+			}
 
-		j += a;
+			sentido = 1;
+		}
 	}
-
-
-
-	// this->object_index_buffer[0] = 0;
-	// this->object_index_buffer[1] = 1;
-	// this->object_index_buffer[2] = 3;
-
-	// this->object_index_buffer[3] = 1;
-	// this->object_index_buffer[4] = 3;
-	// this->object_index_buffer[5] = 4;
-
-	// this->object_index_buffer[6] = 1;
-	// this->object_index_buffer[7] = 4;
-	// this->object_index_buffer[8] = 2;
-
-	// this->object_index_buffer[9] = 4;
-	// this->object_index_buffer[10] = 2;
-	// this->object_index_buffer[11] = 5;
-
-
-	// this->object_index_buffer[12] = 3;
-	// this->object_index_buffer[13] = 4;
-	// this->object_index_buffer[14] = 6;
-
-	// this->object_index_buffer[15] = 4;
-	// this->object_index_buffer[16] = 6;
-	// this->object_index_buffer[17] = 7;
-
-	// this->object_index_buffer[18] = 4;
-	// this->object_index_buffer[19] = 5;
-	// this->object_index_buffer[20] = 7;
-
-	// this->object_index_buffer[21] = 5;
-	// this->object_index_buffer[22] = 7;
-	// this->object_index_buffer[23] = 8;
-	
-
-
-
-	// NORMALES
-
-
-	this->object_normal_buffer[0] = 0.5f;
-	this->object_normal_buffer[1] = 0.5f;
-	this->object_normal_buffer[2] = 0.2f;
-
-	this->object_normal_buffer[3] = 0.5f;
-	this->object_normal_buffer[4] = -0.5f;
-	this->object_normal_buffer[5] = 0.2f;
-
-	this->object_normal_buffer[6] = -0.5f;
-	this->object_normal_buffer[7] = -0.5f;
-	this->object_normal_buffer[8] = 0.2f;
-
-	this->object_normal_buffer[9] = -0.5f;
-	this->object_normal_buffer[10] = 0.5f;
-	this->object_normal_buffer[11] = 0.2f;
-
-	this->object_normal_buffer[12] = 0.5f;
-	this->object_normal_buffer[13] = 0.5f;
-	this->object_normal_buffer[14] = 0.2f;
-
-	this->object_normal_buffer[15] = 0.5f;
-	this->object_normal_buffer[16] = -0.5f;
-	this->object_normal_buffer[17] = 0.2f;
-
-	this->object_normal_buffer[18] = -0.5f;
-	this->object_normal_buffer[19] = -0.5f;
-	this->object_normal_buffer[20] = 0.2f;
 }
 
 
@@ -353,6 +231,47 @@ void Test::create(int size)
 void Test::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	// NORMALES
+
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
+
+	int e = 0;
+	for(int m = 0; m < this->ESTIRAMIENTO; m++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
+			malla[m][n] = e++;
+
+	int k = 0;
+
+	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+		{
+			float u[3], v[3];
+			
+			// Tomamos vectores adyacentes u y v
+			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+				this->object_vertex_buffer[malla[i][j] * 3];
+			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+			
+			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
+				this->object_vertex_buffer[malla[i][j] * 3];
+			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+			// Calculamos la normal a u y v
+			float *n = Matematica::productoVectorial(u, v);
+
+			this->object_normal_buffer[k++] = n[0];
+			this->object_normal_buffer[k++] = n[1];
+			this->object_normal_buffer[k++] = n[2];
+		}
+	}
+
+	
 	///////////////////////////////////////////
 	// Bind View Matrix
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,

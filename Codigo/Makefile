@@ -1,7 +1,19 @@
 # 6671 1er c 2013
 
+# Nombre del ejecutable.
+target = 6671
+
+# Archivo log de Valgrind.
+VGLOGFILE = valgrind.out
+
+# Flags para el Valgrind
+VGFLAGS = --tool=memcheck --trace-children=yes --track-fds=yes --time-stamp=yes --num-callers=20 --error-exitcode=42 --db-attach=no --leak-check=full --leak-resolution=med --log-file=$(VGLOGFILE)
+
+
+
+
 all: main
-	g++  main.o lib_matematica.o scene.o object_dibujable.o object_TEST.o object_eje_coordenado.o object_cube.o object_grid.o object_spiralSphere.o object_superficie.o object_cangrejo.o object_cangrejo_cuerpo.o object_cangrejo_pata.o object_cangrejo_ojo.o object_cangrejo_pinza.o object_pez.o object_pez_cuerpo.o object_pez_ojo.o object_pez_aleta_trasera.o object_pez_aleta_dorsal.o object_pez_aleta_lateral.o object_roca.o object_planta_acuatica.o object_planta_hoja_tipo01.o myWindow.o myApplication.o glutWindow.o glWindow.o glApplication.o -lGLEW -lGLU -lGL -lglut -o 6671
+	g++  main.o lib_matematica.o scene.o object_dibujable.o object_TEST.o object_eje_coordenado.o object_cube.o object_grid.o object_spiralSphere.o object_superficie.o object_cangrejo.o object_cangrejo_cuerpo.o object_cangrejo_pata.o object_cangrejo_pata_muslo.o object_cangrejo_pata_pierna.o object_cangrejo_pata_pie.o object_cangrejo_ojo.o object_cangrejo_pinza.o object_cangrejo_pinza_antebrazo.o object_cangrejo_pinza_brazo.o object_cangrejo_pinza_garra_superior.o object_cangrejo_pinza_garra_inferior.o object_pez.o object_pez_cuerpo.o object_pez_ojo.o object_pez_aleta_trasera.o object_pez_aleta_dorsal.o object_pez_aleta_lateral.o object_roca.o object_planta_acuatica.o object_planta_hoja_tipo01.o object_planta_hoja_tipo02.o object_planta_hoja_tipo03.o myWindow.o myApplication.o glutWindow.o glWindow.o glApplication.o -lGLEW -lGLU -lGL -lglut -o 6671
 
 glApplication: glApplication.cpp glApplication.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c glApplication.cpp
@@ -45,11 +57,34 @@ object_cangrejo_cuerpo: object_cangrejo_cuerpo.cpp object_cangrejo_cuerpo.h
 object_cangrejo_pata: object_cangrejo_pata.cpp object_cangrejo_pata.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pata.cpp
 
+object_cangrejo_pata_muslo: object_cangrejo_pata_muslo.cpp object_cangrejo_pata_muslo.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pata_muslo.cpp
+
+object_cangrejo_pata_pierna: object_cangrejo_pata_pierna.cpp object_cangrejo_pata_pierna.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pata_pierna.cpp
+
+object_cangrejo_pata_pie: object_cangrejo_pata_pie.cpp object_cangrejo_pata_pie.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pata_pie.cpp
+
 object_cangrejo_ojo: object_cangrejo_ojo.cpp object_cangrejo_ojo.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_ojo.cpp
 
 object_cangrejo_pinza: object_cangrejo_pinza.cpp object_cangrejo_pinza.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pinza.cpp
+
+object_cangrejo_pinza_antebrazo: object_cangrejo_pinza_antebrazo.cpp object_cangrejo_pinza_antebrazo.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pinza_antebrazo.cpp
+
+object_cangrejo_pinza_brazo: object_cangrejo_pinza_brazo.cpp object_cangrejo_pinza_brazo.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pinza_brazo.cpp
+
+object_cangrejo_pinza_garra_superior: object_cangrejo_pinza_garra_superior.cpp object_cangrejo_pinza_garra_superior.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pinza_garra_superior.cpp
+
+object_cangrejo_pinza_garra_inferior: object_cangrejo_pinza_garra_inferior.cpp object_cangrejo_pinza_garra_inferior.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_cangrejo_pinza_garra_inferior.cpp
+
+
 
 object_superficie: object_superficie.cpp object_superficie.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_superficie.cpp
@@ -81,6 +116,15 @@ object_planta_acuatica: object_planta_acuatica.cpp object_planta_acuatica.h
 object_planta_hoja_tipo01: object_planta_hoja_tipo01.cpp object_planta_hoja_tipo01.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_hoja_tipo01.cpp
 
+object_planta_hoja_tipo02: object_planta_hoja_tipo02.cpp object_planta_hoja_tipo02.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_hoja_tipo02.cpp
+
+
+object_planta_hoja_tipo03: object_planta_hoja_tipo03.cpp object_planta_hoja_tipo03.h
+	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_hoja_tipo03.cpp
+
+
+
 
 
 
@@ -93,11 +137,14 @@ scene: scene.cpp scene.h
 lib_matematica: lib_matematica.cpp lib_matematica.h
 	g++ -c lib_matematica.cpp
 
-main: main.cpp lib_matematica myWindow myApplication scene object_dibujable object_eje_coordenado object_cube object_grid object_spiralSphere object_superficie object_cangrejo object_cangrejo_cuerpo object_cangrejo_pata object_cangrejo_ojo object_cangrejo_pinza object_pez object_pez_cuerpo object_pez_ojo object_pez_aleta_trasera object_pez_aleta_dorsal object_pez_aleta_lateral object_roca object_planta_acuatica object_planta_hoja_tipo01 object_TEST
+main: main.cpp lib_matematica myWindow myApplication scene object_dibujable object_eje_coordenado object_cube object_grid object_spiralSphere object_superficie object_cangrejo object_cangrejo_cuerpo object_cangrejo_pata object_cangrejo_pata_muslo object_cangrejo_pata_pierna object_cangrejo_pata_pie object_cangrejo_ojo object_cangrejo_pinza object_cangrejo_pinza_antebrazo object_cangrejo_pinza_brazo object_cangrejo_pinza_garra_superior object_cangrejo_pinza_garra_inferior object_pez object_pez_cuerpo object_pez_ojo object_pez_aleta_trasera object_pez_aleta_dorsal object_pez_aleta_lateral object_roca object_planta_acuatica object_planta_hoja_tipo01 object_planta_hoja_tipo02 object_planta_hoja_tipo03 object_TEST
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c main.cpp
 
 run:
-	./6671
+	./$(target)
+
+valgrind:
+	valgrind $(VGFLAGS) ./$(target)
 
 clean:
-	rm -rf *o main ./6671
+	rm -rf *o main ./$(target)

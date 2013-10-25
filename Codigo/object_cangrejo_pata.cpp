@@ -38,12 +38,7 @@ namespace {
 
 
 // Constructor
-CangrejoPata::CangrejoPata()
-{
-	this->pata_index_buffer = NULL;
-	this->pata_vertex_buffer = NULL;
-	this->pata_normal_buffer = NULL;
-}
+CangrejoPata::CangrejoPata() { }
 
 
 // Destructor
@@ -51,13 +46,47 @@ CangrejoPata::~CangrejoPata() { }
 
 
 // Crea un objeto
-void CangrejoPata::create()
+void CangrejoPata::create(int direccion)
 {
-	// Creamos el eje coordenado
-	this->ejeCoordenado.create(1);
+	this->direccion = direccion;
 
-	// Creamos la esfera
-	this->spiralSphere.create(0.5, 32, 32);	
+	
+	this->maxGradoMuslo = 110.0;
+	this->minGradoMuslo = 70.0;
+	if(direccion == 1) {
+		this->gradoMuslo = 70.0;
+		this->gradoRotacion = 0;
+	}
+	else if(direccion == -1) {
+		this->gradoMuslo = 110.0;
+		this->gradoRotacion = 360;
+	}
+	this->sentidoMuslo = 1;
+
+	this->maxGradoPierna = 80.0;
+	this->minGradoPierna = 35.0;
+	this->gradoPierna = 35.0;
+	if(direccion == 1) this->gradoPierna = 35.0;
+	else if(direccion == -1) this->gradoPierna = 80.0;
+
+	this->maxGradoPie = 70.0;
+	this->minGradoPie = 40.0;
+	this->gradoPie = 40.0;
+	if(direccion == 1) this->gradoPie = 40.0;
+	else if(direccion == -1) this->gradoPie = 70.0;
+
+
+	// Creamos el eje coordenado
+	this->ejeCoordenado.create(3);
+
+	// Creamos el muslo
+	this->muslo.create();
+
+	// Creamos la pierna
+	this->pierna.create();
+
+	// Creamos el pie
+	this->pie.create();
 }
 
 
@@ -70,36 +99,150 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Dibujamos el eje coordenado
 	// this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
 
+	if(direccion == 1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion += 0.045;
+		if(this->gradoRotacion >= 360.0) this->gradoRotacion = 0.0;
+
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
+				
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
+				
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
+
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
+				
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
+
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
+	else if(direccion == -1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion -= 0.045;
+		if(this->gradoRotacion <= 0.0) this->gradoRotacion = 360.0;
+
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
+				
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
+				
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
+
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
+				
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
+
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
+
+	// Verificamos el sentido
+	if(this->sentidoMuslo == 1 && this->gradoMuslo >= maxGradoMuslo)
+		this->sentidoMuslo = -1;
+	else if(this->sentidoMuslo == -1 && this->gradoMuslo <= minGradoMuslo)
+		this->sentidoMuslo = 1;
+
+
+	// Coloreamos objetos
+	this->muslo.changeObjectColor(126, 241, 95);
+	this->pierna.changeObjectColor(0, 0, 0);
+	this->pie.changeObjectColor(126, 241, 95);
+
+	// Matriz de traslasión
 	glm::mat4 m = glm::mat4(1.0f);
-	this->spiralSphere.changeObjectColor(126, 241, 95);
 
 	// Damos forma al objeto y la renderizamos
 	glm::mat4 mMuslo = glm::mat4(1.0f);
-	m = glm::translate(model_matrix, glm::vec3(0.0, -0.35, 0.0));
-	mMuslo = glm::scale(m, glm::vec3(0.4, 0.7, 0.4));
-	this->spiralSphere.render(mMuslo, view_matrix, projection_matrix);
+	m = glm::rotate(model_matrix, this->gradoMuslo * 1.0f, 
+		glm::vec3(1.0, 0.0, 0.0));
+	m = glm::translate(m, glm::vec3(0.0, 0.05 * cos(this->gradoRotacion), 
+		0.05 * sin(this->gradoRotacion)));
+	this->muslo.render(m, view_matrix, projection_matrix);
 
-	// Reposicionamos
-	m = glm::translate(m, glm::vec3(0.0, -0.25, 0.0));
-	m = glm::rotate(m, 45.0f, glm::vec3(1.0, 0.0, 0.0));
+	// // Reposicionamos
+	m = glm::translate(m, glm::vec3(0.0, 0.0, 1.6));
+	m = glm::rotate(m, this->gradoPierna * 1.0f, glm::vec3(1.0, 0.0, 0.0));
 
-	// Dibujamos el eje coordenado
+	// // // Dibujamos el eje coordenado
 	// this->ejeCoordenado.render(m, view_matrix, projection_matrix);
 
-	glm::mat4 mEntrepierna = glm::mat4(1.0f);
-	mEntrepierna = glm::translate(m, glm::vec3(0.0, -0.425, 0.0));
-	mEntrepierna = glm::scale(mEntrepierna, glm::vec3(0.3, 0.85, 0.3));
-	this->spiralSphere.render(mEntrepierna, view_matrix, projection_matrix);
+	this->pierna.render(m, view_matrix, projection_matrix);
 
 	// Reposicionamos
-	m = glm::translate(m, glm::vec3(0.0, -0.75, 0.0));
-	m = glm::rotate(m, 60.0f, glm::vec3(1.0, 0.0, 0.0));
+	m = glm::translate(m, glm::vec3(0.0, 0.1, 1.8));
+	m = glm::rotate(m, this->gradoPie * 1.0f, glm::vec3(1.0, 0.0, 0.0));
 
 	// Dibujamos el eje coordenado
 	// this->ejeCoordenado.render(m, view_matrix, projection_matrix);
 
 	glm::mat4 mPie = glm::mat4(1.0f);
-	mPie = glm::translate(m, glm::vec3(0.0, -0.25, 0.0));
-	mPie = glm::scale(mPie, glm::vec3(0.2, 0.5, 0.2));
-	this->spiralSphere.render(mPie, view_matrix, projection_matrix);
+	mPie = glm::translate(m, glm::vec3(0.0, 0.0, 2.0));
+	// mPie = glm::scale(mPie, glm::vec3(0.9, 0.9, 0.9));
+	mPie = glm::rotate(mPie, -180.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->pie.render(mPie, view_matrix, projection_matrix);
+}
+
+
+// Permite establecer un delay en el movimientoi
+void CangrejoPata::setDelay(float delay)
+{
+	this->gradoMuslo += delay;
 }

@@ -14,7 +14,6 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
-
 #include "lib_matematica.h"
 #include "object_planta_hoja_tipo01.h"
 
@@ -28,7 +27,6 @@ namespace {
 	
 	// Ruta del archivo del fragment shader
 	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
-	
 }
 
 
@@ -40,8 +38,12 @@ namespace {
 
 
 // Constructor
-PlantaHojaTipo01::PlantaHojaTipo01() 
+PlantaHojaTipo01::PlantaHojaTipo01()
 {
+	// Valores por defecto
+	this->amplitud = 1.0;
+	this->velocidad = 0.1;
+
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
@@ -56,7 +58,7 @@ PlantaHojaTipo01::PlantaHojaTipo01()
 	this->motion_pcy[1] = 0.0;
 	this->motion_pcz[1] = 2.0;
 
-	this->motion_pcx[2] = -7.0;
+	this->motion_pcx[2] = (-1) * this->amplitud;
 	this->motion_pcy[2] = 0.0;
 	this->motion_pcz[2] = 3.0;
 
@@ -128,7 +130,7 @@ void PlantaHojaTipo01::create()
 	float PASO = 0.25;
 
 	// Valores para cálculos (no modificar)
-	int CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
+	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
 	int OBJ_ALTURA = 5;
 
@@ -136,29 +138,28 @@ void PlantaHojaTipo01::create()
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
 
-	this->object_vertex_buffer_size = DIMENSIONES * CANT_PUNTOS * this->ESTIRAMIENTO;
+	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = 2 * CANT_PUNTOS 
+	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
 		* (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
-	this->object_normal_buffer_size = DIMENSIONES * CANT_PUNTOS 
+	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
 		* (this->ESTIRAMIENTO-1);
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
 	// Unimos los puntos
 
-	int ESTIRAMIENTO = this->ESTIRAMIENTO;
-	int malla[ESTIRAMIENTO][CANT_PUNTOS];
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
 	int e = 0;
 	for(int m = 0; m < this->ESTIRAMIENTO; m++)
-		for(int n = 0; n < CANT_PUNTOS; n++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
 			malla[m][n] = e++;
 
 
@@ -166,10 +167,11 @@ void PlantaHojaTipo01::create()
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
-		float distancia = Matematica::curvaBezier((k * 1.0) / (this->ESTIRAMIENTO-1),
-			grosor_pcy);
+		float distancia = Matematica::curvaBezier((k * 1.0) / 
+			(this->ESTIRAMIENTO-1),	grosor_pcy);
 
-		float deformacion = Matematica::curvaBezier((k * 1.0) /  (this->ESTIRAMIENTO-1), deformacion_pcy);
+		float deformacion = Matematica::curvaBezier((k * 1.0) /  
+			(this->ESTIRAMIENTO-1), deformacion_pcy);
 
 		// Puntos de control
 		float pc0x = 0.0 * distancia + deformacion;
@@ -192,7 +194,7 @@ void PlantaHojaTipo01::create()
 		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
 
 
-		for(int j = 0; j < CANT_PUNTOS; j++) 
+		for(int j = 0; j < this->CANT_PUNTOS; j++) 
 		{
 			float ppx = Matematica::curvaBezier(j * PASO, pcx);
 			float ppy = Matematica::curvaBezier(j * PASO, pcy);
@@ -212,7 +214,7 @@ void PlantaHojaTipo01::create()
 	{
 		if(sentido == 1)
 		{
-			for(int j=0; j <= (CANT_PUNTOS-1); j++) {
+			for(int j=0; j <= (this->CANT_PUNTOS-1); j++) {
 				this->object_index_buffer[k++] = malla[i][j];
 				this->object_index_buffer[k++] = malla[i+1][j];
 			}
@@ -221,7 +223,7 @@ void PlantaHojaTipo01::create()
 		}
 		else if(sentido == -1)
 		{
-			for(int j=(CANT_PUNTOS-1); j >= 0; j--) {
+			for(int j=(this->CANT_PUNTOS-1); j >= 0; j--) {
 				this->object_index_buffer[k++] = malla[i][j];
 				this->object_index_buffer[k++] = malla[i+1][j];
 			}
@@ -229,13 +231,54 @@ void PlantaHojaTipo01::create()
 			sentido = 1;
 		}
 	}
+}
+
+
+// Renderiza el objeto (lo dibuja).
+// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
+// debe renderizarce el objeto.
+void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+	glm::mat4 &projection_matrix)
+{
+	// Reposicionamos puntos para dar movimiento
+
+	// Iteramos sobre los niveles
+	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
+		float t = i * 1.0 / this->ESTIRAMIENTO;
+
+		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
+
+		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
+		// el buffer de vertices
+		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
+		int cant_puntos_nivel = ini / 3;
+
+		for(int j=0; j < cant_puntos_nivel; j++) {
+			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.0004;
+		}
+	}
+
+	this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
+
+	if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
+		this->sentido_motion = -1;
+	else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
+		this->sentido_motion = 1;
 
 
 	// NORMALES
-	k = 0;
+
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
+
+	int e = 0;
+	for(int m = 0; m < this->ESTIRAMIENTO; m++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
+			malla[m][n] = e++;
+
+	int k = 0;
 
 	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (CANT_PUNTOS-1); j++)
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
 		{
 			float u[3], v[3];
 			
@@ -263,39 +306,6 @@ void PlantaHojaTipo01::create()
 			this->object_normal_buffer[k++] = n[2];
 		}
 	}
-}
-
-
-// Renderiza el objeto (lo dibuja).
-// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
-// debe renderizarce el objeto.
-void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
-	glm::mat4 &projection_matrix)
-{
-	// Reposicionamos puntos para dar movimiento
-
-	// Iteramos sobre los niveles
-	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
-		float t = i * 1.0 / this->ESTIRAMIENTO;
-
-		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
-
-		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-		// el buffer de vertices
-		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
-		int cant_puntos_nivel = ini / 3;
-
-		for(int j=0; j < cant_puntos_nivel; j++) {
-			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.0005;
-		}
-	}
-
-	this->motion_pcx[2] += (float)(this->sentido_motion) * 0.1;
-
-	if((this->motion_pcx[2] > 7) && (this->sentido_motion == 1))
-		this->sentido_motion = -1;
-	else if((this->motion_pcx[2] < -7) && (this->sentido_motion == -1))
-		this->sentido_motion = 1;
 
 
 
@@ -366,4 +376,21 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+
+// Permite setear la amplitud de la hoja. Debe setearse antes de crear
+// el objeto.
+void PlantaHojaTipo01::setAmplitud(float amplitud)
+{
+	this->amplitud = amplitud;
+	this->motion_pcx[2] = (-1) * amplitud;
+}
+
+
+// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
+// antes de crear el objeto.
+void PlantaHojaTipo01::setVelocidad(float velocidad)
+{
+	this->velocidad = velocidad;
 }

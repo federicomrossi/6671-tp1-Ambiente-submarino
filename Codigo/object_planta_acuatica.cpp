@@ -52,7 +52,15 @@ void PlantaAcuatica::create()
 	// this->ejeCoordenado.create(3);
 
 	// Creamos una hoja de tipo 01
+	this->hojaTipo01.setAmplitud(7.0);
+	this->hojaTipo01.setVelocidad(0.1);
 	this->hojaTipo01.create();
+
+	// Creamos una hoja de tipo 02
+	this->hojaTipo02.create();
+
+	// Creamos una hoja de tipo 03
+	this->hojaTipo03.create();
 }
 
 
@@ -67,12 +75,35 @@ void PlantaAcuatica::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// 	projection_matrix);
 
 	// Dibujamos la hoja de tipo 01
-	glm::mat4 mHojaT1 = glm::mat4(1.0f);
-	// mHojaT1 = glm::scale(model_matrix, glm::vec3(1.0, 1.0, 1.0));
-	// // mHojaT1 = glm::rotate(mHojaT1, -140.0f, glm::vec3(0.0, 0.0, 1.0));
-	// // mHojaT1 = glm::rotate(mHojaT1, -10.0f, glm::vec3(1.0, 0.0, 0.0));
+	glm::mat4 mHojaT1_01 = glm::mat4(1.0f);
+	// mHojaT1_01 = glm::scale(model_matrix, glm::vec3(1.0, 1.0, 1.0));
+	mHojaT1_01 = glm::rotate(model_matrix, -20.0f, glm::vec3(0.0, 1.0, 0.0));
+	// mHojaT1_01 = glm::rotate(mHojaT1_01, -10.0f, glm::vec3(1.0, 0.0, 0.0));
 	this->hojaTipo01.changeObjectColor(0, 255, 0);
-	this->hojaTipo01.render(model_matrix, view_matrix, projection_matrix);
+	this->hojaTipo01.render(mHojaT1_01, view_matrix, projection_matrix);
+
+	glm::mat4 mHojaT1_02 = glm::mat4(1.0f);
+	mHojaT1_02 = glm::scale(model_matrix, glm::vec3(0.7, 0.7, 0.7));
+	mHojaT1_02 = glm::rotate(mHojaT1_02, -10.0f, glm::vec3(0.0, 1.0, 0.0));
+	mHojaT1_02 = glm::rotate(mHojaT1_02, -10.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->hojaTipo01.render(mHojaT1_02, view_matrix, projection_matrix);
+
+
+	// Dibujamos la hoja de tipo 02
+	glm::mat4 mHojaT2 = glm::mat4(1.0f);
+	this->hojaTipo02.changeObjectColor(0, 255, 0);
+	mHojaT2 = glm::rotate(model_matrix, 20.0f, glm::vec3(0.0, 1.0, 0.0));
+	mHojaT2 = glm::rotate(mHojaT2, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->hojaTipo02.render(mHojaT2, view_matrix, projection_matrix);
+
+
+	// Dibujamos la hoja de tipo 03
+	glm::mat4 mHojaT3 = glm::mat4(1.0f);
+	mHojaT3 = glm::rotate(model_matrix, 40.0f, glm::vec3(0.0, 1.0, 0.0));
+	mHojaT3 = glm::rotate(mHojaT3, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->hojaTipo03.changeObjectColor(0, 255, 0);
+	this->hojaTipo03.render(mHojaT3, view_matrix, projection_matrix);
+
 
 	// mHojaT1 = glm::scale(model_matrix, glm::vec3(1.0, 1.0, 0.7));
 	// mHojaT1 = glm::rotate(mHojaT1, 130.0f, glm::vec3(0.0, 0.0, 1.0));

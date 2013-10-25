@@ -1,10 +1,10 @@
 /*  
- *  CLASS CANGREJO_CUERPO
+ *  CLASS PLANTA
  */  
 
 
-#ifndef OBJECT_CANGREJO_CUERPO_H
-#define OBJECT_CANGREJO_CUERPO_H
+#ifndef OBJECT_PLANTA_HOJA_TIPO_O3_H
+#define OBJECT_PLANTA_HOJA_TIPO_03_H
 
 
 #include <glm/glm.hpp> 
@@ -21,10 +21,11 @@
  * ***************************************************************************/
 
 
-class CangrejoCuerpo : public ObjectDibujable
+class PlantaHojaTipo03 : public ObjectDibujable
 {
 private:
 
+	// Buffers
 	GLfloat* object_vertex_buffer;
 	GLfloat* object_normal_buffer;
 	GLuint* object_index_buffer;
@@ -32,17 +33,26 @@ private:
 	unsigned int object_normal_buffer_size;
 	unsigned int object_index_buffer_size;
 
+	// Puntos de control del movimiento
+	float motion_pcx[4];
+	float motion_pcy[4];
+	float motion_pcz[4];
+	float amplitud;
+	float velocidad;
+	int sentido_motion;		// Señalador que indica el sentido de t
+
 	// Caracteristicas del objeto
 	int CANT_PUNTOS;
 	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
 
+
 public:
 
 	// Constructor
-	CangrejoCuerpo();
+	PlantaHojaTipo03();
 
 	// Destructor
-	~CangrejoCuerpo();
+	~PlantaHojaTipo03();
 
 	// Crea un objeto
 	virtual void create();
@@ -52,6 +62,14 @@ public:
 	// debe renderizarce el objeto.
 	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
+
+	// Permite setear la amplitud de la hoja. Debe setearse antes de crear
+	// el objeto.
+	void setAmplitud(float amplitud);
+
+	// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
+	// antes de crear el objeto.
+	void setVelocidad(float velocidad);
 };
 
 #endif

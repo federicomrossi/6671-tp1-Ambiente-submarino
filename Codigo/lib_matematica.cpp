@@ -4,9 +4,8 @@
 
 #include <iostream>
 #include <math.h>
+#include <GL/freeglut.h>
 #include "lib_matematica.h"
-
-
 
 
 // Método que calcula el factorial del número n.
@@ -44,10 +43,17 @@ float* Matematica::productoVectorial(float u[3], float v[3])
 }
 
 
+// Función que devuelve un numero aleatorio entre "min" y "max"
+float Matematica::numeroAleatorio(float min, float max)
+{
+	return ((float(rand()) / float(RAND_MAX)) * (max - min)) + min;
+}
+
+
 // Calculo de punto en una curva utilizando el método de Bezier
 // (implementación con algoritmo de Berstein).
-// PRE: "t" es un valor entre 0 y 1 que define el parámetro de la curva (
-// dependiendo de cual sea el valor se devolverá un cierto punto de dicha 
+// PRE: "t" es un valor entre 0 y 1 que define el parámetro de la curva
+// (dependiendo de cual sea el valor se devolverá un cierto punto de dicha 
 // curva, siendo 0 el punto de control inicial y 1 el punto de control final); 
 // "p" es un puntero a un arreglo que contiene las coordenadas de los puntos 
 // de control.
@@ -95,14 +101,20 @@ float Matematica::superficieBezier(float u, float v, float p[4][4])
 }
 
 
-// 
+// Calculo de punto en una curva utilizando el método de B-Spline 
+// cuadrático uniforme.
+// PRE: "u" es un valor entre 0 y 1 que define el parámetro de la curva 
+// (dependiendo de cual sea el valor se devolverá un cierto punto de dicha 
+// curva); "p" es un puntero a un arreglo que contiene las coordenadas de 
+// los puntos de control.
+// POST: se devuelve el valor de la coordenada del punto sobre la curva.
 float Matematica::curvaBSpline(float u, float p[3])
 {
 	float punto = 0;
 
 	punto += (0.5 * pow(1-u, 2)) * p[0];
-	punto += (0.5 * (1-u) * u) * p[1];
+	punto += (-pow(u, 2) + u + 0.5) * p[1];
 	punto += (0.5 * pow(u, 2)) * p[2];
 
-	return punto;	
+	return punto;
 }

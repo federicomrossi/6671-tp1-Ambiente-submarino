@@ -13,9 +13,8 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
-
+#include "lib_matematica.h"
 #include "object_superficie.h"
-
 
 
 // Constantes de CONFIGURACION
@@ -51,102 +50,197 @@ Superficie::~Superficie() { }
 
 
 // Crea un objeto
-void Superficie::create()
+void Superficie::create(int ancho)
 {
-	// Creamos el eje coordenado
-	// this->ejeCoordenado.create(3);
-
-	// TAMAÑO DE LA SUPERFICIE
-	float TAMANIO = 16.0;
-
-
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
+	// Almacenamos el ancho que debe tener la superficie
+	this->ESTIRAMIENTO = ancho;
 
-	// Creamos el objeto
+
+	// Puntos de control de la CURVA DE DEFORMACIÓN EN X
+	float deformacionX_pc0x = 0.0;
+	float deformacionX_pc0y = 0.0;
+
+	float deformacionX_pc1x = 3.0;
+	float deformacionX_pc1y = 3.0;
+
+	float deformacionX_pc2x = 9.0;
+	float deformacionX_pc2y = -2.0;
+
+	float deformacionX_pc3x = 10.0;
+	float deformacionX_pc3y = 0.0;
+
+	float deformacionX_pcx[] = {deformacionX_pc0x, deformacionX_pc1x,
+		deformacionX_pc2x, deformacionX_pc3x};
+	float deformacionX_pcy[] = {deformacionX_pc0y, deformacionX_pc1y,
+		deformacionX_pc2y, deformacionX_pc3y};
+
+
+	// Puntos de control de la CURVA DE DEFORMACIÓN EN X
+	float deformacionY_pc0x = 0.0;
+	float deformacionY_pc0y = 0.0;
+
+	float deformacionY_pc1x = 2.0;
+	float deformacionY_pc1y = -1.4;
+
+	float deformacionY_pc2x = 8.5;
+	float deformacionY_pc2y = 6.0;
+
+	float deformacionY_pc3x = 10.0;
+	float deformacionY_pc3y = 0.0;
+
+	float deformacionY_pcx[] = {deformacionY_pc0x, deformacionY_pc1x,
+		deformacionY_pc2x, deformacionY_pc3x};
+	float deformacionY_pcy[] = {deformacionY_pc0y, deformacionY_pc1y,
+		deformacionY_pc2y, deformacionY_pc3y};
+
+
+
+	// CREACIÓN DEL OBJETO
+
+	// Configuración del paso entre un punto y otro.
+	float PASO = 0.1;
+
+	// Valores para cálculos (no modificar)
+	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
+	int DIMENSIONES = 3;
+	int OBJ_ALTURA = 5;
+
+
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
+
+	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
+	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	int DIMENSIONES = 3;
-	int ESTIRAMIENTO = 1;
-	int CANT_PUNTOS = 5;
-
-	// Configuración de la normal
-	this->object_normal_buffer_size = DIMENSIONES * CANT_PUNTOS;
-	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
-
-	this->object_normal_buffer[0] = 0.1f;
-	this->object_normal_buffer[1] = 0.1f;
-	this->object_normal_buffer[2] = 0.2f;
-
-	this->object_normal_buffer[3] = 0.1f;
-	this->object_normal_buffer[4] = 0.1f;
-	this->object_normal_buffer[5] = 0.2f;
-
-	this->object_normal_buffer[6] = 0.1f;
-	this->object_normal_buffer[7] = 0.1f;
-	this->object_normal_buffer[8] = 0.2f;
-
-	this->object_normal_buffer[9] = 0.1f;
-	this->object_normal_buffer[10] = 0.1f;
-	this->object_normal_buffer[11] = 0.2f;
-
-	this->object_normal_buffer[12] = 0.1f;
-	this->object_normal_buffer[13] = 0.1f;
-	this->object_normal_buffer[14] = 0.2f;
-
-	// Puntos
-	float centroX = 0.0;
-	float centroY = 0.0;
-
-	float pc0x = centroX + TAMANIO;
-	float pc0y = centroY + TAMANIO;
-
-	float pc1x = centroX - TAMANIO;
-	float pc1y = centroY + TAMANIO;
-
-	float pc2x = centroX - TAMANIO;
-	float pc2y = centroY - TAMANIO;
-
-	float pc3x = centroX + TAMANIO;
-	float pc3y = centroY - TAMANIO;
-
-	this->object_vertex_buffer_size = DIMENSIONES * CANT_PUNTOS  * ESTIRAMIENTO;
-	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
-
-	this->object_index_buffer_size = CANT_PUNTOS + 1;
+	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
+		* (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
-	this->object_vertex_buffer[0] = centroX;
-	this->object_vertex_buffer[1] = centroY;
-	this->object_vertex_buffer[2] = 0.0;
-
-	this->object_vertex_buffer[3] = pc0x;
-	this->object_vertex_buffer[4] = pc0y;
-	this->object_vertex_buffer[5] = 0.0;
-
-	this->object_vertex_buffer[6] = pc1x;
-	this->object_vertex_buffer[7] = pc1y;
-	this->object_vertex_buffer[8] = 0.0;
-
-	this->object_vertex_buffer[9] = pc2x;
-	this->object_vertex_buffer[10] = pc2y;
-	this->object_vertex_buffer[11] = 0.0;
-
-	this->object_vertex_buffer[12] = pc3x;
-	this->object_vertex_buffer[13] = pc3y;
-	this->object_vertex_buffer[14] = 0.0;
+	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* (this->ESTIRAMIENTO-1);
+	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
-	for(unsigned int i=0; i< this->object_index_buffer_size; i++) {
-		this->object_index_buffer[i] = i;
+	// Unimos los puntos
+
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
+
+	int e = 0;
+	for(int m = 0; m < this->ESTIRAMIENTO; m++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
+			malla[m][n] = e++;
+
+
+	int i = 0;
+
+	for(int k = -(this->ESTIRAMIENTO / 2); k < (this->ESTIRAMIENTO / 2); k++)
+	{
+		float deformacionX = Matematica::curvaBezier((k * 1.0) /  
+			(this->ESTIRAMIENTO-1), deformacionX_pcy);
+
+		float deformacionY = Matematica::curvaBezier((k * 1.0) /  
+			(this->ESTIRAMIENTO-1), deformacionY_pcy);
+
+		// Puntos de control
+		float pc0x = (this->ESTIRAMIENTO / 2);
+		float pc0y = k;
+		float pc0z = 0.0;
+
+		float pc1x = (this->ESTIRAMIENTO / 4);
+		float pc1y = k;
+		float pc1z = 0.5 * cos(k);
+
+		float pc2x = -(this->ESTIRAMIENTO / 4);
+		float pc2y = k;
+		float pc2z = 0.6 * sin(k);
+
+		float pc3x = -(this->ESTIRAMIENTO / 2);
+		float pc3y = k;
+		float pc3z = 0.0;
+
+		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
+		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
+		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
+
+
+		for(int j = 0; j < this->CANT_PUNTOS; j++) 
+		{
+			float ppx = Matematica::curvaBezier(j * PASO, pcx);
+			float ppy = Matematica::curvaBezier(j * PASO, pcy);
+			float ppz = Matematica::curvaBezier(j * PASO, pcz);
+
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
 	}
-	this->object_index_buffer[this->object_index_buffer_size - 1] = 1;
+
+
+	int sentido = 1;
+	int k = 0;
+
+	for(int i=0; i < (this->ESTIRAMIENTO-1); i++)
+	{
+		if(sentido == 1)
+		{
+			for(int j=0; j <= (this->CANT_PUNTOS-1); j++) {
+				this->object_index_buffer[k++] = malla[i][j];
+				this->object_index_buffer[k++] = malla[i+1][j];
+			}
+
+			sentido = -1;
+		}
+		else if(sentido == -1)
+		{
+			for(int j=(this->CANT_PUNTOS-1); j >= 0; j--) {
+				this->object_index_buffer[k++] = malla[i][j];
+				this->object_index_buffer[k++] = malla[i+1][j];
+			}
+
+			sentido = 1;
+		}
+	}
+
+	// NORMALES
+
+	k = 0;
+
+	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+		{
+			float u[3], v[3];
+			
+			// Tomamos vectores adyacentes u y v
+			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+				this->object_vertex_buffer[malla[i][j] * 3];
+			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+			
+			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
+				this->object_vertex_buffer[malla[i][j] * 3];
+			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+
+			// Calculamos la normal a u y v
+			float *n = Matematica::productoVectorial(u, v);
+
+			this->object_normal_buffer[k++] = n[0];
+			this->object_normal_buffer[k++] = n[1];
+			this->object_normal_buffer[k++] = n[2];
+		}
+	}
 }
 
 
@@ -156,16 +250,8 @@ void Superficie::create()
 void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// Dibujamos el eje coordenado
-	// this->ejeCoordenado.render(model_matrix, view_matrix, 
-	// 	projection_matrix);
-	
-	// Seteamos el color de la superficie
-	this->changeObjectColor(251, 202, 150);
-
-
-	///////////////////////////////////////////
 	// Bind View Matrix
+	// ################t_motion +=0.01;t_motion +=0.01;
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -180,12 +266,12 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_projection_matrix >= 0) 
 		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,
 			&projection_matrix[0][0]); 
-	//
-	///////////////////////////////////////////
 
 
-	//////////////////////////////////////
+
 	// Bind Light Settings
+	// ###################
+
 	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
 	   
@@ -200,8 +286,7 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
-	//
-	///////////////////////////////////////////
+
 
 
 	// Normal Matrix
@@ -219,7 +304,7 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"ModelMatrix"); 
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
-			&model_matrix[0][0]); 
+			&model_matrix[0][0]);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -227,7 +312,7 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
 
-	glDrawElements(GL_TRIANGLE_FAN, this->object_index_buffer_size, GL_UNSIGNED_INT, 
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);

@@ -14,7 +14,12 @@
 
 #include "object_eje_coordenado.h"
 #include "object_spiralSphere.h"
-#include "object_cube.h"
+#include "object_cangrejo_pinza_antebrazo.h"
+#include "object_cangrejo_pinza_brazo.h"
+#include "object_cangrejo_pinza_garra_superior.h"
+ #include "object_cangrejo_pinza_garra_inferior.h"
+
+
 
 
 
@@ -35,9 +40,12 @@ private:
 	unsigned int pinza_index_buffer_size;
 
 	// Objetos
-	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
-	SpiralSphere spiralSphere;
-	Cube cube;
+	EjeCoordenado ejeCoordenado;			// Eje coordenado del objeto
+	CangrejoPinzaAntebrazo antebrazo;		// Antebrazo de la pinza
+	CangrejoPinzaBrazo brazo;				// Brazo de la pinza
+	SpiralSphere munieca;					// Munieca de la pinza
+	CangrejoPinzaGarraSuperior garraSup;	// Garra superior de la pinza
+	CangrejoPinzaGarraInferior garraInf;	// Garra inferior de la pinza
 
 public:
 

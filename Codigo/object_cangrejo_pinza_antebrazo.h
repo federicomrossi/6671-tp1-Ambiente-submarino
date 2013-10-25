@@ -1,16 +1,19 @@
 /*  
- *  CLASS CANGREJO_CUERPO
+ *  CLASS CANGREJO_PINZA_ANTEBRAZO
  */  
 
 
-#ifndef OBJECT_CANGREJO_CUERPO_H
-#define OBJECT_CANGREJO_CUERPO_H
+#ifndef OBJECT_CANGREJO_PINZA_ANTEBRAZO_H
+#define OBJECT_CANGREJO_PINZA_ANTEBRAZO_H
 
 
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp> 
 #include <vector>
 #include "object_dibujable.h"
+
+#include "object_eje_coordenado.h"
+
 
 
 
@@ -21,7 +24,7 @@
  * ***************************************************************************/
 
 
-class CangrejoCuerpo : public ObjectDibujable
+class CangrejoPinzaAntebrazo : public ObjectDibujable
 {
 private:
 
@@ -39,10 +42,10 @@ private:
 public:
 
 	// Constructor
-	CangrejoCuerpo();
+	CangrejoPinzaAntebrazo();
 
 	// Destructor
-	~CangrejoCuerpo();
+	~CangrejoPinzaAntebrazo();
 
 	// Crea un objeto
 	virtual void create();

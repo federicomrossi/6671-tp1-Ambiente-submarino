@@ -14,7 +14,6 @@
 
 // Objetos
 #include "object_eje_coordenado.h"
-#include "object_cube.h"
 
 
 
@@ -29,7 +28,31 @@ private:
 
 	// Objetos
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
-	Cube cube;		// Cubo
+	
+	// Buffers
+	GLfloat* object_vertex_buffer;
+	GLfloat* object_normal_buffer;
+	GLuint* object_index_buffer;
+	unsigned int object_vertex_buffer_size;
+	unsigned int object_normal_buffer_size;
+	unsigned int object_index_buffer_size;
+
+	// Puntos de control del movimiento
+	float motion_pcx[4];
+	float motion_pcy[4];
+	float motion_pcz[4];
+
+	// Atributos de movimiento
+	float amplitud;
+	float velocidad;
+	int sentido_motion;		// Señalador que indica el sentido de t
+
+	// Caracteristicas del objeto
+	int CANT_PUNTOS;
+	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
+	int ORIENTACION_ALETA;	// Atributo que permite establecer la orientación
+							// de la aleta, siendo 1 hacia izquierda y -1 
+							// hacie la derecha.
 	
 public:
 
@@ -40,7 +63,9 @@ public:
 	~PezAletaLateral();
 
 	// Crea un objeto
-	virtual void create();
+	// PRE: 'orientacion' define si la aleta se curva hacia la derecha (-1) o 
+	// hacia la izquierda (1).
+	virtual void create(int orientacion);
 
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo

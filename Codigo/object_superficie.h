@@ -26,12 +26,17 @@ class Superficie : public ObjectDibujable
 {
 private:
 
+	// Buffers
 	GLfloat* object_vertex_buffer;
 	GLfloat* object_normal_buffer;
 	GLuint* object_index_buffer;
 	unsigned int object_vertex_buffer_size;
 	unsigned int object_normal_buffer_size;
 	unsigned int object_index_buffer_size;
+
+	// Caracteristicas del objeto
+	int CANT_PUNTOS;
+	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
 
 	// Objetos
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
@@ -45,7 +50,7 @@ public:
 	~Superficie();
 
 	// Crea un objeto
-	virtual void create();
+	virtual void create(int ancho);
 
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo

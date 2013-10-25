@@ -67,9 +67,17 @@ private:
 	Roca roca;
 	PlantaAcuatica plantaAcuatica;
 
+
+	// Movimiento
+	float cangrejoPosY;
+	int cangrejoSentido;
+	float pezGradoRotacion;
+	float pezPosX;
+	float pezPosY;
+	float pezPosZ;
+
 	// TEMPORAL
 	GLfloat grado;
-	Test test;
 	// FIN TEMPORAL
 
 public:

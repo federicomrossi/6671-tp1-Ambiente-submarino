@@ -15,6 +15,8 @@
 // Objetos
 #include "object_eje_coordenado.h"
 #include "object_planta_hoja_tipo01.h"
+#include "object_planta_hoja_tipo02.h"
+#include "object_planta_hoja_tipo03.h"
 
 
 
@@ -30,6 +32,8 @@ private:
 
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
 	PlantaHojaTipo01 hojaTipo01;		// Hoja de tipo 01
+	PlantaHojaTipo02 hojaTipo02;		// Hoja de tipo 02
+	PlantaHojaTipo03 hojaTipo03;		// Hoja de tipo 03
 
 public:
 

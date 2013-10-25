@@ -1,5 +1,5 @@
 /*  
- *  CLASS PEZ_ALETA_LATERAL
+ *  CLASS CANGREJO_PATA_MUSLO
  */
 
 
@@ -13,8 +13,9 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
-#include "lib_matematica.h"
-#include "object_pez_aleta_lateral.h"
+ #include "lib_matematica.h"
+
+#include "object_cangrejo_pinza_antebrazo.h"
 
 
 
@@ -37,121 +38,55 @@ namespace {
 
 
 // Constructor
-PezAletaLateral::PezAletaLateral() 
+CangrejoPinzaAntebrazo::CangrejoPinzaAntebrazo()
 {
-	// Valores por defecto
-	this->amplitud = 0.4;
-	this->velocidad = 0.4;
-
-	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	this->sentido_motion = 1;
-
-
-	this->ESTIRAMIENTO = 40;
 }
 
 
 // Destructor
-PezAletaLateral::~PezAletaLateral() { }
+CangrejoPinzaAntebrazo::~CangrejoPinzaAntebrazo() { }
 
 
 // Crea un objeto
-// PRE: 'orientacion' define si la aleta se curva hacia la derecha (-1) o 
-// hacia la izquierda (1).
-void PezAletaLateral::create(int orientacion)
+void CangrejoPinzaAntebrazo::create()
 {
-
-	// Inicializamos puntos de control para el movimiento
-	this->motion_pcx[0] = 0.0;
-	this->motion_pcy[0] = 0.0;
-	this->motion_pcz[0] = 0.0;
-
-	this->motion_pcx[1] = 0.0;
-	this->motion_pcy[1] = 0.0;
-	this->motion_pcz[1] = 2.0;
-
-	this->motion_pcx[2] = (-1) * orientacion * this->amplitud;
-	this->motion_pcy[2] = 0.0;
-	this->motion_pcz[2] = 3.0;
-
-	this->motion_pcx[3] = 0.0;
-	this->motion_pcy[3] = 0.0;
-	this->motion_pcz[3] = 5.0;
-
-	// Almacenamos la orientación especificada
-	this->ORIENTACION_ALETA = orientacion;
-
-	// Creamos el eje coordenado
-	this->ejeCoordenado.create(3);
-
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
 
-	// Puntos de control de la CURVA SUPERIOR
-	float distancia_sup_pc0x = 0.0;
-	float distancia_sup_pc0y = 1.0;
+	// Puntos de control de la CURVA DE LA FORMA DEL ESQUELETO
 
-	float distancia_sup_pc1x = 3.0;
-	float distancia_sup_pc1y = 0.0;
+	float forma_pc0x = 0.0;
+	float forma_pc0y = 0.15;
 
-	float distancia_sup_pc2x = 10.0;
-	float distancia_sup_pc2y = 5.0;
+	float forma_pc1x = 0.2;
+	float forma_pc1y = 0.4;
 
-	float distancia_sup_pc3x = 10.0;
-	float distancia_sup_pc3y = 3.0;
+	float forma_pc2x = 9.8;
+	float forma_pc2y = 0.4;
 
-	float distancia_sup_pcx[] = {distancia_sup_pc0x, distancia_sup_pc1x, distancia_sup_pc2x, distancia_sup_pc3x};
-	float distancia_sup_pcy[] = {distancia_sup_pc0y, distancia_sup_pc1y, distancia_sup_pc2y, distancia_sup_pc3y};
+	float forma_pc3x = 10.0;
+	float forma_pc3y = 0.15;
 
-	// Puntos de control de la CURVA INFERIOR
-	float distancia_inf_pc0x =0.0;
-	float distancia_inf_pc0y = 1.0;
+	float forma_pcx[] = {forma_pc0x, forma_pc1x, forma_pc2x, forma_pc3x};
+	float forma_pcy[] = {forma_pc0y, forma_pc1y, forma_pc2y, forma_pc3y};
 
-	float distancia_inf_pc1x = 3.0;
-	float distancia_inf_pc1y = 0.0;
-
-	float distancia_inf_pc2x = 10.0;
-	float distancia_inf_pc2y = 5.0;
-
-	float distancia_inf_pc3x = 10.0;
-	float distancia_inf_pc3y = 3.0;
-
-	float distancia_inf_pcx[] = {distancia_inf_pc0x, distancia_inf_pc1x, distancia_inf_pc2x, distancia_inf_pc3x};
-	float distancia_inf_pcy[] = {distancia_inf_pc0y, distancia_inf_pc1y, distancia_inf_pc2y, distancia_inf_pc3y};
-
-
-	// Puntos de control de la CURVA DE ONDULACION
-	float ondulacion_pc0x =0.0;
-	float ondulacion_pc0y = 0.0;
-
-	float ondulacion_pc1x = 2.0;
-	float ondulacion_pc1y = 0.0;
-
-	float ondulacion_pc2x = 5.0;
-	float ondulacion_pc2y = this->ORIENTACION_ALETA * 1.5;
-
-	float ondulacion_pc3x = 10.0;
-	float ondulacion_pc3y = this->ORIENTACION_ALETA * 1.0;
-
-	float ondulacion_pcx[] = {ondulacion_pc0x, ondulacion_pc1x, ondulacion_pc2x, ondulacion_pc3x};
-	float ondulacion_pcy[] = {ondulacion_pc0y, ondulacion_pc1y, ondulacion_pc2y, ondulacion_pc3y};
-
-
-
-	// CREACIÓN DEL OBJETO
 
 	// Configuración del paso entre un punto y otro.
 	float PASO = 0.1;
+	// Cantidad de curvas que compondran la curva general
+	int CANT_CURVAS = 4;
 
 	// Valores para cálculos (no modificar)
-	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
+	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
+	this->ESTIRAMIENTO = 40;
+
+
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -163,8 +98,7 @@ void PezAletaLateral::create(int orientacion)
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+	this->object_index_buffer_size = 2* this->CANT_PUNTOS * (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
@@ -173,6 +107,7 @@ void PezAletaLateral::create(int orientacion)
 
 
 	// Unimos los puntos
+
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
 	int e = 0;
@@ -181,54 +116,102 @@ void PezAletaLateral::create(int orientacion)
 			malla[m][n] = e++;
 
 
+
 	int i = 0;
 
-	for(int k = 0; k < this->ESTIRAMIENTO; k++)
+	// Iteramos sobre cada nivel del objeto
+	for(int q = 0; q < this->ESTIRAMIENTO; q++)
 	{
-		float distancia_sup = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_sup_pcy);
-
-		float distancia_inf = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_inf_pcy);
-
-		float ondulacion = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	ondulacion_pcy);
-
+		// Calculamos la curva de bezier que da forma al esqueleto superior
+		float forma = Matematica::curvaBezier((q * 1.0) / 
+			(this->ESTIRAMIENTO-1),	forma_pcy);
 
 		// Puntos de control
-		float pc0x = ondulacion * 0.4;
-		float pc0y = k;
-		float pc0z = -0.30 * distancia_inf;
+		float pc0x = 1.0 * forma;
+		float pc0y = -1.0 * forma;
+		float pc0z = 0.0;
 
-		float pc1x = ondulacion * 0.4;
-		float pc1y = k  + 6.0;
-		float pc1z = -0.2 * distancia_inf;
+		float pc1x = -1.0 * forma;
+		float pc1y = -1.0 * forma;
+		float pc1z = 0.0;
 
-		float pc2x = ondulacion * 0.4;
-		float pc2y = k + 6.0;
-		float pc2z = 0.2  * distancia_sup;
+		float pc2x = -1.0 * forma;
+		float pc2y = 1.0 * forma;
+		float pc2z = 0.0;
 
-		float pc3x = ondulacion * 0.4;
-		float pc3y = k;
-		float pc3z = 0.30 * distancia_sup;
+		float pc3x = 1.0 * forma;
+		float pc3y = 1.0 * forma;
+		float pc3z = 0.0;
 
-		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
+		// Armamos arreglos para los trozos que conforman la curva
+		float pcx012[] = {pc0x, pc1x, pc2x};
+		float pcx123[] = {pc1x, pc2x, pc3x};
+		float pcx230[] = {pc2x, pc3x, pc0x};
+		float pcx301[] = {pc3x, pc0x, pc1x};
+
+		float pcy012[] = {pc0y, pc1y, pc2y};
+		float pcy123[] = {pc1y, pc2y, pc3y};
+		float pcy230[] = {pc2y, pc3y, pc0y};
+		float pcy301[] = {pc3y, pc0y, pc1y};
 
 
-		for(int j = 0; j < this->CANT_PUNTOS; j++) 
+
+		// Segmento 0-1-2 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
-			float ppx = Matematica::curvaBezier(j * PASO, pcx);
-			float ppy = Matematica::curvaBezier(j * PASO, pcy) * 0.05f;
-			float ppz = Matematica::curvaBezier(j * PASO, pcz);
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx012);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy012);
+			float ppz = q * 0.05f;
 
+			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy ;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
+
+		// Segmento 1-2-3 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx123);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
+			float ppz = q * 0.05f;
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
+
+		// Segmento 2-3-0 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx230);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy230);
+			float ppz = q * 0.05f;
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+		}
+
+		// Segmento 3-0-1 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = Matematica::curvaBSpline(j * PASO, pcx301);
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy301);
+			float ppz = q * 0.05f;
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 		}
 	}
-
 
 	int sentido = 1;
 	int k = 0;
@@ -255,7 +238,7 @@ void PezAletaLateral::create(int orientacion)
 		}
 	}
 
-	
+
 	// NORMALES
 
 	k = 0;
@@ -295,41 +278,11 @@ void PezAletaLateral::create(int orientacion)
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// Dibujamos el eje coordenado
-	// this->ejeCoordenado.render(model_matrix, view_matrix, 
-	// 	projection_matrix);
-	
-	// Reposicionamos puntos para dar movimiento
-
-	// Iteramos sobre los niveles
-	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
-		float t = i * 1.0 / this->ESTIRAMIENTO;
-
-		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
-
-		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-		// el buffer de vertices
-		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
-		int cant_puntos_nivel = ini / 3;
-
-		for(int j=0; j < cant_puntos_nivel; j++) {
-			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.04;
-		}
-	}
-
-	this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
-
-	if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
-		this->sentido_motion = -1;
-	else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
-		this->sentido_motion = 1;
-
-
+	///////////////////////////////////////////
 	// Bind View Matrix
-	// ################t_motion +=0.01;t_motion +=0.01;
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -344,12 +297,12 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_projection_matrix >= 0) 
 		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,
 			&projection_matrix[0][0]); 
+	//
+	///////////////////////////////////////////
 
 
-
+	//////////////////////////////////////
 	// Bind Light Settings
-	// ###################
-
 	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
 	   
@@ -364,7 +317,8 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
-
+	//
+	///////////////////////////////////////////
 
 
 	// Normal Matrix
@@ -382,7 +336,7 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"ModelMatrix"); 
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
-			&model_matrix[0][0]);
+			&model_matrix[0][0]); 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -395,16 +349,4 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-
-
-
-
-
-
-	// // Damos forma y la renderizamos
-	// this->cube.changeObjectColor(33, 59, 148);
-	// glm::mat4 m = glm::mat4(1.0f);
-	// m = glm::translate(model_matrix, glm::vec3(-0.5, 0.0, 0.0));
-	// m = glm::scale(m, glm::vec3(1.0, 0.01, 0.6));
-	// this->cube.render(m, view_matrix, projection_matrix);
 }

@@ -1,9 +1,10 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS CUBE
  */
 
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <vector>
 
@@ -13,8 +14,10 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
+
 #include "lib_matematica.h"
-#include "object_pez_aleta_dorsal.h"
+
+#include "object_TEST.h"
 
 
 
@@ -26,8 +29,8 @@ namespace {
 	
 	// Ruta del archivo del fragment shader
 	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	
 }
-
 
 
 
@@ -38,73 +41,82 @@ namespace {
 
 
 // Constructor
-PezAletaDorsal::PezAletaDorsal() 
+Test::Test()
 {
-	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	this->ESTIRAMIENTO = 30;
 }
 
 
 // Destructor
-PezAletaDorsal::~PezAletaDorsal() { }
+Test::~Test() { }
 
 
-// Crea un objeto
-void PezAletaDorsal::create()
+// Crea un objeto cubo
+void Test::create(int size)
 {
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
 
-
-	// Puntos de control de la CURVA SUPERIOR
-	float distancia_sup_pc0x = 0.0;
-	float distancia_sup_pc0y = -0.15;
-
-	float distancia_sup_pc1x = 2.0;
-	float distancia_sup_pc1y = 0.5;
-
-	float distancia_sup_pc2x = 7.0;
-	float distancia_sup_pc2y = 0.2;
-
-	float distancia_sup_pc3x = 10.0;
-	float distancia_sup_pc3y = -0.18;
-
-	float distancia_sup_pcx[] = {distancia_sup_pc0x, distancia_sup_pc1x, distancia_sup_pc2x, distancia_sup_pc3x};
-	float distancia_sup_pcy[] = {distancia_sup_pc0y, distancia_sup_pc1y, distancia_sup_pc2y, distancia_sup_pc3y};
-
-
-	// Puntos de control de la CURVA INFERIOR
-	float distancia_inf_pc0x = 0.0;
-	float distancia_inf_pc0y = -0.15;
-
-	float distancia_inf_pc1x = 2.0;
-	float distancia_inf_pc1y = 0.1;
-
-	float distancia_inf_pc2x = 7.0;
-	float distancia_inf_pc2y = 0.005;
-
-	float distancia_inf_pc3x = 10.0;
-	float distancia_inf_pc3y = -0.18;
-
-	float distancia_inf_pcx[] = {distancia_sup_pc0x, distancia_inf_pc1x, distancia_inf_pc2x, distancia_inf_pc3x};
-	float distancia_inf_pcy[] = {distancia_sup_pc0y, distancia_inf_pc1y, distancia_inf_pc2y, distancia_inf_pc3y};
-
+	// ////////////////// TEST 3
 
 
 	// CREACIÓN DEL OBJETO
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.1;
+	float PASO = 0.05;
 
 	// Valores para cálculos (no modificar)
-	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
+	this->CANT_PUNTOS = 2 * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
+	this->ESTIRAMIENTO = 3;
+
+
+	// Puntos de control
+	float pc0x = 0.0;
+	float pc0y = 1.0;
+	float pc0z = 0.0;
+
+	float pc1x = -1.35;
+	float pc1y = 1.0;
+	float pc1z = 0.0;
+
+	float pc2x = -1.35;
+	float pc2y = -1.0;
+	float pc2z = 0.0;
+
+	float pc3x = 0.0;
+	float pc3y = -1.0;
+	float pc3z = 0.0;
+
+	float pcx[] = {pc0x, pc1x, pc2x, pc3x};
+	float pcy[] = {pc0y, pc1y, pc2y, pc3y};
+
+
+
+	// Puntos de control inversos
+	float pc0x_inv = -0.0;
+	float pc0y_inv = -1.0;
+	float pc0z_inv = 0.0;
+
+	float pc1x_inv = 1.35;
+	float pc1y_inv = -1.0;
+	float pc1z_inv = 0.0;
+
+	float pc2x_inv = 1.35;
+	float pc2y_inv = 1.0;
+	float pc2z_inv = 0.0;
+
+	float pc3x_inv = -0.0;
+	float pc3y_inv = 1.0;
+	float pc3z_inv = 0.0;
+
+	float pcx_inv[] = {pc0x_inv, pc1x_inv, pc2x_inv, pc3x_inv};
+	float pcy_inv[] = {pc0y_inv, pc1y_inv, pc2y_inv, pc3y_inv};
+
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -116,8 +128,7 @@ void PezAletaDorsal::create()
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+	this->object_index_buffer_size = 2* this->CANT_PUNTOS * (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
@@ -126,6 +137,7 @@ void PezAletaDorsal::create()
 
 
 	// Unimos los puntos
+
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
 	int e = 0;
@@ -134,88 +146,98 @@ void PezAletaDorsal::create()
 			malla[m][n] = e++;
 
 
+
 	int i = 0;
 
-	for(int k = 0; k < this->ESTIRAMIENTO; k++)
+	for(int q = 0; q < this->ESTIRAMIENTO; q++)
 	{
-		float distancia_sup = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_sup_pcy);
-
-		float distancia_inf = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_inf_pcy);
-
-
-		// Puntos de control
-		float pc0x = 0.0;
-		float pc0y = k;
-		float pc0z = 1.0 * distancia_inf - 0.5;
-
-		float pc1x = 0.0;
-		float pc1y = k;
-		float pc1z = 1.0 * distancia_inf - 0.5;
-
-		float pc2x = 0.0;
-		float pc2y = k;
-		float pc2z = 0.0 * distancia_sup;
-
-		float pc3x = 0.0;
-		float pc3y = k;
-		float pc3z = 1.0 * distancia_sup;
-
-		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
-
-
-		for(int j = 0; j < this->CANT_PUNTOS; j++) 
+		for(int j = 0; j < this->CANT_PUNTOS/2; j++) 
 		{
 			float ppx = Matematica::curvaBezier(j * PASO, pcx);
-			float ppy = Matematica::curvaBezier(j * PASO, pcy) * 0.05f;
-			float ppz = Matematica::curvaBezier(j * PASO, pcz);
+			float ppy = Matematica::curvaBezier(j * PASO, pcy);
+			float ppz = 1.0 * q;
 
 			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy ;
+			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			std::cout << ppx << "," << ppy << "," << ppz << std::endl;
+		}
+
+
+		for(int j = 0; j < this->CANT_PUNTOS/2; j++) 
+		{
+			float ppx = Matematica::curvaBezier(j * PASO, pcx_inv);
+			float ppy = Matematica::curvaBezier(j * PASO, pcy_inv);
+			float ppz = 1.0 * q;
+
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+
+			std::cout << ppx << "," << ppy << "," << ppz << std::endl;
+		}
+
+		// for(int k = 0; k < object_index_buffer_size; k++)
+		// 	object_index_buffer[k] = k;
+
+
+		int sentido = 1;
+		int k = 0;
+
+		for(int i=0; i < (this->ESTIRAMIENTO-1); i++)
+		{
+			if(sentido == 1)
+			{
+				for(int j=0; j <= (this->CANT_PUNTOS-1); j++) {
+					this->object_index_buffer[k++] = malla[i][j];
+					this->object_index_buffer[k++] = malla[i+1][j];
+				}
+
+				sentido = -1;
+			}
+			else if(sentido == -1)
+			{
+				for(int j=(this->CANT_PUNTOS-1); j >= 0; j--) {
+					this->object_index_buffer[k++] = malla[i][j];
+					this->object_index_buffer[k++] = malla[i+1][j];
+				}
+
+				sentido = 1;
+			}
 		}
 	}
 
+	// NORMALES
+	// this->object_normal_buffer[0] = 0.5f;
+	// this->object_normal_buffer[1] = 0.5f;
+	// this->object_normal_buffer[2] = 0.2f;
 
-	int sentido = 1;
-	int k = 0;
+	// this->object_normal_buffer[3] = 0.5f;
+	// this->object_normal_buffer[4] = -0.5f;
+	// this->object_normal_buffer[5] = 0.2f;
 
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++)
-	{
-		if(sentido == 1)
-		{
-			for(int j=0; j <= (this->CANT_PUNTOS-1); j++) {
-				this->object_index_buffer[k++] = malla[i][j];
-				this->object_index_buffer[k++] = malla[i+1][j];
-			}
+	// this->object_normal_buffer[6] = -0.5f;
+	// this->object_normal_buffer[7] = -0.5f;
+	// this->object_normal_buffer[8] = 0.2f;
 
-			sentido = -1;
-		}
-		else if(sentido == -1)
-		{
-			for(int j=(this->CANT_PUNTOS-1); j >= 0; j--) {
-				this->object_index_buffer[k++] = malla[i][j];
-				this->object_index_buffer[k++] = malla[i+1][j];
-			}
+	// this->object_normal_buffer[9] = -0.5f;
+	// this->object_normal_buffer[10] = 0.5f;
+	// this->object_normal_buffer[11] = 0.2f;
 
-			sentido = 1;
-		}
-	}
+	// this->object_normal_buffer[12] = 0.5f;
+	// this->object_normal_buffer[13] = 0.5f;
+	// this->object_normal_buffer[14] = 0.2f;
 }
 
 
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void Test::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// Centramos la aleta en el centro del eje de coordenadas
-	glm::mat4 mAleta = glm::mat4(1.0f);
-	mAleta = glm::translate(model_matrix, glm::vec3(0.0, -0.75, 0.0));
+
 
 
 	// NORMALES
@@ -259,9 +281,9 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		}
 	}
 
-
+	
+	///////////////////////////////////////////
 	// Bind View Matrix
-	// ################t_motion +=0.01;t_motion +=0.01;
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -276,12 +298,12 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_projection_matrix >= 0) 
 		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,
 			&projection_matrix[0][0]); 
+	//
+	///////////////////////////////////////////
 
 
-
+	//////////////////////////////////////
 	// Bind Light Settings
-	// ###################
-
 	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
 	   
@@ -296,7 +318,8 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
-
+	//
+	///////////////////////////////////////////
 
 
 	// Normal Matrix
@@ -314,7 +337,7 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"ModelMatrix"); 
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
-			&mAleta[0][0]);
+			&model_matrix[0][0]); 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);

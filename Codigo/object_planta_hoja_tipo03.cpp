@@ -1,11 +1,12 @@
 /*  
- *  CLASS PEZ_ALETA_LATERAL
+ *  CLASS PLANTA_HOJA
  */
 
 
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <math.h>
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -13,8 +14,9 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
+
 #include "lib_matematica.h"
-#include "object_pez_aleta_lateral.h"
+#include "object_planta_hoja_tipo03.h"
 
 
 
@@ -26,6 +28,7 @@ namespace {
 	
 	// Ruta del archivo del fragment shader
 	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	
 }
 
 
@@ -37,33 +40,17 @@ namespace {
 
 
 // Constructor
-PezAletaLateral::PezAletaLateral() 
+PlantaHojaTipo03::PlantaHojaTipo03()
 {
 	// Valores por defecto
-	this->amplitud = 0.4;
-	this->velocidad = 0.4;
+	this->amplitud = 3.0;
+	this->velocidad = 0.1;
+
 
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	this->sentido_motion = 1;
-
-
-	this->ESTIRAMIENTO = 40;
-}
-
-
-// Destructor
-PezAletaLateral::~PezAletaLateral() { }
-
-
-// Crea un objeto
-// PRE: 'orientacion' define si la aleta se curva hacia la derecha (-1) o 
-// hacia la izquierda (1).
-void PezAletaLateral::create(int orientacion)
-{
 
 	// Inicializamos puntos de control para el movimiento
 	this->motion_pcx[0] = 0.0;
@@ -74,7 +61,7 @@ void PezAletaLateral::create(int orientacion)
 	this->motion_pcy[1] = 0.0;
 	this->motion_pcz[1] = 2.0;
 
-	this->motion_pcx[2] = (-1) * orientacion * this->amplitud;
+	this->motion_pcx[2] = (-1) * this->amplitud;
 	this->motion_pcy[2] = 0.0;
 	this->motion_pcz[2] = 3.0;
 
@@ -82,76 +69,91 @@ void PezAletaLateral::create(int orientacion)
 	this->motion_pcy[3] = 0.0;
 	this->motion_pcz[3] = 5.0;
 
-	// Almacenamos la orientación especificada
-	this->ORIENTACION_ALETA = orientacion;
+	this->sentido_motion = 1;
 
-	// Creamos el eje coordenado
-	this->ejeCoordenado.create(3);
 
+	this->ESTIRAMIENTO = 60;
+}
+
+
+// Destructor
+PlantaHojaTipo03::~PlantaHojaTipo03() { }
+
+
+// Crea un objeto
+void PlantaHojaTipo03::create()
+{
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
 
-	// Puntos de control de la CURVA SUPERIOR
-	float distancia_sup_pc0x = 0.0;
-	float distancia_sup_pc0y = 1.0;
+	// Puntos de control de la CURVA DE GROSOR
 
-	float distancia_sup_pc1x = 3.0;
-	float distancia_sup_pc1y = 0.0;
+	float grosor_pc0x = 0.0;
+	float grosor_pc0y = 0.0;
 
-	float distancia_sup_pc2x = 10.0;
-	float distancia_sup_pc2y = 5.0;
+	float grosor_pc1x = 8.0;
+	float grosor_pc1y = 0.5;
 
-	float distancia_sup_pc3x = 10.0;
-	float distancia_sup_pc3y = 3.0;
+	float grosor_pc2x = 8.5;
+	float grosor_pc2y = 0.0;
 
-	float distancia_sup_pcx[] = {distancia_sup_pc0x, distancia_sup_pc1x, distancia_sup_pc2x, distancia_sup_pc3x};
-	float distancia_sup_pcy[] = {distancia_sup_pc0y, distancia_sup_pc1y, distancia_sup_pc2y, distancia_sup_pc3y};
+	float grosor_pc3x = 10.0;
+	float grosor_pc3y = 0.0;
 
-	// Puntos de control de la CURVA INFERIOR
-	float distancia_inf_pc0x =0.0;
-	float distancia_inf_pc0y = 1.0;
-
-	float distancia_inf_pc1x = 3.0;
-	float distancia_inf_pc1y = 0.0;
-
-	float distancia_inf_pc2x = 10.0;
-	float distancia_inf_pc2y = 5.0;
-
-	float distancia_inf_pc3x = 10.0;
-	float distancia_inf_pc3y = 3.0;
-
-	float distancia_inf_pcx[] = {distancia_inf_pc0x, distancia_inf_pc1x, distancia_inf_pc2x, distancia_inf_pc3x};
-	float distancia_inf_pcy[] = {distancia_inf_pc0y, distancia_inf_pc1y, distancia_inf_pc2y, distancia_inf_pc3y};
+	float grosor_pcx[] = {grosor_pc0x, grosor_pc1x, grosor_pc2x, grosor_pc3x};
+	float grosor_pcy[] = {grosor_pc0y, grosor_pc1y, grosor_pc2y, grosor_pc3y};
 
 
-	// Puntos de control de la CURVA DE ONDULACION
-	float ondulacion_pc0x =0.0;
-	float ondulacion_pc0y = 0.0;
+	// Puntos de control de la CURVA DE DEFORMACIÓN
 
-	float ondulacion_pc1x = 2.0;
-	float ondulacion_pc1y = 0.0;
+	float deformacion_pc0x = 0.0;
+	float deformacion_pc0y = 0.0;
 
-	float ondulacion_pc2x = 5.0;
-	float ondulacion_pc2y = this->ORIENTACION_ALETA * 1.5;
+	float deformacion_pc1x = 3.0;
+	float deformacion_pc1y = 0.6;
 
-	float ondulacion_pc3x = 10.0;
-	float ondulacion_pc3y = this->ORIENTACION_ALETA * 1.0;
+	float deformacion_pc2x = 7.5;
+	float deformacion_pc2y = -0.1;
 
-	float ondulacion_pcx[] = {ondulacion_pc0x, ondulacion_pc1x, ondulacion_pc2x, ondulacion_pc3x};
-	float ondulacion_pcy[] = {ondulacion_pc0y, ondulacion_pc1y, ondulacion_pc2y, ondulacion_pc3y};
+	float deformacion_pc3x = 10.0;
+	float deformacion_pc3y = 0.0;
+
+	float deformacion_pcx[] = {deformacion_pc0x, deformacion_pc1x,
+		deformacion_pc2x, deformacion_pc3x};
+	float deformacion_pcy[] = {deformacion_pc0y, deformacion_pc1y,
+		deformacion_pc2y, deformacion_pc3y};
+
+
+	// Puntos de control de la CURVA DE DOBLEZ
+
+	float doblez_pc0x = 0.0;
+	float doblez_pc0y = 0.0;
+
+	float doblez_pc1x = 3.0;
+	float doblez_pc1y = 5.0;
+
+	float doblez_pc2x = 7.0;
+	float doblez_pc2y = -5.0;
+
+	float doblez_pc3x = 10.0;
+	float doblez_pc3y = 0.0;
+
+	float doblez_pcx[] = {doblez_pc0x, doblez_pc1x, doblez_pc2x, doblez_pc3x};
+	float doblez_pcy[] = {doblez_pc0y, doblez_pc1y, doblez_pc2y, doblez_pc3y};
 
 
 
 	// CREACIÓN DEL OBJETO
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.1;
+	float PASO = 0.25;
 
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
+	int OBJ_ALTURA = 5;
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -173,6 +175,7 @@ void PezAletaLateral::create(int orientacion)
 
 
 	// Unimos los puntos
+
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
 	int e = 0;
@@ -185,46 +188,45 @@ void PezAletaLateral::create(int orientacion)
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
-		float distancia_sup = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_sup_pcy);
+		float distancia = Matematica::curvaBezier((k * 1.0) / 
+			(this->ESTIRAMIENTO-1),	grosor_pcy);
 
-		float distancia_inf = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	distancia_inf_pcy);
+		float deformacion = Matematica::curvaBezier((k * 1.0) /  
+			(this->ESTIRAMIENTO-1), deformacion_pcy);
 
-		float ondulacion = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	ondulacion_pcy);
+		float doblez_y = Matematica::curvaBezier((k * 1.0) / 
+			(this->ESTIRAMIENTO-1),	doblez_pcy);
 
 
 		// Puntos de control
-		float pc0x = ondulacion * 0.4;
-		float pc0y = k;
-		float pc0z = -0.30 * distancia_inf;
+		float pc0x = (0.0 * distancia + deformacion) * doblez_y;
+		float pc0y = -1.0 * distancia;
+		float pc0z = k;
 
-		float pc1x = ondulacion * 0.4;
-		float pc1y = k  + 6.0;
-		float pc1z = -0.2 * distancia_inf;
+		float pc1x = (-0.6 * distancia + deformacion) * doblez_y;
+		float pc1y = -1.0 * distancia / 2.0;
+		float pc1z = k;
 
-		float pc2x = ondulacion * 0.4;
-		float pc2y = k + 6.0;
-		float pc2z = 0.2  * distancia_sup;
+		float pc2x = (-0.6 * distancia + deformacion) * doblez_y;
+		float pc2y = 1.0 * distancia / 2.0;
+		float pc2z = k;
 
-		float pc3x = ondulacion * 0.4;
-		float pc3y = k;
-		float pc3z = 0.30 * distancia_sup;
+		float pc3x = (0.0 * distancia + deformacion) * doblez_y;
+		float pc3y = 1.0 * distancia;
+		float pc3z = k;
 
 		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
 		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
 
 
 		for(int j = 0; j < this->CANT_PUNTOS; j++) 
 		{
 			float ppx = Matematica::curvaBezier(j * PASO, pcx);
-			float ppy = Matematica::curvaBezier(j * PASO, pcy) * 0.05f;
-			float ppz = Matematica::curvaBezier(j * PASO, pcz);
+			float ppy = Matematica::curvaBezier(j * PASO, pcy);
+			float ppz = k * 0.05f;
 
 			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy ;
+			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 		}
 	}
@@ -254,11 +256,51 @@ void PezAletaLateral::create(int orientacion)
 			sentido = 1;
 		}
 	}
+}
 
-	
+
+// Renderiza el objeto (lo dibuja).
+// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
+// debe renderizarce el objeto.
+void PlantaHojaTipo03::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+	glm::mat4 &projection_matrix)
+{
+	// Reposicionamos puntos para dar movimiento
+
+	// Iteramos sobre los niveles
+	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
+		float t = i * 1.0 / this->ESTIRAMIENTO;
+
+		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
+
+		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
+		// el buffer de vertices
+		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
+		int cant_puntos_nivel = ini / 3;
+
+		for(int j=0; j < cant_puntos_nivel; j++) {
+			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.001;
+		}
+	}
+
+	this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
+
+	if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
+		this->sentido_motion = -1;
+	else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
+		this->sentido_motion = 1;
+
+
 	// NORMALES
 
-	k = 0;
+	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
+
+	int e = 0;
+	for(int m = 0; m < this->ESTIRAMIENTO; m++)
+		for(int n = 0; n < this->CANT_PUNTOS; n++)
+			malla[m][n] = e++;
+
+	int k = 0;
 
 	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
 		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
@@ -289,43 +331,7 @@ void PezAletaLateral::create(int orientacion)
 			this->object_normal_buffer[k++] = n[2];
 		}
 	}
-}
 
-
-// Renderiza el objeto (lo dibuja).
-// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
-// debe renderizarce el objeto.
-void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
-	glm::mat4 &projection_matrix)
-{
-	// Dibujamos el eje coordenado
-	// this->ejeCoordenado.render(model_matrix, view_matrix, 
-	// 	projection_matrix);
-	
-	// Reposicionamos puntos para dar movimiento
-
-	// Iteramos sobre los niveles
-	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
-		float t = i * 1.0 / this->ESTIRAMIENTO;
-
-		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
-
-		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-		// el buffer de vertices
-		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
-		int cant_puntos_nivel = ini / 3;
-
-		for(int j=0; j < cant_puntos_nivel; j++) {
-			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.04;
-		}
-	}
-
-	this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
-
-	if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
-		this->sentido_motion = -1;
-	else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
-		this->sentido_motion = 1;
 
 
 	// Bind View Matrix
@@ -395,16 +401,21 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+}
 
 
+// Permite setear la amplitud de la hoja. Debe setearse antes de crear
+// el objeto.
+void PlantaHojaTipo03::setAmplitud(float amplitud)
+{
+	this->amplitud = amplitud;
+	this->motion_pcx[2] = (-1) * amplitud;
+}
 
 
-
-
-	// // Damos forma y la renderizamos
-	// this->cube.changeObjectColor(33, 59, 148);
-	// glm::mat4 m = glm::mat4(1.0f);
-	// m = glm::translate(model_matrix, glm::vec3(-0.5, 0.0, 0.0));
-	// m = glm::scale(m, glm::vec3(1.0, 0.01, 0.6));
-	// this->cube.render(m, view_matrix, projection_matrix);
+// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
+// antes de crear el objeto.
+void PlantaHojaTipo03::setVelocidad(float velocidad)
+{
+	this->velocidad = velocidad;
 }

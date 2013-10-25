@@ -28,7 +28,7 @@
 // Constructor
 Scene::Scene()
 {
-	this->position = glm::vec3(8.0, 0.0, 3.0);
+	this->position = glm::vec3(4.0, 0.0, 0.0);
 	this->horizontalAngle = 3.14f;
 	this->verticalAngle = 0.0f;
 	this->initialFoV = 30.0f;
@@ -44,6 +44,11 @@ Scene::Scene()
 	cameraTargetX = 0.0;
 	cameraTargetY = 0.0;
 	cameraTargetZ = 0.0;
+
+	this->cangrejoPosY = 0.0;
+	this->cangrejoSentido = 1;
+
+	this->pezGradoRotacion = 0.0;
 }
 
 
@@ -55,15 +60,13 @@ Scene::~Scene() { }
 void Scene::initialize()
 {
 	this->grado = 0.0f;
-	this->ejeCoordenado.create(2);
-	this->grid.create(20);
-	this->superficie.create();
+	// this->ejeCoordenado.create(4);
+	// this->grid.create(20);
+	this->superficie.create(20);
 	this->cangrejo.create();
 	this->pez.create();
 	this->roca.create();
 	this->plantaAcuatica.create();
-	// this->test.create(10);
-
 
 	// Establecemos un color inicial para la escena
 	glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
@@ -77,14 +80,6 @@ void Scene::initialize()
 // initialize().
 void Scene::render(GLuint height, GLuint width)
 {
-	//////////////////////////////
-
-	// this->horizontalAngle += this->mouseSpeed * 0.005f * float(1024/2 - this->xpos);
-	// this->verticalAngle += this->mouseSpeed * 0.005f * float(576/2 - this->ypos);
-
-	///////////////////////////////	
-
-
 	// The position of your camera, in world space
 	glm::vec3 cameraPosition = glm::vec3(
 		this->cameraPositionX,
@@ -122,30 +117,11 @@ void Scene::render(GLuint height, GLuint width)
 		0.1f
 	);
 
-	// // PERSPECTIVA
-	// projection_matrix = glm::perspective(
-		
-	// 	// The horizontal Field of View, in degrees : the amount of "zoom". 
-	// 	// Think "camera lens". Usually between 90° (extra wide) and 30° 
-	// 	// (quite zoomed in)
-	// 	30.0f,
-	
-	// 	// Aspect Ratio. Depends on the size of your window. Notice that 
-	// 	// 4/3 == 800/600 == 1280/960.
-	// 	4.0f / 3.0f,
-
-	// 	// Near clipping plane. Keep as big as possible, or you'll get 
-	// 	// precision issues.
-	// 	0.1f,
-
-	// 	// Far clipping plane. Keep as little as possible.
-	// 	100.0f
-	// );
-
 
 	///////////////////////////////////////////////////////////////////////////
 	// OBJETOS DE LA ESCENA
 	///////////////////////////////////////////////////////////////////////////
+
 
 	// Dibujamos el eje coordenado
 	glm::mat4 model_matrix_eje_coordenado = glm::mat4 (1.0f);
@@ -159,46 +135,79 @@ void Scene::render(GLuint height, GLuint width)
 	this->grid.changeObjectColor(128, 128, 128);
 	this->grid.render(model_matrix_grid, this->view_matrix, projection_matrix);
 
-	// // Dibujamos la superficie
-	// glm::mat4 mSuperficie = glm::mat4(1.0f);
-	// this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
+	// Dibujamos la superficie
+	glm::mat4 mSuperficie = glm::mat4(1.0f);
+	mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	this->superficie.changeObjectColor(199, 215, 126);
+	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
 
-	// // Dibujamos cangrejo
-	// glm::mat4 mCangrejo = glm::mat4(1.0f);
-	// mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -1.0, 0.4));
-	// mCangrejo = glm::scale(mCangrejo, glm::vec3(0.5, 0.5, 0.5));
-	// mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	// this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
+	// Dibujamos cangrejo
 
-	// // Dibujamos el pez
-	// glm::mat4 mPez = glm::mat4(1.0f);
-	// mPez = glm::translate(mPez, glm::vec3(-0.1, 1.6, 1.0));
-	// mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
-	// mPez = glm::rotate(mPez, 15.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
-	// this->pez.render(mPez, this->view_matrix, projection_matrix);
+	// Movimiento
+	if(this->cangrejoSentido == 1 && this->cangrejoPosY < 4.0)
+		this->cangrejoPosY += 0.003;
+	else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
+		this->cangrejoPosY -= 0.003;
 
-	// // Dibujamos rocas
-	// glm::mat4 mRoca = glm::mat4(1.0f);
-	// mRoca = glm::translate(mRoca, glm::vec3(2.0, 2.0, 0.0));
-	// mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.3, 0.3));
-	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	// mRoca = glm::translate(mRoca, glm::vec3(1.0, 0.0, 0.3));
-	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	// mRoca = glm::translate(mRoca, glm::vec3(0.0, 1.1, -0.6));
-	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;
+	else if(this->cangrejoPosY >= 4.0) this->cangrejoSentido = -1;
+
+	glm::mat4 mCangrejo = glm::mat4(1.0f);
+	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -this->cangrejoPosY, 0.45));
+	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.3, 0.3, 0.3));
+	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
+
+	// Dibujamos el pez
+
+	// Movimiento del pez
+
+	// Rotación para efecto de delantamiento
+	float dosPi = 6.283185307;
+	this->pezGradoRotacion += 0.02;
+	if(this->pezGradoRotacion >= dosPi) this->pezGradoRotacion = 0.0;
+	float radio = 5.0;
+
+	this->pezPosX = radio * cos(this->pezGradoRotacion);
+	this->pezPosY = radio * sin(this->pezGradoRotacion);
+	this->pezPosZ = 2.0;
+
+	glm::mat4 mPez = glm::mat4(1.0f);
+	mPez = glm::translate(mPez, glm::vec3(this->pezPosX, this->pezPosY,
+		this->pezPosZ));
+	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
+	mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
+		glm::vec3(0.0, 0.0, 1.0));
+	mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
+	this->pez.render(mPez, this->view_matrix, projection_matrix);
+
+	// Dibujamos rocas
+	glm::mat4 mRoca = glm::mat4(1.0f);
+	mRoca = glm::translate(mRoca, glm::vec3(2.0, 2.0, 0.0));
+	mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.3, 0.3));
+	this->roca.changeObjectColor(130,104,140);
+	this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	mRoca = glm::translate(mRoca, glm::vec3(1.0, 0.0, 0.0));
+	this->roca.render(mRoca, this->view_matrix, projection_matrix);
+	mRoca = glm::translate(mRoca, glm::vec3(0.0, 1.1, 0.0));
+	this->roca.render(mRoca, this->view_matrix, projection_matrix);
+
+	mRoca = glm::translate(mRoca, glm::vec3(-9.0, -8.0, -0.1));
+	this->roca.render(mRoca, this->view_matrix, projection_matrix);
 
 	// Dibujamos una planta
 	glm::mat4 mPlanta = glm::mat4(1.0f);
 	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
-	mPlanta = glm::rotate(mPlanta, -45.0f, glm::vec3(0.0, 0.0, 1.0));
-	this->plantaAcuatica.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
+	mPlanta = glm::rotate(mPlanta, 90.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
-	// // Drawing TEST
-	// glm::mat4 model_matrix_test = glm::mat4(1.0f);
-	// this->test.changeObjectColor(255, 0, 0);
-	// this->test.render(model_matrix_eje_coordenado, this->view_matrix, projection_matrix);
 
+	glm::mat4 mPlanta1 = glm::mat4(1.0f);
+	glm::mat4 mPlanta2 = glm::mat4(1.0f);
+	mPlanta1 = glm::translate(mPlanta1, glm::vec3(-1.0, -1.5, -0.05));
+	mPlanta1 = glm::scale(mPlanta1, glm::vec3(0.7, 0.7, 0.7));
+	this->plantaAcuatica.render(mPlanta1, this->view_matrix, projection_matrix);
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -258,18 +267,30 @@ void Scene::onKeyDown(int nKey, char cAscii)
 		this->cameraPositionY -= 0.07;
 		this->cameraTargetY -= 0.07;
 	}
+	// Subir
+	else if(cAscii == 'i')
+	{
+		this->cameraPositionZ += 0.07;
+		this->cameraTargetZ += 0.07;
+	}
+	// Subir
+	else if(cAscii == 'k')
+	{
+		this->cameraPositionZ -= 0.07;
+		this->cameraTargetZ -= 0.07;
+	}
 
-	if(cAscii == '+') 
-		this->grado--;
-	else if(cAscii == '-') 	
-		this->grado++;
+	// if(cAscii == '+') 
+	// 	this->grado--;
+	// else if(cAscii == '-') 	
+	// 	this->grado++;
 }
 
 
 // Manejador del evento de movimiento de la rueda del mouse
 void Scene::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y)
 {
-	std::cout << nWheelNumber << std::endl;
+
 } 
 
 
