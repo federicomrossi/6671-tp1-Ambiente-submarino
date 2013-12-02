@@ -13,6 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
+#include "SOIL.h"
 
 #include "object_dibujable.h"
 
@@ -35,6 +36,22 @@ ObjectDibujable::~ObjectDibujable() { }
 
 // Crea un objeto.
 void ObjectDibujable::create() { }
+
+
+// Cambia el color del objeto
+// PRE: 'r', 'g' y 'b' corresponden al color en RGB, es decir, a un valor
+// entre 0 y 255.
+void ObjectDibujable::changeObjectColor(int r, int g, int b)
+{
+	glm::vec3 diffuse_reflectivity = glm::vec3(r/255.0, g/255.0, b/255.0);
+
+	GLuint location_diffuse_reflectivity = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_diffuse_reflectivity >= 0) 
+		glUniform3fv(location_diffuse_reflectivity, 1, 
+			&diffuse_reflectivity[0]); 
+}
 
 
 // Carga los shaders
@@ -184,17 +201,30 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 }
 
 
-// Cambia el color del objeto
-// PRE: 'r', 'g' y 'b' corresponden al color en RGB, es decir, a un valor
-// entre 0 y 255.
-void ObjectDibujable::changeObjectColor(int r, int g, int b)
+// Carga e inicia las texturas
+void ObjectDibujable::loadAndInitTexture(const char* filename)
 {
-	glm::vec3 diffuse_reflectivity = glm::vec3(r/255.0, g/255.0, b/255.0);
+	// Load texture file
+		int image_witdh;
+	int image_height;
+	int image_channels;
+	unsigned char* image_buffer  = SOIL_load_image(filename, &image_witdh, &image_height, &image_channels, SOIL_LOAD_RGBA);
 
-	GLuint location_diffuse_reflectivity = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// Copy file to OpenGL
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(1, &this->texture_id);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
-	if(location_diffuse_reflectivity >= 0) 
-		glUniform3fv(location_diffuse_reflectivity, 1, 
-			&diffuse_reflectivity[0]); 
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_witdh, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_buffer);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// Set the Tex1 sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	if( loc >= 0 )
+		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
+		glUniform1i(loc, 0);
+	else
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
 }

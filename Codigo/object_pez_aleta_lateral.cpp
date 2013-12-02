@@ -168,7 +168,7 @@ void PezAletaLateral::create(int orientacion)
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
@@ -260,29 +260,65 @@ void PezAletaLateral::create(int orientacion)
 
 	k = 0;
 
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
+	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
 		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
 		{
 			float u[3], v[3];
+
+			int realI, realJ;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+			{
+				realI = i+1;
+				realJ = j-1;
+			}
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j+1;
+			}
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j-1;
+			}
+			else
+			{
+				realI = i+1;
+				realJ = j+1;
+			}
 			
 			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
 				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
+			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
 				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
+			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
+			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 
+			float *n;
 
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+			else
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+
+			n = Matematica::normalizar(n);
 
 			this->object_normal_buffer[k++] = n[0];
 			this->object_normal_buffer[k++] = n[1];
@@ -304,28 +340,29 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	
 	// Reposicionamos puntos para dar movimiento
 
-	// Iteramos sobre los niveles
-	for(int i = 0; i < this->ESTIRAMIENTO; i++) {
-		float t = i * 1.0 / this->ESTIRAMIENTO;
+	// // Iteramos sobre los niveles
+	// for(int i = 0; i < this->ESTIRAMIENTO-1; i++) {
+	// 	float t = i * 1.0 / this->ESTIRAMIENTO;
 
-		float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
+	// 	float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
 
-		// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-		// el buffer de vertices
-		int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
-		int cant_puntos_nivel = ini / 3;
+	// 	// Nos posicionamos sobre el inicio de los puntos del nivel actual en
+	// 	// el buffer de vertices
+	// 	int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO + i;
+	// 	int cant_puntos_nivel = ini / 3;
+	// 	std::cout << "paso " << i << std::endl;
 
-		for(int j=0; j < cant_puntos_nivel; j++) {
-			this->object_vertex_buffer[ini + j * 3] += deltaX * 0.04;
-		}
-	}
+	// 	for(int j=0; j < cant_puntos_nivel; j++) {
+	// 		this->object_vertex_buffer[ini + j * 3] += deltaX * 0.04;
+	// 	}
+	// }
 
-	this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
+	// this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
 
-	if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
-		this->sentido_motion = -1;
-	else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
-		this->sentido_motion = 1;
+	// if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
+	// 	this->sentido_motion = -1;
+	// else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
+	// 	this->sentido_motion = 1;
 
 
 	// Bind View Matrix
@@ -395,16 +432,4 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-
-
-
-
-
-
-	// // Damos forma y la renderizamos
-	// this->cube.changeObjectColor(33, 59, 148);
-	// glm::mat4 m = glm::mat4(1.0f);
-	// m = glm::translate(model_matrix, glm::vec3(-0.5, 0.0, 0.0));
-	// m = glm::scale(m, glm::vec3(1.0, 0.01, 0.6));
-	// this->cube.render(m, view_matrix, projection_matrix);
 }

@@ -49,21 +49,21 @@ Pez::~Pez() { }
 void Pez::create()
 {
 	// // Creamos el eje coordenado
-	this->ejeCoordenado.create(3);
+	// this->ejeCoordenado.create(3);
 
 	// Creamos el cuerpo del pez;
 	this->pezCuerpo.create();
 
-	// // Creamos el ojo del pez;
+	// Creamos el ojo del pez;
 	this->pezOjo.create();
 
-	// // Creamos la aleta trasera
+	// Creamos la aleta trasera
 	this->pezAletaTrasera.create();
 
-	// // Creamos la aleta dorsal
+	// Creamos la aleta dorsal
 	this->pezAletaDorsal.create();
 
-	// // Creamos las aletas laterales
+	// Creamos las aletas laterales
 	this->pezAletaLateralDer.create(-1);
 	this->pezAletaLateralIzq.create(1);
 }
@@ -107,7 +107,7 @@ void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	// Renderizamos la aleta dorsal del pez
 	glm::mat4 mAletaDorsal = glm::mat4(1.0f);
-	mAletaDorsal = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 1.2));
+	mAletaDorsal = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 1.16));
 	mAletaDorsal = glm::rotate(mAletaDorsal, 90.0f, glm::vec3(0.0, 0.0, 1.0));
 	this->pezAletaDorsal.changeObjectColor(33, 59, 200);
 	this->pezAletaDorsal.render(mAletaDorsal, view_matrix, projection_matrix);

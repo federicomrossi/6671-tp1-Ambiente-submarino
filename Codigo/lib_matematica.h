@@ -23,6 +23,9 @@ public:
 	// POST: se devuelve un vector normal a 'u' y 'v';
 	static float* productoVectorial(float u[3], float v[3]);
 
+	// Método que normaliza un vector de 3 dimensiones
+	static float* normalizar(float n[3]);
+
 	// Función que devuelve un numero aleatorio entre "min" y "max"
 	static float numeroAleatorio(float min, float max);
 

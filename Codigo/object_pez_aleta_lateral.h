@@ -49,7 +49,10 @@ private:
 
 	// Caracteristicas del objeto
 	int CANT_PUNTOS;
-	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
+	int ESTIRAMIENTO;				// Niveles que posee el objeto de
+									// estiramiento
+	float ESPACIADO_ESTIRAMIENTO;	// Espacio entre cada nivel de altura del
+									// estiramiento del objeto.
 	int ORIENTACION_ALETA;	// Atributo que permite establecer la orientación
 							// de la aleta, siendo 1 hacia izquierda y -1 
 							// hacie la derecha.

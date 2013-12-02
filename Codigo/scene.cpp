@@ -19,7 +19,6 @@
 
 
 
-
 /* ****************************************************************************
  * DEFINICIÓN DE LA CLASE
  * ***************************************************************************/
@@ -62,10 +61,10 @@ void Scene::initialize()
 	this->grado = 0.0f;
 	// this->ejeCoordenado.create(4);
 	// this->grid.create(20);
-	this->superficie.create(20);
-	this->cangrejo.create();
+	this->superficie.create(40);
+	// this->cangrejo.create();
+	// this->roca.create();
 	this->pez.create();
-	this->roca.create();
 	this->plantaAcuatica.create();
 
 	// Establecemos un color inicial para la escena
@@ -137,7 +136,9 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos la superficie
 	glm::mat4 mSuperficie = glm::mat4(1.0f);
-	mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	mSuperficie = glm::translate(mSuperficie, glm::vec3(-15.0, 0.0, 0.0));
+	// mSuperficie = glm::scale(mSuperficie, glm::vec3(1.0, 1.0, 1.0));
+	// mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->superficie.changeObjectColor(199, 215, 126);
 	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
 
@@ -166,19 +167,21 @@ void Scene::render(GLuint height, GLuint width)
 	float dosPi = 6.283185307;
 	this->pezGradoRotacion += 0.02;
 	if(this->pezGradoRotacion >= dosPi) this->pezGradoRotacion = 0.0;
-	float radio = 5.0;
+	float radio = 6.0;
 
 	this->pezPosX = radio * cos(this->pezGradoRotacion);
 	this->pezPosY = radio * sin(this->pezGradoRotacion);
 	this->pezPosZ = 2.0;
 
 	glm::mat4 mPez = glm::mat4(1.0f);
-	mPez = glm::translate(mPez, glm::vec3(this->pezPosX, this->pezPosY,
+	mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY,
 		this->pezPosZ));
 	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
 	mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
 		glm::vec3(0.0, 0.0, 1.0));
 	mPez = glm::rotate(mPez, 5.0f, glm::vec3(0.0, 1.0, 0.0));
+	// mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
+	// mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->pez.render(mPez, this->view_matrix, projection_matrix);
 
 	// Dibujamos rocas
@@ -199,15 +202,15 @@ void Scene::render(GLuint height, GLuint width)
 	glm::mat4 mPlanta = glm::mat4(1.0f);
 	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
 	mPlanta = glm::rotate(mPlanta, 90.0f, glm::vec3(0.0, 0.0, 1.0));
-	mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	// mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
 
-	glm::mat4 mPlanta1 = glm::mat4(1.0f);
-	glm::mat4 mPlanta2 = glm::mat4(1.0f);
-	mPlanta1 = glm::translate(mPlanta1, glm::vec3(-1.0, -1.5, -0.05));
-	mPlanta1 = glm::scale(mPlanta1, glm::vec3(0.7, 0.7, 0.7));
-	this->plantaAcuatica.render(mPlanta1, this->view_matrix, projection_matrix);
+	// glm::mat4 mPlanta1 = glm::mat4(1.0f);
+	// glm::mat4 mPlanta2 = glm::mat4(1.0f);
+	// mPlanta1 = glm::translate(mPlanta1, glm::vec3(-1.0, -1.5, -0.05));
+	// mPlanta1 = glm::scale(mPlanta1, glm::vec3(0.7, 0.7, 0.7));
+	// this->plantaAcuatica.render(mPlanta1, this->view_matrix, projection_matrix);
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -280,10 +283,10 @@ void Scene::onKeyDown(int nKey, char cAscii)
 		this->cameraTargetZ -= 0.07;
 	}
 
-	// if(cAscii == '+') 
-	// 	this->grado--;
-	// else if(cAscii == '-') 	
-	// 	this->grado++;
+	if(cAscii == '+') 
+		this->grado--;
+	else if(cAscii == '-') 	
+		this->grado++;
 }
 
 

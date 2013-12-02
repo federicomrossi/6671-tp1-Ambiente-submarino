@@ -43,6 +43,22 @@ float* Matematica::productoVectorial(float u[3], float v[3])
 }
 
 
+// Método que normaliza un vector de 3 dimensiones
+float* Matematica::normalizar(float v[3])
+{
+	static float n[3];
+
+	float norma = sqrt(pow(v[0], 2) + pow(v[1], 2) + pow(v[2], 2));
+
+
+	n[0] = v[0] / norma;
+	n[1] = v[1] / norma;
+	n[2] = v[2] / norma;
+
+	return n;
+}
+
+
 // Función que devuelve un numero aleatorio entre "min" y "max"
 float Matematica::numeroAleatorio(float min, float max)
 {

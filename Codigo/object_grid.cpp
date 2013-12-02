@@ -195,21 +195,6 @@ void Grid::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&model_matrix[0][0]);
 
-	/*struct FogInfo {
-		float maxDist;
-		float minDist;
-		vec3 color;
-	};
-
-	GLuint fog;
-	GLuint location_fog = glGetUniformLocation(fog, "FogInfo"); 
-
-	fog.maxDist = 5.0f;
-	fog.minDist = 1.0f;
-	fog.color = glm::vec3(0.0f, 0.0f, 0.0f);
-	*/
-
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->grid_vertex_buffer);

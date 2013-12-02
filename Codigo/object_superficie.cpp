@@ -65,7 +65,7 @@ void Superficie::create(int ancho)
 	float deformacionX_pc0y = 0.0;
 
 	float deformacionX_pc1x = 3.0;
-	float deformacionX_pc1y = 3.0;
+	float deformacionX_pc1y = 5.0;
 
 	float deformacionX_pc2x = 9.0;
 	float deformacionX_pc2y = -2.0;
@@ -79,7 +79,7 @@ void Superficie::create(int ancho)
 		deformacionX_pc2y, deformacionX_pc3y};
 
 
-	// Puntos de control de la CURVA DE DEFORMACIÓN EN X
+	// Puntos de control de la CURVA DE DEFORMACIÓN EN Y
 	float deformacionY_pc0x = 0.0;
 	float deformacionY_pc0y = 0.0;
 
@@ -102,18 +102,18 @@ void Superficie::create(int ancho)
 	// CREACIÓN DEL OBJETO
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.1;
+	float PASO = 0.25;
 
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
-	int OBJ_ALTURA = 5;
 
 
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
 
-	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
+	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
@@ -124,7 +124,7 @@ void Superficie::create(int ancho)
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
@@ -212,29 +212,66 @@ void Superficie::create(int ancho)
 
 	k = 0;
 
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
+	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
 		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
 		{
 			float u[3], v[3];
-			
+
+			int realI, realJ;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+			{
+				realI = i+1;
+				realJ = j-1;
+			}
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j+1;
+			}
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j-1;
+			}
+			else
+			{
+				realI = i+1;
+				realJ = j+1;
+			}
+
+
 			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
 				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
+			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
 				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
+			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
+			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 
+			float *n;
 
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+			else
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+
+			n = Matematica::normalizar(n);
 
 			this->object_normal_buffer[k++] = n[0];
 			this->object_normal_buffer[k++] = n[1];
@@ -244,6 +281,8 @@ void Superficie::create(int ancho)
 }
 
 
+
+
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
@@ -251,7 +290,8 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::mat4 &projection_matrix)
 {
 	// Bind View Matrix
-	// ################t_motion +=0.01;t_motion +=0.01;
+	// ################
+
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -286,7 +326,6 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
-
 
 
 	// Normal Matrix

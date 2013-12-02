@@ -121,7 +121,7 @@ void PezAletaDorsal::create()
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
@@ -204,6 +204,77 @@ void PezAletaDorsal::create()
 			sentido = 1;
 		}
 	}
+
+
+	// NORMALES
+
+	k = 0;
+
+	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+		{
+			float u[3], v[3];
+
+			int realI, realJ;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+			{
+				realI = i+1;
+				realJ = j-1;
+			}
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j+1;
+			}
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j-1;
+			}
+			else
+			{
+				realI = i+1;
+				realJ = j+1;
+			}
+			
+			// Tomamos vectores adyacentes u y v
+			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
+				this->object_vertex_buffer[malla[i][j] * 3];
+			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+			
+			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
+				this->object_vertex_buffer[malla[i][j] * 3];
+			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+			float *n;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+			else
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+
+			n = Matematica::normalizar(n);
+
+			this->object_normal_buffer[k++] = n[0];
+			this->object_normal_buffer[k++] = n[1];
+			this->object_normal_buffer[k++] = n[2];
+		}
+	}
 }
 
 
@@ -216,48 +287,6 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Centramos la aleta en el centro del eje de coordenadas
 	glm::mat4 mAleta = glm::mat4(1.0f);
 	mAleta = glm::translate(model_matrix, glm::vec3(0.0, -0.75, 0.0));
-
-
-	// NORMALES
-
-	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
-
-	int e = 0;
-	for(int m = 0; m < this->ESTIRAMIENTO; m++)
-		for(int n = 0; n < this->CANT_PUNTOS; n++)
-			malla[m][n] = e++;
-
-	int k = 0;
-
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
-		}
-	}
 
 
 	// Bind View Matrix

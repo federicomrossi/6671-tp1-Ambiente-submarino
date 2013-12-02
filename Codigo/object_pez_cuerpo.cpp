@@ -119,14 +119,15 @@ void PezCuerpo::create()
 
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.001;
+	float PASO = 0.1;
 	// Cantidad de curvas que compondran la curva general
 	int CANT_CURVAS = 4;
 
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
-	this->ESTIRAMIENTO = 60;
+	this->ESTIRAMIENTO = 16;
+	this->ESPACIADO_ESTIRAMIENTO = 0.2;
 
 
 
@@ -144,7 +145,7 @@ void PezCuerpo::create()
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
@@ -214,7 +215,7 @@ void PezCuerpo::create()
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx012);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy012);
-			float ppz = q * 0.05f;
+			float ppz = q * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
@@ -228,7 +229,7 @@ void PezCuerpo::create()
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx123);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
-			float ppz = q * 0.05f;
+			float ppz = q * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
@@ -242,7 +243,7 @@ void PezCuerpo::create()
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx230);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy230);
-			float ppz = q * 0.05f;
+			float ppz = q * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
@@ -256,7 +257,7 @@ void PezCuerpo::create()
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx301);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy301);
-			float ppz = q * 0.05f;
+			float ppz = q * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
@@ -289,6 +290,77 @@ void PezCuerpo::create()
 			sentido = 1;
 		}
 	}
+
+
+	// NORMALES
+
+	k = 0;
+
+	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+		{
+			float u[3], v[3];
+
+			int realI, realJ;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+			{
+				realI = i+1;
+				realJ = j-1;
+			}
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j+1;
+			}
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+			{
+				realI = i-1;
+				realJ = j-1;
+			}
+			else
+			{
+				realI = i+1;
+				realJ = j+1;
+			}
+			
+			// Tomamos vectores adyacentes u y v
+			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
+				this->object_vertex_buffer[malla[i][j] * 3];
+			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+			
+			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
+				this->object_vertex_buffer[malla[i][j] * 3];
+			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
+				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+			float *n;
+
+			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(u, v);
+			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+			else
+				// Calculamos la normal a u y v
+				n = Matematica::productoVectorial(v, u);
+
+			n = Matematica::normalizar(n);
+
+			this->object_normal_buffer[k++] = n[0];
+			this->object_normal_buffer[k++] = n[1];
+			this->object_normal_buffer[k++] = n[2];
+		}
+	}
 }
 
 
@@ -303,47 +375,6 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mCuerpo = glm::translate(model_matrix, glm::vec3(-1.5, 0.0, 0.0));
 	mCuerpo = glm::rotate(mCuerpo, 90.0f, glm::vec3(0.0, 1.0, 0.0));
 
-
-	// NORMALES
-
-	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
-
-	int e = 0;
-	for(int m = 0; m < this->ESTIRAMIENTO; m++)
-		for(int n = 0; n < this->CANT_PUNTOS; n++)
-			malla[m][n] = e++;
-
-	int k = 0;
-
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
-		}
-	}
 
 	///////////////////////////////////////////
 	// Bind View Matrix
