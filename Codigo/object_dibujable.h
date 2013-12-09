@@ -28,7 +28,12 @@ protected:
 	GLuint programHandle;				// Program shader
 	GLuint vertShader;					// Vertex shader
 	GLuint fragShader;					// Fragment shader
-	GLuint texture_id;					// ID de la textura	
+	GLuint texture_id;					// ID de la textura
+
+	unsigned char* image_buffer;
+	int image_witdh;
+	int image_height;
+	int image_channels;
 
 	// Carga los shaders
 	void loadShaderPrograms(std::string vertShaderFile, 

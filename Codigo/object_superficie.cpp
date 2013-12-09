@@ -21,10 +21,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/SuperficieVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/SuperficieFShader.frag";
 	
 }
 
@@ -41,6 +41,7 @@ Superficie::Superficie()
 {
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 }
 
@@ -52,9 +53,14 @@ Superficie::~Superficie() { }
 // Crea un objeto
 void Superficie::create(int ancho)
 {
+	// Cargamos la textura
+	this->loadAndInitTexture("textures/sand-texture-04.jpg");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
+	
+
 
 	// Almacenamos el ancho que debe tener la superficie
 	this->ESTIRAMIENTO = ancho;
@@ -107,6 +113,7 @@ void Superficie::create(int ancho)
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
+	int DIMENSIONES_TEXTURA = 2;
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -116,12 +123,17 @@ void Superficie::create(int ancho)
 		* this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
+
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
 	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
 		* (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
+
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
 		* this->ESTIRAMIENTO;
@@ -139,15 +151,12 @@ void Superficie::create(int ancho)
 
 
 	int i = 0;
+	int y = 0;
+	int w = 0;
+
 
 	for(int k = -(this->ESTIRAMIENTO / 2); k < (this->ESTIRAMIENTO / 2); k++)
 	{
-		float deformacionX = Matematica::curvaBezier((k * 1.0) /  
-			(this->ESTIRAMIENTO-1), deformacionX_pcy);
-
-		float deformacionY = Matematica::curvaBezier((k * 1.0) /  
-			(this->ESTIRAMIENTO-1), deformacionY_pcy);
-
 		// Puntos de control
 		float pc0x = (this->ESTIRAMIENTO / 2);
 		float pc0y = k;
@@ -179,6 +188,21 @@ void Superficie::create(int ancho)
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (j * PASO) 
+				* (this->ESTIRAMIENTO / 5);
+			this->object_texture_buffer[y++] = ((k * 1.0) 
+				/ (this->ESTIRAMIENTO-1)) * (this->ESTIRAMIENTO / 5);
+
+
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBezierVectores(j * PASO, pcx, pcy, pcz, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			// this->object_normal_buffer[w++] = n[0];
+			// this->object_normal_buffer[w++] = n[1];
+			// this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
@@ -208,6 +232,8 @@ void Superficie::create(int ancho)
 		}
 	}
 
+
+
 	// NORMALES
 
 	k = 0;
@@ -215,67 +241,12 @@ void Superficie::create(int ancho)
 	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
 		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
 		{
-			float u[3], v[3];
-
-			int realI, realJ;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-			{
-				realI = i+1;
-				realJ = j-1;
-			}
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j+1;
-			}
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j-1;
-			}
-			else
-			{
-				realI = i+1;
-				realJ = j+1;
-			}
-
-
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 			
-			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
 
-			float *n;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-			else
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-
-			n = Matematica::normalizar(n);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
+			// Cargamos las coordenadas en el buffer
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
 		}
 	}
 }
@@ -288,7 +259,12 @@ void Superficie::create(int ancho)
 // debe renderizarce el objeto.
 void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
-{
+{	
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+	glUseProgram(this->programHandle);
+
+	this->changeObjectColor(199, 215, 126);
+
 	// Bind View Matrix
 	// ################
 
@@ -331,7 +307,7 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Normal Matrix
 	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
 
-	// Bind Normal MAtrix
+	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
 		"NormalMatrix"); 
 	if( location_normal_matrix >= 0 ) 
@@ -345,15 +321,28 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&model_matrix[0][0]);
 
+
+	// Set the Tex1 sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	if( loc >= 0 )
+		glUniform1i(loc, 0);
+	else
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
+	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

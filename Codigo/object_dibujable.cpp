@@ -153,12 +153,12 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 			}
 		}
 	
-	// *******************************************
+		// *******************************************
 
 
-	// *******************************************
-	// Linking the shader programms
-	// *******************************************
+		// *******************************************
+		// Linking the shader programms
+		// *******************************************
 
 		this->programHandle = glCreateProgram();
 		
@@ -194,8 +194,7 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 					free(log);
 				}
 			}
-			else
-				glUseProgram(this->programHandle);
+
 		}
 	}
 }
@@ -205,26 +204,32 @@ void ObjectDibujable::loadShaderPrograms(std::string vertShaderFile,
 void ObjectDibujable::loadAndInitTexture(const char* filename)
 {
 	// Load texture file
-		int image_witdh;
-	int image_height;
-	int image_channels;
-	unsigned char* image_buffer  = SOIL_load_image(filename, &image_witdh, &image_height, &image_channels, SOIL_LOAD_RGBA);
+	this->image_buffer  = SOIL_load_image(filename, &this->image_witdh, &this->image_height, &this->image_channels, SOIL_LOAD_RGBA);
 
 	// Copy file to OpenGL
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &this->texture_id);
-	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);  
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_witdh, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_buffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->image_witdh, this->image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image_buffer);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+	// // Copy file to OpenGL
+	// glActiveTexture(GL_TEXTURE0);
+	// glGenTextures(1, &this->texture_id);
+	// glBindTexture(GL_TEXTURE_2D, this->textureure_id);
 
-	if( loc >= 0 )
-		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_witdh, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_buffer);
+	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// // Set the Tex1 sampler uniform to refer to texture unit 0
+	// int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	// if( loc >= 0 )
+	// 	// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
+	// 	glUniform1i(loc, 0);
+	// else
+	// 	fprintf(stderr, "Uniform variable Tex1 not found!\n");
 }

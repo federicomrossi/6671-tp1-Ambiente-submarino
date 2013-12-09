@@ -307,6 +307,8 @@ void CangrejoPinzaBrazo::create()
 void CangrejoPinzaBrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+	
 	///////////////////////////////////////////
 	// Bind View Matrix
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,

@@ -284,6 +284,8 @@ void PezAletaDorsal::create()
 void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+	
 	// Centramos la aleta en el centro del eje de coordenadas
 	glm::mat4 mAleta = glm::mat4(1.0f);
 	mAleta = glm::translate(model_matrix, glm::vec3(0.0, -0.75, 0.0));

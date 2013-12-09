@@ -1,12 +1,11 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS SUPERFICIEAGUA
  */
 
 
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <math.h>
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -15,20 +14,18 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
-#include "object_planta_hoja_tipo01.h"
-
-
-
+#include "object_superficie_agua.h"
 
 
 // Constantes de CONFIGURACION
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/HojaPlantaVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/SuperficieAguaVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/HojaPlantaFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/SuperficieAguaFShader.frag";
+	
 }
 
 
@@ -40,74 +37,74 @@ namespace {
 
 
 // Constructor
-PlantaHojaTipo01::PlantaHojaTipo01()
+SuperficieAgua::SuperficieAgua()
 {
 	// Valores por defecto
 	this->tiempo = 0.0f;
-
-	// Inicializamos buffers
+	
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	this->ESTIRAMIENTO = 15;
-	this->ESPACIADO_ESTIRAMIENTO = 0.2;
 }
 
 
 // Destructor
-PlantaHojaTipo01::~PlantaHojaTipo01() { }
+SuperficieAgua::~SuperficieAgua() { }
 
 
 // Crea un objeto
-void PlantaHojaTipo01::create()
+void SuperficieAgua::create(int ancho)
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/leaf-texture-01.jpg");
-	
+	this->loadAndInitTexture("textures/water-texture-01.jpg");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
+	
 
 
-
-	// Puntos de control de la CURVA DE GROSOR
-
-	float grosor_pc0x = 0.0;
-	float grosor_pc0y = 0.0;
-
-	float grosor_pc1x = 8.0;
-	float grosor_pc1y = 0.5;
-
-	float grosor_pc2x = 8.5;
-	float grosor_pc2y = 0.0;
-
-	float grosor_pc3x = 10.0;
-	float grosor_pc3y = 0.0;
-
-	float grosor_pcx[] = {grosor_pc0x, grosor_pc1x, grosor_pc2x, grosor_pc3x};
-	float grosor_pcy[] = {grosor_pc0y, grosor_pc1y, grosor_pc2y, grosor_pc3y};
+	// Almacenamos el ancho que debe tener la superficie
+	this->ESTIRAMIENTO = ancho;
 
 
-	// Puntos de control de la CURVA DE DEFORMACIÓN
+	// Puntos de control de la CURVA DE DEFORMACIÓN EN X
+	float deformacionX_pc0x = 0.0;
+	float deformacionX_pc0y = 0.0;
 
-	float deformacion_pc0x = 0.0;
-	float deformacion_pc0y = 0.0;
+	float deformacionX_pc1x = 3.0;
+	float deformacionX_pc1y = 5.0;
 
-	float deformacion_pc1x = 3.0;
-	float deformacion_pc1y = 0.6;
+	float deformacionX_pc2x = 9.0;
+	float deformacionX_pc2y = -2.0;
 
-	float deformacion_pc2x = 7.5;
-	float deformacion_pc2y = -0.1;
+	float deformacionX_pc3x = 10.0;
+	float deformacionX_pc3y = 0.0;
 
-	float deformacion_pc3x = 10.0;
-	float deformacion_pc3y = 0.0;
+	float deformacionX_pcx[] = {deformacionX_pc0x, deformacionX_pc1x,
+		deformacionX_pc2x, deformacionX_pc3x};
+	float deformacionX_pcy[] = {deformacionX_pc0y, deformacionX_pc1y,
+		deformacionX_pc2y, deformacionX_pc3y};
 
-	float deformacion_pcx[] = {deformacion_pc0x, deformacion_pc1x,
-		deformacion_pc2x, deformacion_pc3x};
-	float deformacion_pcy[] = {deformacion_pc0y, deformacion_pc1y,
-		deformacion_pc2y, deformacion_pc3y};
+
+	// Puntos de control de la CURVA DE DEFORMACIÓN EN Y
+	float deformacionY_pc0x = 0.0;
+	float deformacionY_pc0y = 0.0;
+
+	float deformacionY_pc1x = 2.0;
+	float deformacionY_pc1y = -1.4;
+
+	float deformacionY_pc2x = 8.5;
+	float deformacionY_pc2y = 6.0;
+
+	float deformacionY_pc3x = 10.0;
+	float deformacionY_pc3y = 0.0;
+
+	float deformacionY_pcx[] = {deformacionY_pc0x, deformacionY_pc1x,
+		deformacionY_pc2x, deformacionY_pc3x};
+	float deformacionY_pcy[] = {deformacionY_pc0y, deformacionY_pc1y,
+		deformacionY_pc2y, deformacionY_pc3y};
 
 
 
@@ -140,6 +137,7 @@ void PlantaHojaTipo01::create()
 		* (this->ESTIRAMIENTO-1);
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
+
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
 		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
@@ -159,30 +157,25 @@ void PlantaHojaTipo01::create()
 	int y = 0;
 	int w = 0;
 
-	for(int k = 0; k < this->ESTIRAMIENTO; k++)
+
+	for(int k = -(this->ESTIRAMIENTO / 2); k < (this->ESTIRAMIENTO / 2); k++)
 	{
-		float distancia = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	grosor_pcy);
-
-		float deformacion = Matematica::curvaBezier((k * 1.0) /  
-			(this->ESTIRAMIENTO-1), deformacion_pcy);
-
 		// Puntos de control
-		float pc0x = 0.0 * distancia + deformacion;
-		float pc0y = -1.0 * distancia;
-		float pc0z = k * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
+		float pc0x = (this->ESTIRAMIENTO / 2);
+		float pc0y = k;
+		float pc0z = 0.0;
 
-		float pc1x = -0.6 * distancia + deformacion;
-		float pc1y = -1.0 * distancia / 2.0;
-		float pc1z = k * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
+		float pc1x = (this->ESTIRAMIENTO / 4);
+		float pc1y = k;
+		float pc1z = 0.5 * cos(k);
 
-		float pc2x = -0.6 * distancia + deformacion;
-		float pc2y = 1.0 * distancia / 2.0;
-		float pc2z = k * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
+		float pc2x = -(this->ESTIRAMIENTO / 4);
+		float pc2y = k;
+		float pc2z = 0.6 * sin(k);
 
-		float pc3x = 0.0 * distancia + deformacion;
-		float pc3y = 1.0 * distancia;
-		float pc3z = k * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
+		float pc3x = -(this->ESTIRAMIENTO / 2);
+		float pc3y = k;
+		float pc3z = 0.0;
 
 		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
 		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
@@ -193,24 +186,24 @@ void PlantaHojaTipo01::create()
 		{
 			float ppx = Matematica::curvaBezier(j * PASO, pcx);
 			float ppy = Matematica::curvaBezier(j * PASO, pcy);
-			float ppz = k * this->ESPACIADO_ESTIRAMIENTO * 1.0f;
+			float ppz = Matematica::curvaBezier(j * PASO, pcz);
 
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
 			this->object_texture_buffer[y++] = (j * PASO);
-			this->object_texture_buffer[y++] = ((k * 1.0) 
-				/ (this->ESTIRAMIENTO-1));
+			this->object_texture_buffer[y++] = ((k + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+
 
 			// Calculamos los vectores tangente, binormal y normal en el punto
 			float t[3], b[3], n[3];
 			Matematica::curvaBezierVectores(j * PASO, pcx, pcy, pcz, t, b, n);
 
 			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
+			// this->object_normal_buffer[w++] = n[0];
+			// this->object_normal_buffer[w++] = n[1];
+			// this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
@@ -239,24 +232,45 @@ void PlantaHojaTipo01::create()
 			sentido = 1;
 		}
 	}
+
+
+
+	// NORMALES
+
+	k = 0;
+
+	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
+		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+		{
+			
+
+			// Cargamos las coordenadas en el buffer
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
+		}
+	}
 }
+
+
 
 
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {	
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(0, 255, 0);
+	this->changeObjectColor(121,121,212);
+
 
 	// Bind tiempo para variación de movimiento
 	// ########################################
 	GLfloat algae_time = glGetUniformLocation(this->programHandle,
-		"TIMEEE");
+		"Tiempo");
 	this->tiempo += 0.01f;
 
 	// if(algae_time >= 0)
@@ -264,7 +278,8 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Bind View Matrix
-	// ################t_motion +=0.01;t_motion +=0.01;
+	// ################
+
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -301,11 +316,10 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 
-
 	// Normal Matrix
 	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
 
-	// Bind Normal MAtrix
+	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
 		"NormalMatrix"); 
 	if( location_normal_matrix >= 0 ) 
@@ -320,17 +334,13 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-
-
 	// Set the Tex1 sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Tex1");
 
 	if( loc >= 0 )
-		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
 		glUniform1i(loc, 0);
 	else
 		fprintf(stderr, "Uniform variable Tex1 not found!\n");
-
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -338,7 +348,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
@@ -347,20 +357,4 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
-
-// Permite setear la amplitud de la hoja. Debe setearse antes de crear
-// el objeto.
-void PlantaHojaTipo01::setAmplitud(float amplitud)
-{
-	
-}
-
-
-// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
-// antes de crear el objeto.
-void PlantaHojaTipo01::setVelocidad(float velocidad)
-{
-
 }

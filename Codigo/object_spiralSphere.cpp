@@ -164,6 +164,10 @@ void SpiralSphere::create(const float radius, const unsigned int loops,
 void SpiralSphere::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+
+	this->changeObjectColor(100, 100, 100);
+	
 	///////////////////////////////////////////
 	// Bind View Matrix
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,

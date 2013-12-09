@@ -87,6 +87,120 @@ float Matematica::curvaBezier(float t, float p[4])
 }
 
 
+// Cálculo de los vectores tangente (t), binormal (b) y normal (n)
+// correspondientes a un punto de la curva de Bezier dado por el valor
+// del parámetro t.
+// El valor no se encuentra normalizado.
+void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz[4], float *t, float *b, float *n)
+{
+	// Primer derivada de las bases de bezier
+	float b00 = (-3 * pow(u, 2) + 6 * u - 3);
+	float b01 = (9 * pow(u, 2) - 12 * u + 3);
+	float b02 = (-9 * pow(u, 2) + 6 * u);
+	float b03 = (3 * pow(u, 2));
+
+	if(b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0 && u == 0) {
+		// Primer derivada de las bases de bezier
+		b00 = (-3 * pow(u+0.01, 2) + 6 * (u+0.01) - 3);
+		b01 = (9 * pow(u+0.01, 2) - 12 * (u+0.01) + 3);
+		b02 = (-9 * pow(u+0.01, 2) + 6 * (u+0.01));
+		b03 = (3 * pow(u+0.01, 2));		
+	}
+	else if (b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0 && u == 1) {
+		// Primer derivada de las bases de bezier
+		b00 = (-3 * pow(u-0.01, 2) + 6 * (u-0.01) - 3);
+		b01 = (9 * pow(u-0.01, 2) - 12 * (u-0.01) + 3);
+		b02 = (-9 * pow(u-0.01, 2) + 6 * (u-0.01));
+		b03 = (3 * pow(u-0.01, 2));
+	}
+
+	// Segunda derivada de las bases de bezier
+	float b10 = (-6 * u + 6);
+	float b11 = (18 * u - 12);
+	float b12 = (-18 * u + 6);
+	float b13 = (6 * u);
+
+	if(b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0 && u == 0) {
+		// Primer derivada de las bases de bezier
+		b10 = (-6 * (u+0.01) + 6);
+		b11 = (18 * (u+0.01) - 12);
+		b12 = (-18 * (u+0.01) + 6);
+		b13 = (6 * (u+0.01));
+	}
+	else if (b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0 && u == 1) {
+		// Primer derivada de las bases de bezier
+		b10 = (-6 * (u-0.01) + 6);
+		b11 = (18 * (u-0.01) - 12);
+		b12 = (-18 * (u-0.01) + 6);
+		b13 = (6 * (u-0.01));
+	}
+
+
+	// Tangente
+	float tx = 0;
+	float ty = 0;
+	float tz = 0;
+
+	tx += b00 * px[0];
+	tx += b01 * px[1];
+	tx += b02 * px[2];
+	tx += b03 * px[3];
+
+	ty += b00 * py[0];
+	ty += b01 * py[1];
+	ty += b02 * py[2];
+	ty += b03 * py[3];
+
+	tz += b00 * pz[0];
+	tz += b01 * pz[1];
+	tz += b02 * pz[2];
+	tz += b03 * pz[3];
+
+	float tTemp[3];
+	tTemp[0] = tx;
+	tTemp[1] = ty;
+	tTemp[2] = tz;
+
+
+	t = Matematica::normalizar(tTemp);
+
+
+	// Binormal
+	float bx = 0;
+	float by = 0;
+	float bz = 0;
+
+	bx += b10 * px[0];
+	bx += b11 * px[1];
+	bx += b12 * px[2];
+	bx += b13 * px[3];
+
+	by += b10 * py[0];
+	by += b11 * py[1];
+	by += b12 * py[2];
+	by += b13 * py[3];
+
+	bz += b10 * pz[0];
+	bz += b11 * pz[1];
+	bz += b12 * pz[2];
+	bz += b13 * pz[3];
+
+	float bTemp[3];
+	bTemp[0] = bx;
+	bTemp[1] = by;
+	bTemp[2] = bz;
+
+	// std::cout << bTemp[0] << ",\t" << bTemp[1] << ",\t" << bTemp[2] << std::endl;
+
+	float *temp = Matematica::productoVectorial(tTemp, bTemp);
+	b = Matematica::normalizar(temp);
+
+
+	// Normal
+	n = Matematica::productoVectorial(t, b);
+}
+
+
 // Cálculo de punto en una superficie utilizando el método de Bezier.
 float Matematica::superficieBezier(float u, float v, float p[4][4])
 {
@@ -133,4 +247,78 @@ float Matematica::curvaBSpline(float u, float p[3])
 	punto += (0.5 * pow(u, 2)) * p[2];
 
 	return punto;
+}
+
+
+// Cálculo de los vectores tangente (t), binormal (b) y normal (n)
+// correspondientes a un punto de la curva BSpline dado por el valor
+// del parámetro u.
+// El valor no se encuentra normalizado.
+void curvaBSplineVectores(float u, float px[3], float py[3], 
+		float pz[3], float *t, float *b, float *n)
+{
+	// Primer derivada de las bases de bezier
+	float b00 = (u - 1);
+	float b01 = (-2 * u + 1);
+	float b02 = u;
+
+	// Segunda derivada de las bases de bezier
+	float b10 = 1;
+	float b11 = -2;
+	float b12 = 1;
+
+
+	// Tangente
+	float tx = 0;
+	float ty = 0;
+	float tz = 0;
+
+	tx += b00 * px[0];
+	tx += b01 * px[1];
+	tx += b02 * px[2];
+
+	ty += b00 * py[0];
+	ty += b01 * py[1];
+	ty += b02 * py[2];
+
+	tz += b00 * pz[0];
+	tz += b01 * pz[1];
+	tz += b02 * pz[2];
+
+	float tTemp[3];
+	tTemp[0] = tx;
+	tTemp[1] = ty;
+	tTemp[2] = tz;
+
+	t = Matematica::normalizar(tTemp);
+
+
+	// Binormal
+	float bx = 0;
+	float by = 0;
+	float bz = 0;
+
+	bx += b10 * px[0];
+	bx += b11 * px[1];
+	bx += b12 * px[2];
+
+	by += b10 * py[0];
+	by += b11 * py[1];
+	by += b12 * py[2];
+
+	bz += b10 * pz[0];
+	bz += b11 * pz[1];
+	bz += b12 * pz[2];
+
+	float bTemp[3];
+	bTemp[0] = bx;
+	bTemp[1] = by;
+	bTemp[2] = bz;
+
+	float *temp = Matematica::productoVectorial(tTemp, bTemp);
+	b = Matematica::normalizar(temp);
+
+
+	// Normal
+	n = Matematica::productoVectorial(t, b);
 }

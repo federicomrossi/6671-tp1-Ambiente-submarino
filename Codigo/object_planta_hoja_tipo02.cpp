@@ -24,10 +24,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/HojaPlantaVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/HojaPlantaFShader.frag";
 	
 }
 
@@ -43,34 +43,13 @@ namespace {
 PlantaHojaTipo02::PlantaHojaTipo02()
 {
 	// Valores por defecto
-	this->amplitud = 6.0;
-	this->velocidad = 0.1;
-
+	this->tiempo = 0.0f;
 
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	// Inicializamos puntos de control para el movimiento
-	this->motion_pcx[0] = 0.0;
-	this->motion_pcy[0] = 0.0;
-	this->motion_pcz[0] = 0.0;
-
-	this->motion_pcx[1] = 0.0;
-	this->motion_pcy[1] = 0.0;
-	this->motion_pcz[1] = 2.0;
-
-	this->motion_pcx[2] = (-1) * this->amplitud;
-	this->motion_pcy[2] = 0.0;
-	this->motion_pcz[2] = 3.0;
-
-	this->motion_pcx[3] = 0.0;
-	this->motion_pcy[3] = 0.0;
-	this->motion_pcz[3] = 5.0;
-
-	this->sentido_motion = 1;
-
 
 	this->ESTIRAMIENTO = 15;
 	this->ESPACIADO_ESTIRAMIENTO = 0.2;
@@ -84,9 +63,13 @@ PlantaHojaTipo02::~PlantaHojaTipo02() { }
 // Crea un objeto
 void PlantaHojaTipo02::create()
 {
+	// Cargamos la textura
+	this->loadAndInitTexture("textures/leaf-texture-01.jpg");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
+
 
 
 	// Puntos de control de la CURVA DE GROSOR
@@ -136,6 +119,7 @@ void PlantaHojaTipo02::create()
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
+	int DIMENSIONES_TEXTURA = 2;
 	int OBJ_ALTURA = 5;
 
 
@@ -144,6 +128,11 @@ void PlantaHojaTipo02::create()
 
 	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
+
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
+
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
@@ -168,6 +157,8 @@ void PlantaHojaTipo02::create()
 
 
 	int i = 0;
+	int y = 0;
+	int w = 0;
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
@@ -195,6 +186,7 @@ void PlantaHojaTipo02::create()
 
 		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
 		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
+		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
 
 
 		for(int j = 0; j < this->CANT_PUNTOS; j++) 
@@ -206,6 +198,20 @@ void PlantaHojaTipo02::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((k * 1.0) 
+				/ (this->ESTIRAMIENTO-1));
+		
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBezierVectores(j * PASO, pcx, pcy, pcz, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = 1.0;
+			this->object_normal_buffer[w++] = 1.0;
+			this->object_normal_buffer[w++] = 1.0;
 		}
 	}
 
@@ -234,77 +240,6 @@ void PlantaHojaTipo02::create()
 			sentido = 1;
 		}
 	}
-
-
-	// NORMALES
-
-	k = 0;
-
-	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-
-			int realI, realJ;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-			{
-				realI = i+1;
-				realJ = j-1;
-			}
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j+1;
-			}
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j-1;
-			}
-			else
-			{
-				realI = i+1;
-				realJ = j+1;
-			}
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-			float *n;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-			else
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-
-			n = Matematica::normalizar(n);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
-		}
-	}
 }
 
 
@@ -314,30 +249,19 @@ void PlantaHojaTipo02::create()
 void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// // Reposicionamos puntos para dar movimiento
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+	glUseProgram(this->programHandle);
 
-	// // Iteramos sobre los niveles
-	// for(int i = 0; i < this->ESTIRAMIENTO; i++) {
-	// 	float t = i * 1.0 / this->ESTIRAMIENTO;
+	this->changeObjectColor(0, 255, 0);
 
-	// 	float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
+	// Bind tiempo para variación de movimiento
+	// ########################################
+	GLfloat algae_time = glGetUniformLocation(this->programHandle,
+		"TIMEEE");
+	this->tiempo += 0.01f;
 
-	// 	// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-	// 	// el buffer de vertices
-	// 	int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO * i;
-	// 	int cant_puntos_nivel = ini / 3;
-
-	// 	for(int j=0; j < cant_puntos_nivel; j++) {
-	// 		this->object_vertex_buffer[ini + j * 3] += deltaX * 0.0005;
-	// 	}
-	// }
-
-	// this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
-
-	// if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
-	// 	this->sentido_motion = -1;
-	// else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
-	// 	this->sentido_motion = 1;
+	// if(algae_time >= 0)
+	glUniform1f(algae_time, this->tiempo); 
 
 
 	// Bind View Matrix
@@ -396,17 +320,34 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&model_matrix[0][0]);
 
+
+
+
+	// Set the Tex1 sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	if( loc >= 0 )
+		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
+		glUniform1i(loc, 0);
+	else
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 
@@ -414,8 +355,7 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 // el objeto.
 void PlantaHojaTipo02::setAmplitud(float amplitud)
 {
-	this->amplitud = amplitud;
-	this->motion_pcx[2] = (-1) * amplitud;
+
 }
 
 
@@ -423,5 +363,5 @@ void PlantaHojaTipo02::setAmplitud(float amplitud)
 // antes de crear el objeto.
 void PlantaHojaTipo02::setVelocidad(float velocidad)
 {
-	this->velocidad = velocidad;
+
 }

@@ -312,6 +312,8 @@ void CangrejoPataPierna::create()
 void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+	
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mPierna = glm::mat4(1.0f);
 	mPierna = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 0.0));

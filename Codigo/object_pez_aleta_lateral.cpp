@@ -334,6 +334,8 @@ void PezAletaLateral::create(int orientacion)
 void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+	
 	// Dibujamos el eje coordenado
 	// this->ejeCoordenado.render(model_matrix, view_matrix, 
 	// 	projection_matrix);

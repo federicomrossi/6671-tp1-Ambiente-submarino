@@ -306,7 +306,9 @@ void Roca::create()
 void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-		// Ponemos el objeto en el centro del eje coordenado
+	glUseProgram(this->programHandle);
+	
+	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mRoca = glm::mat4(1.0f);
 	mRoca = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 0.0));
 

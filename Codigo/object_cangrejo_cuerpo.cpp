@@ -322,6 +322,8 @@ void CangrejoCuerpo::create()
 void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glUseProgram(this->programHandle);
+	
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
 	mCuerpo = glm::translate(model_matrix, glm::vec3(-1.25, 0.0, 0.0));

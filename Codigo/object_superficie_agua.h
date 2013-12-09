@@ -1,10 +1,10 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS SUPERFICIEAGUA
  */  
 
 
-#ifndef OBJECT_PLANTA_HOJA_TIPO_O2_H
-#define OBJECT_PLANTA_HOJA_TIPO_02_H
+#ifndef OBJECT_SUPERFICIE_AGUA_H
+#define OBJECT_SUPERFICIE_AGUA_H
 
 
 #include <glm/glm.hpp> 
@@ -12,8 +12,14 @@
 #include <vector>
 #include "object_dibujable.h"
 
+// Objetos
+#include "object_eje_coordenado.h"
 
 
+// DEBUG
+#include "object_vector.h"
+// END DEBUG
+ 
 
 
 /* ****************************************************************************
@@ -21,7 +27,7 @@
  * ***************************************************************************/
 
 
-class PlantaHojaTipo02 : public ObjectDibujable
+class SuperficieAgua : public ObjectDibujable
 {
 private:
 
@@ -35,41 +41,36 @@ private:
 	unsigned int object_texture_buffer_size;
 	unsigned int object_index_buffer_size;
 
+	// Caracteristicas del objeto
+	int CANT_PUNTOS;
+	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
+
 	// Atributos del movimiento
 	GLfloat tiempo;
 
-	// Caracteristicas del objeto
-	int CANT_PUNTOS;
-	int ESTIRAMIENTO;				// Niveles que posee el objeto de
-									// estiramiento
-	float ESPACIADO_ESTIRAMIENTO;	// Espacio entre cada nivel de altura del
-									// estiramiento del objeto.
+	// Objetos
+	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
 
-
+	// DEBUG
+	Vector vector;
+	// END DEBUG
+	
 public:
 
 	// Constructor
-	PlantaHojaTipo02();
+	SuperficieAgua();
 
 	// Destructor
-	~PlantaHojaTipo02();
+	~SuperficieAgua();
 
 	// Crea un objeto
-	virtual void create();
+	virtual void create(int ancho);
 
 	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
 	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
-
-	// Permite setear la amplitud de la hoja. Debe setearse antes de crear
-	// el objeto.
-	void setAmplitud(float amplitud);
-
-	// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
-	// antes de crear el objeto.
-	void setVelocidad(float velocidad);
 };
 
 #endif

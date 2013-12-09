@@ -59,6 +59,8 @@ void Roca::create()
 void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	this->changeObjectColor(130,104,140);
+
 	// Damos forma del ojo a la esfera y la renderizamos
 	this->spiralSphere.changeObjectColor(131, 84, 84);
 	this->spiralSphere.render(model_matrix, view_matrix, projection_matrix);
