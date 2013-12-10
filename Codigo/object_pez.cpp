@@ -54,18 +54,18 @@ void Pez::create()
 	// Creamos el cuerpo del pez;
 	this->pezCuerpo.create();
 
-	// // Creamos el ojo del pez;
-	// this->pezOjo.create();
+	// Creamos el ojo del pez;
+	this->pezOjo.create();
 
-	// // Creamos la aleta trasera
-	// this->pezAletaTrasera.create();
+	// Creamos la aleta trasera
+	this->pezAletaTrasera.create();
 
-	// // Creamos la aleta dorsal
-	// this->pezAletaDorsal.create();
+	// Creamos la aleta dorsal
+	this->pezAletaDorsal.create();
 
-	// // Creamos las aletas laterales
-	// this->pezAletaLateralDer.create(-1);
-	// this->pezAletaLateralIzq.create(1);
+	// Creamos las aletas laterales
+	this->pezAletaLateralDer.create(-1);
+	this->pezAletaLateralIzq.create(1);
 }
 
 
@@ -84,48 +84,48 @@ void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mCuerpo = glm::scale(model_matrix, glm::vec3(1.3, 1.3, 1.3));
 	this->pezCuerpo.render(mCuerpo, view_matrix, projection_matrix);
 
-	// // Renderizamos los ojos del pez
-	// glm::mat4 mOjoDer = glm::mat4(1.0f);
-	// glm::mat4 mOjoIzq = glm::mat4(1.0f);
-	// mOjoDer = glm::translate(model_matrix, glm::vec3(1.3, 0.06, 0.25));
-	// mOjoIzq = glm::translate(model_matrix, glm::vec3(1.3, -0.06, 0.25));
-	// mOjoDer = glm::scale(mOjoDer, glm::vec3(0.13, 0.13, 0.13));
-	// mOjoIzq = glm::scale(mOjoIzq, glm::vec3(0.13, 0.13, 0.13));
-	// this->pezOjo.render(mOjoDer, view_matrix, projection_matrix);
-	// this->pezOjo.render(mOjoIzq, view_matrix, projection_matrix);
+	// Renderizamos los ojos del pez
+	glm::mat4 mOjoDer = glm::mat4(1.0f);
+	glm::mat4 mOjoIzq = glm::mat4(1.0f);
+	mOjoDer = glm::translate(model_matrix, glm::vec3(1.3, 0.06, 0.25));
+	mOjoIzq = glm::translate(model_matrix, glm::vec3(1.3, -0.06, 0.25));
+	mOjoDer = glm::scale(mOjoDer, glm::vec3(0.13, 0.13, 0.13));
+	mOjoIzq = glm::scale(mOjoIzq, glm::vec3(0.13, 0.13, 0.13));
+	this->pezOjo.render(mOjoDer, view_matrix, projection_matrix);
+	this->pezOjo.render(mOjoIzq, view_matrix, projection_matrix);
 
-	// // Renderizamos la aleta trasera del pez
-	// glm::mat4 mAletaTrasera = glm::mat4(1.0f);
-	// mAletaTrasera = glm::translate(model_matrix, glm::vec3(-1.9, 0.0, 0.0));
-	// mAletaTrasera = glm::scale(mAletaTrasera, glm::vec3(1.3, 1.3, 1.3));
-	// mAletaTrasera = glm::rotate(mAletaTrasera, 90.0f, 
-	// 	glm::vec3(0.0, 0.0, 1.0));
-	// this->pezAletaTrasera.changeObjectColor(33, 59, 200);
-	// // this->pezAletaTrasera.changeObjectColor(166, 214, 38);
-	// this->pezAletaTrasera.render(mAletaTrasera, view_matrix, projection_matrix);
+	// Renderizamos la aleta trasera del pez
+	glm::mat4 mAletaTrasera = glm::mat4(1.0f);
+	mAletaTrasera = glm::translate(model_matrix, glm::vec3(-1.9, 0.0, 0.0));
+	mAletaTrasera = glm::scale(mAletaTrasera, glm::vec3(1.3, 1.3, 1.3));
+	mAletaTrasera = glm::rotate(mAletaTrasera, 90.0f, 
+		glm::vec3(0.0, 0.0, 1.0));
+	this->pezAletaTrasera.changeObjectColor(33, 59, 200);
+	// this->pezAletaTrasera.changeObjectColor(166, 214, 38);
+	this->pezAletaTrasera.render(mAletaTrasera, view_matrix, projection_matrix);
 
-	// // Renderizamos la aleta dorsal del pez
-	// glm::mat4 mAletaDorsal = glm::mat4(1.0f);
-	// mAletaDorsal = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 1.16));
-	// mAletaDorsal = glm::rotate(mAletaDorsal, 90.0f, glm::vec3(0.0, 0.0, 1.0));
-	// this->pezAletaDorsal.changeObjectColor(33, 59, 200);
-	// this->pezAletaDorsal.render(mAletaDorsal, view_matrix, projection_matrix);
+	// Renderizamos la aleta dorsal del pez
+	glm::mat4 mAletaDorsal = glm::mat4(1.0f);
+	mAletaDorsal = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 1.16));
+	mAletaDorsal = glm::rotate(mAletaDorsal, 90.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->pezAletaDorsal.changeObjectColor(33, 59, 200);
+	this->pezAletaDorsal.render(mAletaDorsal, view_matrix, projection_matrix);
 
-	// // Renderizamos las aletas laterales del pez
-	// glm::mat4 mAletaLateralIzq = glm::mat4(1.0f);
-	// mAletaLateralIzq = glm::translate(model_matrix, 
-	// 	glm::vec3(0.7, 0.225, 0.0));
-	// mAletaLateralIzq = glm::scale(mAletaLateralIzq, glm::vec3(0.5, 0.5, 0.5));
+	// Renderizamos las aletas laterales del pez
+	glm::mat4 mAletaLateralIzq = glm::mat4(1.0f);
+	mAletaLateralIzq = glm::translate(model_matrix, 
+		glm::vec3(0.7, 0.225, 0.0));
+	mAletaLateralIzq = glm::scale(mAletaLateralIzq, glm::vec3(0.5, 0.5, 0.5));
+	mAletaLateralIzq = glm::rotate(mAletaLateralIzq, 
+		90.0f, glm::vec3(0.0, 0.0, 1.0));
 	// mAletaLateralIzq = glm::rotate(mAletaLateralIzq, 
-	// 	90.0f, glm::vec3(0.0, 0.0, 1.0));
-	// // mAletaLateralIzq = glm::rotate(mAletaLateralIzq, 
-	// // 	10.0f, glm::vec3(0.0, 0.0, 1.0));
-	// this->pezAletaLateralIzq.render(mAletaLateralIzq, view_matrix, projection_matrix);
+	// 	10.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->pezAletaLateralIzq.render(mAletaLateralIzq, view_matrix, projection_matrix);
 
-	// glm::mat4 mAletaLateralDer = glm::mat4(1.0f);
-	// mAletaLateralDer = glm::translate(model_matrix, glm::vec3(0.7, -0.225, 0.0));
-	// mAletaLateralDer = glm::scale(mAletaLateralDer, glm::vec3(0.5, 0.5, 0.5));
-	// mAletaLateralDer = glm::rotate(mAletaLateralDer, 
-	// 	90.0f, glm::vec3(0.0, 0.0, 1.0));
-	// this->pezAletaLateralDer.render(mAletaLateralDer, view_matrix, projection_matrix);
+	glm::mat4 mAletaLateralDer = glm::mat4(1.0f);
+	mAletaLateralDer = glm::translate(model_matrix, glm::vec3(0.7, -0.225, 0.0));
+	mAletaLateralDer = glm::scale(mAletaLateralDer, glm::vec3(0.5, 0.5, 0.5));
+	mAletaLateralDer = glm::rotate(mAletaLateralDer, 
+		90.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->pezAletaLateralDer.render(mAletaLateralDer, view_matrix, projection_matrix);
 }

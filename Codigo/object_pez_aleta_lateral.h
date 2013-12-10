@@ -37,15 +37,8 @@ private:
 	unsigned int object_normal_buffer_size;
 	unsigned int object_index_buffer_size;
 
-	// Puntos de control del movimiento
-	float motion_pcx[4];
-	float motion_pcy[4];
-	float motion_pcz[4];
-
-	// Atributos de movimiento
-	float amplitud;
-	float velocidad;
-	int sentido_motion;		// Señalador que indica el sentido de t
+	// Atributos del movimiento
+	GLfloat tiempo;
 
 	// Caracteristicas del objeto
 	int CANT_PUNTOS;

@@ -22,10 +22,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/PezAletaLateralVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/PezAletaLateralFShader.frag";
 }
 
 
@@ -40,16 +40,12 @@ namespace {
 PezAletaLateral::PezAletaLateral() 
 {
 	// Valores por defecto
-	this->amplitud = 0.4;
-	this->velocidad = 0.4;
+	this->tiempo = 0.0f;
 
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_vertex_buffer = NULL;
-
-	this->sentido_motion = 1;
-
 
 	this->ESTIRAMIENTO = 40;
 }
@@ -64,24 +60,6 @@ PezAletaLateral::~PezAletaLateral() { }
 // hacia la izquierda (1).
 void PezAletaLateral::create(int orientacion)
 {
-
-	// Inicializamos puntos de control para el movimiento
-	this->motion_pcx[0] = 0.0;
-	this->motion_pcy[0] = 0.0;
-	this->motion_pcz[0] = 0.0;
-
-	this->motion_pcx[1] = 0.0;
-	this->motion_pcy[1] = 0.0;
-	this->motion_pcz[1] = 2.0;
-
-	this->motion_pcx[2] = (-1) * orientacion * this->amplitud;
-	this->motion_pcy[2] = 0.0;
-	this->motion_pcz[2] = 3.0;
-
-	this->motion_pcx[3] = 0.0;
-	this->motion_pcy[3] = 0.0;
-	this->motion_pcz[3] = 5.0;
-
 	// Almacenamos la orientación especificada
 	this->ORIENTACION_ALETA = orientacion;
 
@@ -336,35 +314,22 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 {
 	glUseProgram(this->programHandle);
 	
-	// Dibujamos el eje coordenado
-	// this->ejeCoordenado.render(model_matrix, view_matrix, 
-	// 	projection_matrix);
-	
-	// Reposicionamos puntos para dar movimiento
 
-	// // Iteramos sobre los niveles
-	// for(int i = 0; i < this->ESTIRAMIENTO-1; i++) {
-	// 	float t = i * 1.0 / this->ESTIRAMIENTO;
+	// Bind tiempo para variación de movimiento
+	// ########################################
+	GLfloat algae_time = glGetUniformLocation(this->programHandle,
+		"Tiempo");
+	this->tiempo += 0.01f;
 
-	// 	float deltaX = Matematica::curvaBezier(t, this->motion_pcx);
+	if(algae_time >= 0)
+		glUniform1f(algae_time, this->tiempo); 
 
-	// 	// Nos posicionamos sobre el inicio de los puntos del nivel actual en
-	// 	// el buffer de vertices
-	// 	int ini = this->object_vertex_buffer_size / this->ESTIRAMIENTO + i;
-	// 	int cant_puntos_nivel = ini / 3;
-	// 	std::cout << "paso " << i << std::endl;
 
-	// 	for(int j=0; j < cant_puntos_nivel; j++) {
-	// 		this->object_vertex_buffer[ini + j * 3] += deltaX * 0.04;
-	// 	}
-	// }
+	GLfloat location_sentido = glGetUniformLocation(this->programHandle,
+		"Sentido");
 
-	// this->motion_pcx[2] += (float)(this->sentido_motion) * this->velocidad;
-
-	// if((this->motion_pcx[2] > this->amplitud) && (this->sentido_motion == 1))
-	// 	this->sentido_motion = -1;
-	// else if((this->motion_pcx[2] < (-1) * this->amplitud) && (this->sentido_motion == -1))
-	// 	this->sentido_motion = 1;
+	if(location_sentido >= 0)
+		glUniform1f(location_sentido, this->ORIENTACION_ALETA); 
 
 
 	// Bind View Matrix

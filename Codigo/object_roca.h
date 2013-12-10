@@ -11,9 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <vector>
 #include "object_dibujable.h"
-
-// Objetos
-#include "object_spiralSphere.h"
+ 
 
 
 
@@ -26,8 +24,20 @@ class Roca : public ObjectDibujable
 {
 private:
 
-	// Objetos
-	SpiralSphere spiralSphere;		// Esfera
+	GLfloat* object_vertex_buffer;
+	GLfloat* object_normal_buffer;
+	GLfloat* object_texture_buffer;
+	GLuint* object_index_buffer;
+	unsigned int object_vertex_buffer_size;
+	unsigned int object_normal_buffer_size;
+	unsigned int object_texture_buffer_size;
+	unsigned int object_index_buffer_size;
+
+	// Caracteristicas del objeto
+	int CANT_PUNTOS;
+	int ESTIRAMIENTO;				// Niveles que posee el objeto de
+									// estiramiento
+	float ESPACIADO_ESTIRAMIENTO;	// Espacio entre cada nivel de altur
 	
 public:
 

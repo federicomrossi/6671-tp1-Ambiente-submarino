@@ -13,7 +13,6 @@ uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
 uniform mat3 NormalMatrix;
 uniform mat4 ProjectionMatrix;
-uniform float Tiempo;
 
 void main()
 {
@@ -28,9 +27,6 @@ void main()
 	// The diffuse shading equation
 	LightIntensity =  Ld * Kd * max( dot( s, tnorm ), 0.0 );
 
-	vec4 aux = gl_Vertex;
-	aux.z = aux.z + 0.4 + cos(4.0 * Tiempo) * 0.2 * sin(0.5 * aux.x) * cos(0.5 * aux.y);
-			
 	// Convert position to clip coordinates and pass along
-	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * aux;
+	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * gl_Vertex;
 }

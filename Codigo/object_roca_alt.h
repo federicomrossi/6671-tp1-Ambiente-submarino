@@ -26,16 +26,8 @@ class Roca : public ObjectDibujable
 {
 private:
 
-	GLfloat* object_vertex_buffer;
-	GLfloat* object_normal_buffer;
-	GLuint* object_index_buffer;
-	unsigned int object_vertex_buffer_size;
-	unsigned int object_normal_buffer_size;
-	unsigned int object_index_buffer_size;
-
-	// Caracteristicas del objeto
-	int CANT_PUNTOS;
-	int ESTIRAMIENTO;		// Niveles que posee el objeto de estiramiento
+	// Objetos
+	SpiralSphere spiralSphere;		// Esfera
 	
 public:
 

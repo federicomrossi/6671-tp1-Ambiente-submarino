@@ -223,12 +223,6 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
-
-			// DEBUG
-			// if(j == 0)
-			// 	std::cout << "012: " << ppx << "," << ppy << "," << ppz << std::endl;
-			// else if(j == (this->CANT_PUNTOS / CANT_CURVAS)-1)
-			// 	std::cout << "012: " << ppx << "," << ppy << "," << ppz << std::endl;
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -243,12 +237,6 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
-
-			// DEBUG
-			// if(j == 0)
-			// 	std::cout << "123: " << ppx << "," << ppy << "," << ppz << std::endl;
-			// else if(j == (this->CANT_PUNTOS / CANT_CURVAS)-1)
-			// 	std::cout << "123: " << ppx << "," << ppy << "," << ppz << std::endl;
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -263,12 +251,6 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
-
-			// DEBUG
-			// if(j == 0)
-			// 	std::cout << "230: " << ppx << "," << ppy << "," << ppz << std::endl;
-			// else if(j == (this->CANT_PUNTOS / CANT_CURVAS)-1)
-			// 	std::cout << "230: " << ppx << "," << ppy << "," << ppz << std::endl;
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -283,18 +265,7 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
-
-			// DEBUG
-			// std::cout;
-			// if(j == 0)
-			// 	std::cout << "301: " << ppx << "," << ppy << "," << ppz << std::endl;
-			// else if(j == (this->CANT_PUNTOS / CANT_CURVAS)-1)
-			// 	std::cout << "301: " << ppx << "," << ppy << "," << ppz << std::endl;
 		}
-		
-		// DEBUG
-		// std::string a;
-		// std::cin >> a; 
 	}
 
 	int sentido = 1;
