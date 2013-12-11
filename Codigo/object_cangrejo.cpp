@@ -85,7 +85,7 @@ void Cangrejo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::mat4 &projection_matrix)
 {
 	// Dibujamos el eje coordenado
-	this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
+	// this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
 	
 	// Calculamos movimiento del cuerpo
 	// Puntos de control
@@ -109,7 +109,7 @@ void Cangrejo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(this->parametro > 1.0) this->parametro = 0.0;
 
 	// Calculamos la curva de bezier que da forma al esqueleto superior
-	this->cuerpoPosZ = Matematica::curvaBezier(this->parametro,mov_cuerpo_pcy);
+	// this->cuerpoPosZ = Matematica::curvaBezier(this->parametro,mov_cuerpo_pcy);
 
 
 	// Dibujamos el cuerpo

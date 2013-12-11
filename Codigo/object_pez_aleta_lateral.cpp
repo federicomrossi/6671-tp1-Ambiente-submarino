@@ -45,6 +45,7 @@ PezAletaLateral::PezAletaLateral()
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 
 	this->ESTIRAMIENTO = 40;
@@ -64,7 +65,10 @@ void PezAletaLateral::create(int orientacion)
 	this->ORIENTACION_ALETA = orientacion;
 
 	// Creamos el eje coordenado
-	this->ejeCoordenado.create(3);
+	// this->ejeCoordenado.create(3);
+
+		// Cargamos la textura
+	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -130,6 +134,7 @@ void PezAletaLateral::create(int orientacion)
 	// Valores para cálculos (no modificar)
 	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
+	int DIMENSIONES_TEXTURA = 2;
 
 
 	if (this->object_vertex_buffer != NULL)
@@ -137,6 +142,11 @@ void PezAletaLateral::create(int orientacion)
 
 	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
+
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
+
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
@@ -160,6 +170,7 @@ void PezAletaLateral::create(int orientacion)
 
 
 	int i = 0;
+	int y = 0;
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
@@ -204,6 +215,10 @@ void PezAletaLateral::create(int orientacion)
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy ;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = ((k * 1.0) 
+				/ (this->ESTIRAMIENTO-1));
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 	}
 
@@ -312,7 +327,10 @@ void PezAletaLateral::create(int orientacion)
 void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
+
+	this->changeObjectColor(255, 255, 255);
 	
 
 	// Bind tiempo para variación de movimiento
@@ -388,15 +406,29 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&model_matrix[0][0]);
 
+
+	// Set the Tex1 sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	if( loc >= 0 )
+		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
+		glUniform1i(loc, 0);
+	else
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

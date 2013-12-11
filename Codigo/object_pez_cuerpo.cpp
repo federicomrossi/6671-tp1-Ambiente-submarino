@@ -23,10 +23,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/PezCuerpoVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/PezCuerpoFShader.frag";
 }
 
 
@@ -45,6 +45,7 @@ PezCuerpo::PezCuerpo()
 {
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 }
 
@@ -56,6 +57,9 @@ PezCuerpo::~PezCuerpo() { }
 // Crea un objeto
 void PezCuerpo::create()
 {
+	// Cargamos la textura
+	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
@@ -128,6 +132,7 @@ void PezCuerpo::create()
 	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
 	this->ESPACIADO_ESTIRAMIENTO = 0.2;
+	int DIMENSIONES_TEXTURA = 2;
 
 
 
@@ -137,6 +142,11 @@ void PezCuerpo::create()
 
 	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
+
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
+
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
@@ -160,6 +170,7 @@ void PezCuerpo::create()
 
 
 	int i = 0;
+	int y = 0;
 
 	// Iteramos sobre cada nivel del objeto
 	for(int q = 0; q < this->ESTIRAMIENTO; q++)
@@ -223,6 +234,9 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = 0.5;
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -237,6 +251,9 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = 0.5;
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -251,6 +268,9 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = 0.5;
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -265,6 +285,9 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = 0.5;
 		}
 	}
 
@@ -302,380 +325,393 @@ void PezCuerpo::create()
 	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
 		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
 		{
-			float t1[3], t2[3], t3[3], t4[3];
-			float *n1, *n2, *n3, *n4;
-			float n[3];
-
-			int w = (this->ESTIRAMIENTO-1);
-			int z = (this->CANT_PUNTOS-1);
-
-			// Caso 1: i=0 y j=0
-			if((i == 0) && (j == 0))
-			{
-				// Vector tg para w-1
-				t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
-					this->object_vertex_buffer[malla[w][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para z-1
-				t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
-					this->object_vertex_buffer[malla[i][z] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 2];
-			}
-			// Caso 2: i=max y j=0
-			else if((i == this->ESTIRAMIENTO-1) && (j == 0))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
-					this->object_vertex_buffer[malla[0][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 2];
-
-				// Vector tg para z-1
-				t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
-					this->object_vertex_buffer[malla[i][z] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 2];
-			}
-			// Caso 3: i=max y j=max
-			else if((i == this->ESTIRAMIENTO-1) && (j == this->CANT_PUNTOS-1))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
-					this->object_vertex_buffer[malla[i][0] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
-					this->object_vertex_buffer[malla[0][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-			// Caso 4: i=0 y j=max
-			else if((i == this->ESTIRAMIENTO-1) && (j == this->CANT_PUNTOS-1))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
-					this->object_vertex_buffer[malla[w][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
-					this->object_vertex_buffer[malla[i][0] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-			// Caso 5: i=0 y 0<j<max
-			else if((i==0) && (j>0) && (j<(this->CANT_PUNTOS-1)))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
-					this->object_vertex_buffer[malla[w][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[w][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-			// Caso 6: 0<i<max y j=0
-			else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j==0))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-					// Vector tg para z-1
-				t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
-					this->object_vertex_buffer[malla[i][z] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][z] * 3 + 2];
-			}
-			// Caso 7: i=max y 0 < j < max
-			else if((i==(this->ESTIRAMIENTO-1)) && (j>0) && (j<(this->CANT_PUNTOS-1)))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
-					this->object_vertex_buffer[malla[0][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[0][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-			// Caso 8: 0 < i < max y j=max
-			else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j==(this->CANT_PUNTOS-1)))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
-					this->object_vertex_buffer[malla[i][0] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][0] * 3 + 2];
-					
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-			// Caso 9: 0 < i < max y 0 < j < max
-			else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j>0) && (j<(this->CANT_PUNTOS-1)))
-			{
-				// Vector tg para i-1
-				t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j+1
-				t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para i+1
-				t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-				// Vector tg para j-1
-				t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
-					this->object_vertex_buffer[malla[i][j] * 3];
-				t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 1];
-				t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
-					this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			}
-
-			// if(j <= (this->CANT_PUNTOS-1)/4) {
-			// 	// Calculamos la normal para cada sentido
-			// 	n1 = Matematica::productoVectorial(t1, t2);
-			// 	n2 = Matematica::productoVectorial(t2, t3);
-			// 	n3 = Matematica::productoVectorial(t3, t4);
-			// 	n4 = Matematica::productoVectorial(t4, t1);
-			// }
-			// else if((j > (this->CANT_PUNTOS-1)/4) && (j <= (this->CANT_PUNTOS-1)/2)) {
-			// 	// Calculamos la normal para cada sentido
-			// 	n1 = Matematica::productoVectorial(t2, t1);
-			// 	n2 = Matematica::productoVectorial(t3, t2);
-			// 	n3 = Matematica::productoVectorial(t4, t3);
-			// 	n4 = Matematica::productoVectorial(t1, t4);
-			// }
-			// else if((j > (this->CANT_PUNTOS-1)/2) && (j <= (this->CANT_PUNTOS-1) * 3/4)) {
-			// 	// Calculamos la normal para cada sentido
-			// 	n1 = Matematica::productoVectorial(t2, t1);
-			// 	n2 = Matematica::productoVectorial(t3, t2);
-			// 	n3 = Matematica::productoVectorial(t3, t4);
-			// 	n4 = Matematica::productoVectorial(t1, t1);
-			// }
-			// else {
-			// 	// Calculamos la normal para cada sentido
-			// 	n1 = Matematica::productoVectorial(t1, t2);
-			// 	n2 = Matematica::productoVectorial(t2, t3);
-			// 	n3 = Matematica::productoVectorial(t3, t4);
-			// 	n4 = Matematica::productoVectorial(t4, t1);
-			// }
-
-
-			// Calculamos la normal para cada sentido
-			n1 = Matematica::productoVectorial(t1, t2);
-			n2 = Matematica::productoVectorial(t2, t3);
-			n3 = Matematica::productoVectorial(t3, t4);
-			n4 = Matematica::productoVectorial(t4, t1);
-
-
-			// Obtenemos la normal tomando el promedio de normales
-			n[0] = n1[0] + n2[0] + n3[0] + n4[0];
-			n[1] = n1[1] + n2[1] + n3[1] + n4[1];
-			n[2] = n1[2] + n2[2] + n3[2] + n4[2];
-
-			// Normalizamos la normal obtenida
-			float *normal = Matematica::normalizar(n);
-
 			// Cargamos las coordenadas en el buffer
-			this->object_normal_buffer[k++] = normal[0];
-			this->object_normal_buffer[k++] = normal[1];
-			this->object_normal_buffer[k++] = normal[2];
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
+			this->object_normal_buffer[k++] = 1.0;
 		}
 	}
+
+
+	// k = 0;
+
+	// for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
+	// 	for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+	// 	{
+	// 		float t1[3], t2[3], t3[3], t4[3];
+	// 		float *n1, *n2, *n3, *n4;
+	// 		float n[3];
+
+	// 		int w = (this->ESTIRAMIENTO-1);
+	// 		int z = (this->CANT_PUNTOS-1);
+
+	// 		// Caso 1: i=0 y j=0
+	// 		if((i == 0) && (j == 0))
+	// 		{
+	// 			// Vector tg para w-1
+	// 			t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para z-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 2];
+	// 		}
+	// 		// Caso 2: i=max y j=0
+	// 		else if((i == this->ESTIRAMIENTO-1) && (j == 0))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 2];
+
+	// 			// Vector tg para z-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 2];
+	// 		}
+	// 		// Caso 3: i=max y j=max
+	// 		else if((i == this->ESTIRAMIENTO-1) && (j == this->CANT_PUNTOS-1))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+	// 		// Caso 4: i=0 y j=max
+	// 		else if((i == this->ESTIRAMIENTO-1) && (j == this->CANT_PUNTOS-1))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+	// 		// Caso 5: i=0 y 0<j<max
+	// 		else if((i==0) && (j>0) && (j<(this->CANT_PUNTOS-1)))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[w-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[w-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[w-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[w][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+	// 		// Caso 6: 0<i<max y j=0
+	// 		else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j==0))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 				// Vector tg para z-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][z-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][z-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][z-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][z] * 3 + 2];
+	// 		}
+	// 		// Caso 7: i=max y 0 < j < max
+	// 		else if((i==(this->ESTIRAMIENTO-1)) && (j>0) && (j<(this->CANT_PUNTOS-1)))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[0][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+	// 		// Caso 8: 0 < i < max y j=max
+	// 		else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j==(this->CANT_PUNTOS-1)))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][0] * 3 + 2];
+					
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+	// 		// Caso 9: 0 < i < max y 0 < j < max
+	// 		else if((i>0) && (i<(this->ESTIRAMIENTO-1)) && (j>0) && (j<(this->CANT_PUNTOS-1)))
+	// 		{
+	// 			// Vector tg para i-1
+	// 			t1[0] = this->object_vertex_buffer[malla[i-1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t1[1] = this->object_vertex_buffer[malla[i-1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t1[2] = this->object_vertex_buffer[malla[i-1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j+1
+	// 			t2[0] = this->object_vertex_buffer[malla[i][j+1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t2[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t2[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para i+1
+	// 			t3[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t3[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t3[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+
+	// 			// Vector tg para j-1
+	// 			t4[0] = this->object_vertex_buffer[malla[i][j-1] * 3] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3];
+	// 			t4[1] = this->object_vertex_buffer[malla[i][j-1] * 3 + 1] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 1];
+	// 			t4[2] = this->object_vertex_buffer[malla[i][j-1] * 3 + 2] - 
+	// 				this->object_vertex_buffer[malla[i][j] * 3 + 2];
+	// 		}
+
+	// 		// if(j <= (this->CANT_PUNTOS-1)/4) {
+	// 		// 	// Calculamos la normal para cada sentido
+	// 		// 	n1 = Matematica::productoVectorial(t1, t2);
+	// 		// 	n2 = Matematica::productoVectorial(t2, t3);
+	// 		// 	n3 = Matematica::productoVectorial(t3, t4);
+	// 		// 	n4 = Matematica::productoVectorial(t4, t1);
+	// 		// }
+	// 		// else if((j > (this->CANT_PUNTOS-1)/4) && (j <= (this->CANT_PUNTOS-1)/2)) {
+	// 		// 	// Calculamos la normal para cada sentido
+	// 		// 	n1 = Matematica::productoVectorial(t2, t1);
+	// 		// 	n2 = Matematica::productoVectorial(t3, t2);
+	// 		// 	n3 = Matematica::productoVectorial(t4, t3);
+	// 		// 	n4 = Matematica::productoVectorial(t1, t4);
+	// 		// }
+	// 		// else if((j > (this->CANT_PUNTOS-1)/2) && (j <= (this->CANT_PUNTOS-1) * 3/4)) {
+	// 		// 	// Calculamos la normal para cada sentido
+	// 		// 	n1 = Matematica::productoVectorial(t2, t1);
+	// 		// 	n2 = Matematica::productoVectorial(t3, t2);
+	// 		// 	n3 = Matematica::productoVectorial(t3, t4);
+	// 		// 	n4 = Matematica::productoVectorial(t1, t1);
+	// 		// }
+	// 		// else {
+	// 		// 	// Calculamos la normal para cada sentido
+	// 		// 	n1 = Matematica::productoVectorial(t1, t2);
+	// 		// 	n2 = Matematica::productoVectorial(t2, t3);
+	// 		// 	n3 = Matematica::productoVectorial(t3, t4);
+	// 		// 	n4 = Matematica::productoVectorial(t4, t1);
+	// 		// }
+
+
+	// 		// Calculamos la normal para cada sentido
+	// 		n1 = Matematica::productoVectorial(t1, t2);
+	// 		n2 = Matematica::productoVectorial(t2, t3);
+	// 		n3 = Matematica::productoVectorial(t3, t4);
+	// 		n4 = Matematica::productoVectorial(t4, t1);
+
+
+	// 		// Obtenemos la normal tomando el promedio de normales
+	// 		n[0] = n1[0] + n2[0] + n3[0] + n4[0];
+	// 		n[1] = n1[1] + n2[1] + n3[1] + n4[1];
+	// 		n[2] = n1[2] + n2[2] + n3[2] + n4[2];
+
+	// 		// Normalizamos la normal obtenida
+	// 		float *normal = Matematica::normalizar(n);
+
+	// 		// Cargamos las coordenadas en el buffer
+	// 		this->object_normal_buffer[k++] = normal[0];
+	// 		this->object_normal_buffer[k++] = normal[1];
+	// 		this->object_normal_buffer[k++] = normal[2];
+	// 	}
+	// }
 }
 
 
@@ -685,9 +721,10 @@ void PezCuerpo::create()
 void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(166, 214, 38);
+	this->changeObjectColor(255, 238, 200);
 	
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
@@ -752,15 +789,30 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&mCuerpo[0][0]); 
 
+
+
+	// Set the Tex1 sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+
+	if( loc >= 0 )
+		glUniform1i(loc, 0);
+	else
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

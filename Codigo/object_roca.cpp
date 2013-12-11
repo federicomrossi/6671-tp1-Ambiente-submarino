@@ -731,7 +731,7 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 	
-	this->changeObjectColor(100,100,100);
+	this->changeObjectColor(180,180,180);
 
 	///////////////////////////////////////////
 	// Bind View Matrix
