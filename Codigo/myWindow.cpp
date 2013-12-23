@@ -135,4 +135,7 @@ void myWindow::OnKeyUp(int nKey, char cAscii)
 	{
 		SetFullscreen(false);
 	}
+
+	// Disparamos evento de tecla liberada
+	this->scene.onKeyUp(nKey, cAscii);
 }

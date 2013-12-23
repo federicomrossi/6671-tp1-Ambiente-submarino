@@ -6,6 +6,8 @@
 #include <math.h>
 #include <GL/freeglut.h>
 #include "lib_matematica.h"
+#include <algorithm> 			// For std::copy
+
 
 
 // Método que calcula el factorial del número n.
@@ -35,9 +37,11 @@ float* Matematica::productoVectorial(float u[3], float v[3])
 {
 	static float n[3];
 
-	n[0] = u[1] * v[2] - v[1] * u[2];
+	n[0] = u[1] * v[2] - (v[1] * u[2]);
 	n[1] = -(u[0] * v[2] - v[0] * u[2]);
 	n[2] = u[0] * v[1] - v[0] * u[1];
+
+	std::copy(n, n+3, n);
 
 	return n;
 }
@@ -55,7 +59,10 @@ float* Matematica::normalizar(float v[3])
 	n[1] = v[1] / norma;
 	n[2] = v[2] / norma;
 
-	return n;
+	static float a[3];
+	std::copy(n, n+3, a);
+
+	return a;
 }
 
 
@@ -91,50 +98,50 @@ float Matematica::curvaBezier(float t, float p[4])
 // correspondientes a un punto de la curva de Bezier dado por el valor
 // del parámetro t.
 // El valor no se encuentra normalizado.
-void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz[4], float *t, float *b, float *n)
+void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz[4], float t[3], float b[3], float n[3])
 {
 	// Primer derivada de las bases de bezier
-	float b00 = (-3 * pow(u, 2) + 6 * u - 3);
-	float b01 = (9 * pow(u, 2) - 12 * u + 3);
-	float b02 = (-9 * pow(u, 2) + 6 * u);
-	float b03 = (3 * pow(u, 2));
+	float b00 = (-3.0 * pow(u, 2) + 6.0 * u - 3.0);
+	float b01 = (9.0 * pow(u, 2) - 12.0 * u + 3.0);
+	float b02 = (-9.0 * pow(u, 2) + 6.0 * u);
+	float b03 = (3.0 * pow(u, 2));
 
-	if(b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0 && u == 0) {
+	if((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 0) {
 		// Primer derivada de las bases de bezier
-		b00 = (-3 * pow(u+0.01, 2) + 6 * (u+0.01) - 3);
-		b01 = (9 * pow(u+0.01, 2) - 12 * (u+0.01) + 3);
-		b02 = (-9 * pow(u+0.01, 2) + 6 * (u+0.01));
-		b03 = (3 * pow(u+0.01, 2));		
+		b00 = (-3.0 * pow(u+0.01, 2) + 6.0 * (u+0.01) - 3.0);
+		b01 = (9.0 * pow(u+0.01, 2) - 12.0 * (u+0.01) + 3.0);
+		b02 = (-9.0 * pow(u+0.01, 2) + 6.0 * (u+0.01));
+		b03 = (3.0 * pow(u+0.01, 2));		
 	}
-	else if (b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0 && u == 1) {
+	else if ((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 1) {
 		// Primer derivada de las bases de bezier
-		b00 = (-3 * pow(u-0.01, 2) + 6 * (u-0.01) - 3);
-		b01 = (9 * pow(u-0.01, 2) - 12 * (u-0.01) + 3);
-		b02 = (-9 * pow(u-0.01, 2) + 6 * (u-0.01));
-		b03 = (3 * pow(u-0.01, 2));
+		b00 = (-3.0 * pow(u-0.01, 2) + 6.0 * (u-0.01) - 3.0);
+		b01 = (9.0 * pow(u-0.01, 2) - 12.0 * (u-0.01) + 3.0);
+		b02 = (-9.0 * pow(u-0.01, 2) + 6.0 * (u-0.01));
+		b03 = (3.0 * pow(u-0.01, 2));
 	}
+
 
 	// Segunda derivada de las bases de bezier
-	float b10 = (-6 * u + 6);
-	float b11 = (18 * u - 12);
-	float b12 = (-18 * u + 6);
-	float b13 = (6 * u);
+	float b10 = (-6.0 * u + 6.0);
+	float b11 = (18.0 * u - 12.0);
+	float b12 = (-18.0 * u + 6.0);
+	float b13 = (6.0 * u);
 
-	if(b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0 && u == 0) {
+	if((b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0) || u == 0) {
 		// Primer derivada de las bases de bezier
-		b10 = (-6 * (u+0.01) + 6);
-		b11 = (18 * (u+0.01) - 12);
-		b12 = (-18 * (u+0.01) + 6);
-		b13 = (6 * (u+0.01));
+		b10 = (-6.0 * (u+0.01) + 6.0);
+		b11 = (18.0 * (u+0.01) - 12.0);
+		b12 = (-18.0 * (u+0.01) + 6.0);
+		b13 = (6.0 * (u+0.01));
 	}
-	else if (b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0 && u == 1) {
+	else if ((b10 == 0 && b11 == 0 && b12 == 0  && b13 == 0) || u == 1) {
 		// Primer derivada de las bases de bezier
-		b10 = (-6 * (u-0.01) + 6);
-		b11 = (18 * (u-0.01) - 12);
-		b12 = (-18 * (u-0.01) + 6);
-		b13 = (6 * (u-0.01));
+		b10 = (-6.0 * (u-0.01) + 6.0);
+		b11 = (18.0 * (u-0.01) - 12.0);
+		b12 = (-18.0 * (u-0.01) + 6.0);
+		b13 = (6.0 * (u-0.01));
 	}
-
 
 	// Tangente
 	float tx = 0;
@@ -145,7 +152,7 @@ void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz
 	tx += b01 * px[1];
 	tx += b02 * px[2];
 	tx += b03 * px[3];
-
+	
 	ty += b00 * py[0];
 	ty += b01 * py[1];
 	ty += b02 * py[2];
@@ -161,9 +168,9 @@ void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz
 	tTemp[1] = ty;
 	tTemp[2] = tz;
 
-
-	t = Matematica::normalizar(tTemp);
-
+	float *a;
+	a = Matematica::normalizar(tTemp);
+	std::copy(a, a+3, t);
 
 	// Binormal
 	float bx = 0;
@@ -185,19 +192,82 @@ void Matematica::curvaBezierVectores(float u, float px[4], float py[4], float pz
 	bz += b12 * pz[2];
 	bz += b13 * pz[3];
 
+
 	float bTemp[3];
 	bTemp[0] = bx;
 	bTemp[1] = by;
 	bTemp[2] = bz;
 
-	// std::cout << bTemp[0] << ",\t" << bTemp[1] << ",\t" << bTemp[2] << std::endl;
 
 	float *temp = Matematica::productoVectorial(tTemp, bTemp);
-	b = Matematica::normalizar(temp);
-
+	
+	float *y;
+	y = Matematica::normalizar(temp);
+	std::copy(y, y+3, b);
 
 	// Normal
-	n = Matematica::productoVectorial(t, b);
+	float *k;
+	k = Matematica::productoVectorial(t, b);
+
+	k = Matematica::normalizar(k);
+	std::copy(k, k+3, n);
+}
+
+
+// Cálculo del vector tangente (t) correspondiente a un punto de la curva
+	// de Bezier dado por el valor del parametro u. 
+void Matematica::vectorTangenteCurvaBezier(float u, float px[4], float py[4], 
+	float pz[4], float t[3])
+{
+	// Primer derivada de las bases de bezier
+	float b00 = (-3.0 * pow(u, 2) + 6.0 * u - 3.0);
+	float b01 = (9.0 * pow(u, 2) - 12.0 * u + 3.0);
+	float b02 = (-9.0 * pow(u, 2) + 6.0 * u);
+	float b03 = (3.0 * pow(u, 2));
+
+	if((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 0) {
+		// Primer derivada de las bases de bezier
+		b00 = (-3.0 * pow(u+0.01, 2) + 6.0 * (u+0.01) - 3.0);
+		b01 = (9.0 * pow(u+0.01, 2) - 12.0 * (u+0.01) + 3.0);
+		b02 = (-9.0 * pow(u+0.01, 2) + 6.0 * (u+0.01));
+		b03 = (3.0 * pow(u+0.01, 2));		
+	}
+	else if ((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 1) {
+		// Primer derivada de las bases de bezier
+		b00 = (-3.0 * pow(u-0.01, 2) + 6.0 * (u-0.01) - 3.0);
+		b01 = (9.0 * pow(u-0.01, 2) - 12.0 * (u-0.01) + 3.0);
+		b02 = (-9.0 * pow(u-0.01, 2) + 6.0 * (u-0.01));
+		b03 = (3.0 * pow(u-0.01, 2));
+	}
+
+	// Tangente
+	float tx = 0;
+	float ty = 0;
+	float tz = 0;
+
+	tx += b00 * px[0];
+	tx += b01 * px[1];
+	tx += b02 * px[2];
+	tx += b03 * px[3];
+	
+	ty += b00 * py[0];
+	ty += b01 * py[1];
+	ty += b02 * py[2];
+	ty += b03 * py[3];
+
+	tz += b00 * pz[0];
+	tz += b01 * pz[1];
+	tz += b02 * pz[2];
+	tz += b03 * pz[3];
+
+	float tTemp[3];
+	tTemp[0] = tx;
+	tTemp[1] = ty;
+	tTemp[2] = tz;
+
+	float *a;
+	a = Matematica::normalizar(tTemp);
+	std::copy(a, a+3, t);
 }
 
 
@@ -254,8 +324,8 @@ float Matematica::curvaBSpline(float u, float p[3])
 // correspondientes a un punto de la curva BSpline dado por el valor
 // del parámetro u.
 // El valor no se encuentra normalizado.
-void curvaBSplineVectores(float u, float px[3], float py[3], 
-		float pz[3], float *t, float *b, float *n)
+void Matematica::curvaBSplineVectores(float u, float px[3], float py[3], 
+		float pz[3], float t[3], float b[3], float n[3])
 {
 	// Primer derivada de las bases de bezier
 	float b00 = (u - 1);
@@ -290,8 +360,9 @@ void curvaBSplineVectores(float u, float px[3], float py[3],
 	tTemp[1] = ty;
 	tTemp[2] = tz;
 
-	t = Matematica::normalizar(tTemp);
-
+	float *a;
+	a = Matematica::normalizar(tTemp);
+	std::copy(a, a+3, t);
 
 	// Binormal
 	float bx = 0;
@@ -316,9 +387,65 @@ void curvaBSplineVectores(float u, float px[3], float py[3],
 	bTemp[2] = bz;
 
 	float *temp = Matematica::productoVectorial(tTemp, bTemp);
-	b = Matematica::normalizar(temp);
 
+	float *y;
+	y = Matematica::normalizar(temp);
+	std::copy(y, y+3, b);
 
 	// Normal
-	n = Matematica::productoVectorial(t, b);
+	float *k;
+	k = Matematica::productoVectorial(b, t);
+	k = Matematica::normalizar(k);
+	std::copy(k, k+3, n);
+}
+
+
+// Cálculo del vector tangente (t) correspondiente a un punto de la curva
+// B-Spline dado por el valor del parametro u. 
+void Matematica::vectorTangenteCurvaBSpline(float u, float px[3], float py[3], 
+	float pz[3], float t[3])
+{
+	// Primer derivada de las bases de bspline
+	float b00 = (u - 1);
+	float b01 = (-2 * u + 1);
+	float b02 = u;
+
+	if((b00 == 0 && b01 == 0 && b02 == 0) || u == 0) {
+		// Primer derivada de las bases de bspline
+		b00 = ((u+0.01) - 1);
+		b01 = (-2 * (u+0.01) + 1);
+		b02 = (u+0.01);
+	}
+	else if ((b00 == 0 && b01 == 0 && b02 == 0) || u == 1) {
+		// Primer derivada de las bases de bspline
+		b00 = ((u-0.01) - 1);
+		b01 = (-2 * (u-0.01) + 1);
+		b02 = (u-0.01);
+	}
+
+	// Tangente
+	float tx = 0;
+	float ty = 0;
+	float tz = 0;
+
+	tx += b00 * px[0];
+	tx += b01 * px[1];
+	tx += b02 * px[2];
+	
+	ty += b00 * py[0];
+	ty += b01 * py[1];
+	ty += b02 * py[2];
+
+	tz += b00 * pz[0];
+	tz += b01 * pz[1];
+	tz += b02 * pz[2];
+
+	float tTemp[3];
+	tTemp[0] = tx;
+	tTemp[1] = ty;
+	tTemp[2] = tz;
+
+	float *a;
+	a = Matematica::normalizar(tTemp);
+	std::copy(a, a+3, t);
 }

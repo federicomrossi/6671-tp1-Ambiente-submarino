@@ -114,7 +114,7 @@ void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Renderizamos las aletas laterales del pez
 	glm::mat4 mAletaLateralIzq = glm::mat4(1.0f);
 	mAletaLateralIzq = glm::translate(model_matrix, 
-		glm::vec3(0.7, 0.25, 0.0));
+		glm::vec3(0.7, 0.26, 0.0));
 	mAletaLateralIzq = glm::scale(mAletaLateralIzq, glm::vec3(0.5, 0.5, 0.5));
 	mAletaLateralIzq = glm::rotate(mAletaLateralIzq, 
 		90.0f, glm::vec3(0.0, 0.0, 1.0));
@@ -123,7 +123,7 @@ void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	this->pezAletaLateralIzq.render(mAletaLateralIzq, view_matrix, projection_matrix);
 
 	glm::mat4 mAletaLateralDer = glm::mat4(1.0f);
-	mAletaLateralDer = glm::translate(model_matrix, glm::vec3(0.7, -0.25, 0.0));
+	mAletaLateralDer = glm::translate(model_matrix, glm::vec3(0.7, -0.26, 0.0));
 	mAletaLateralDer = glm::scale(mAletaLateralDer, glm::vec3(0.5, 0.5, 0.5));
 	mAletaLateralDer = glm::rotate(mAletaLateralDer, 
 		90.0f, glm::vec3(0.0, 0.0, 1.0));

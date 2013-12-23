@@ -54,7 +54,7 @@ glutWindow::glutWindow(void)
    glutSpecialUpFunc(sSpecialUp);
    glutIdleFunc(sIdle);
    
-  
+  	glutIgnoreKeyRepeat(1);   // ignore key repeat when holding key down
 }
 
 //-----------------------------------------------------------------------------

@@ -1,8 +1,6 @@
 #version 110
 
 varying vec3 LightIntensity;
-varying vec3 Position;
-varying vec3 Normal;
 varying vec2 TexCoord;
 
 uniform sampler2D Tex1;

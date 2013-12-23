@@ -104,7 +104,8 @@ void PlantaAcuatica::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	// Dibujamos la hoja de tipo 03
 	glm::mat4 mHojaT3 = glm::mat4(1.0f);
-	mHojaT3 = glm::rotate(model_matrix, 35.0f, glm::vec3(0.0, 1.0, 0.0));
+	mHojaT3 = glm::translate(model_matrix, glm::vec3(0.04, 0.0, 0.0));
+	mHojaT3 = glm::rotate(mHojaT3, 35.0f, glm::vec3(0.0, 1.0, 0.0));
 	mHojaT3 = glm::rotate(mHojaT3, 180.0f, glm::vec3(0.0, 0.0, 1.0));
 	// this->hojaTipo03.changeObjectColor(0, 255, 0);
 	this->hojaTipo03.render(mHojaT3, view_matrix, projection_matrix);

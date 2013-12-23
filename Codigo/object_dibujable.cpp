@@ -43,6 +43,11 @@ void ObjectDibujable::create() { }
 // entre 0 y 255.
 void ObjectDibujable::changeObjectColor(int r, int g, int b)
 {
+	this->R = r;
+	this->G = g;
+	this->B = b;
+
+	
 	glm::vec3 diffuse_reflectivity = glm::vec3(r/255.0, g/255.0, b/255.0);
 
 	GLuint location_diffuse_reflectivity = glGetUniformLocation(

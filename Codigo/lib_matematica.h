@@ -42,9 +42,13 @@ public:
 	// Cálculo de los vectores tangente (t), binormal (b) y normal (n)
 	// correspondientes a un punto de la curva de Bezier dado por el valor
 	// del parámetro t.
-	// El valor no se encuentra normalizado.
 	static void curvaBezierVectores(float u, float px[4], float py[4], 
-		float pz[4], float *t, float *b, float *n);
+		float pz[4], float t[3], float b[3], float n[3]);
+
+	// Cálculo del vector tangente (t) correspondiente a un punto de la curva
+	// de Bezier dado por el valor del parametro u. 
+	static void vectorTangenteCurvaBezier(float u, float px[4], float py[4], 
+		float pz[4], float t[3]);
 
 	// Cálculo de punto en una superficie utilizando el método de Bezier.
 	static float superficieBezier(float u, float v, float p[4][4]);
@@ -63,7 +67,12 @@ public:
 	// del parámetro u.
 	// El valor no se encuentra normalizado.
 	static void curvaBSplineVectores(float u, float px[3], float py[3], 
-		float pz[3], float *t, float *b, float *n);
+		float pz[3], float t[3], float b[3], float n[3]);
+
+	// Cálculo del vector tangente (t) correspondiente a un punto de la curva
+	// B-Spline dado por el valor del parametro u. 
+	static void vectorTangenteCurvaBSpline(float u, float px[3], float py[3], 
+		float pz[3], float t[3]);
 };
 
 

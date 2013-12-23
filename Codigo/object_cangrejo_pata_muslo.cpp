@@ -100,7 +100,7 @@ void CangrejoPataMuslo::create()
 
 
 	// Configuración del paso entre un punto y otro.
-	float PASO = 0.1;
+	float PASO = 0.2;
 	// Cantidad de curvas que compondran la curva general
 	int CANT_CURVAS = 4;
 
@@ -125,7 +125,7 @@ void CangrejoPataMuslo::create()
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
 	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
 
@@ -141,6 +141,7 @@ void CangrejoPataMuslo::create()
 
 
 	int i = 0;
+	int w = 0;
 
 	// Iteramos sobre cada nivel del objeto
 	for(int q = 0; q < this->ESTIRAMIENTO; q++)
@@ -182,7 +183,10 @@ void CangrejoPataMuslo::create()
 		float pcy230[] = {pc2y, pc3y, pc0y};
 		float pcy301[] = {pc3y, pc0y, pc1y};
 
-
+		float pcz012[] = {pc0z, pc1z, pc2z};
+		float pcz123[] = {pc1z, pc2z, pc3z};
+		float pcz230[] = {pc2z, pc3z, pc0z};
+		float pcz301[] = {pc3z, pc0z, pc1z};
 
 
 
@@ -198,6 +202,15 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBSplineVectores(j * PASO, pcx012, pcy012, pcz012, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -212,6 +225,15 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBSplineVectores(j * PASO, pcx123, pcy123, pcz123, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -226,6 +248,15 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBSplineVectores(j * PASO, pcx230, pcy230, pcz230, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -240,6 +271,15 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			// Calculamos los vectores tangente, binormal y normal en el punto
+			float t[3], b[3], n[3];
+			Matematica::curvaBSplineVectores(j * PASO, pcx301, pcy301, pcz301, t, b, n);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
@@ -265,41 +305,6 @@ void CangrejoPataMuslo::create()
 			}
 
 			sentido = 1;
-		}
-	}
-
-
-	// NORMALES
-
-	k = 0;
-
-	for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-
-			// Calculamos la normal a u y v
-			float *n = Matematica::productoVectorial(u, v);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
 		}
 	}
 }

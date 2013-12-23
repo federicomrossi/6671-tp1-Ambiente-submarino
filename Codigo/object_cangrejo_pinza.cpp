@@ -54,7 +54,7 @@ CangrejoPinza::~CangrejoPinza() { }
 void CangrejoPinza::create()
 {
 	// Creamos el eje coordenado
-	this->ejeCoordenado.create(1);
+	// this->ejeCoordenado.create(1);
 
 	// Creamos el antebrazo
 	this->antebrazo.create();
@@ -80,7 +80,7 @@ void CangrejoPinza::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::mat4 &projection_matrix)
 {
 	// Dibujamos el eje coordenado
-	this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
+	// this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
 
 
 	// Coloreamos objetos

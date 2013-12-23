@@ -44,6 +44,22 @@ Scene::Scene()
 	cameraTargetY = 0.0;
 	cameraTargetZ = 0.0;
 
+	// Parámetros de movimiento
+	this->aceleracionMax = 200;
+	this->velocidadMov = 0.07 / this->aceleracionMax;
+	this->movAdelante = false;
+	this->movAtras = false;
+	this->movDerecha = false;
+	this->movIzquierda = false;
+	this->movArriba = false;
+	this->movAbajo = false;
+	this->aceleracionAdelante = 0;
+	this->aceleracionAtras = 0;
+	this->aceleracionDerecha = 0;
+	this->aceleracionIzquierda = 0;
+	this->aceleracionArriba = 0;
+	this->aceleracionAbajo = 0;
+
 	this->cangrejoPosY = 0.0;
 	this->cangrejoSentido = 1;
 
@@ -81,6 +97,110 @@ void Scene::initialize()
 // initialize().
 void Scene::render(GLuint height, GLuint width)
 {
+	///////////////////////
+	// Movimiento de cámara
+
+	if(this->movAdelante)
+	{
+		if(this->aceleracionAdelante < this->aceleracionMax)
+			this->aceleracionAdelante++;
+
+		this->cameraPositionX -= this->aceleracionAdelante * this->velocidadMov;
+		this->cameraTargetX -= this->aceleracionAdelante * this->velocidadMov;
+	}
+	else if(!this->movAdelante && this->aceleracionAdelante > 0)
+	{
+		this->aceleracionAdelante--;
+
+		this->cameraPositionX -= this->aceleracionAdelante * this->velocidadMov;
+		this->cameraTargetX -= this->aceleracionAdelante * this->velocidadMov;
+	}
+
+	if(this->movAtras)
+	{
+		if(this->aceleracionAtras < this->aceleracionMax)
+			this->aceleracionAtras++;
+
+		this->cameraPositionX += this->aceleracionAtras * this->velocidadMov;
+		this->cameraTargetX += this->aceleracionAtras * this->velocidadMov;
+	}
+	else if(!this->movAtras && this->aceleracionAtras > 0)
+	{
+		this->aceleracionAtras--;
+
+		this->cameraPositionX += this->aceleracionAtras * this->velocidadMov;
+		this->cameraTargetX += this->aceleracionAtras * this->velocidadMov;
+	}
+
+	if(this->movDerecha)
+	{
+		if(this->aceleracionDerecha < this->aceleracionMax)
+			this->aceleracionDerecha++;
+
+		this->cameraPositionY += this->aceleracionDerecha * this->velocidadMov;
+		this->cameraTargetY += this->aceleracionDerecha * this->velocidadMov;
+	}
+	else if(!this->movDerecha && this->aceleracionDerecha > 0)
+	{
+		this->aceleracionDerecha--;
+
+		this->cameraPositionY += this->aceleracionDerecha * this->velocidadMov;
+		this->cameraTargetY += this->aceleracionDerecha * this->velocidadMov;
+	}
+
+	if(this->movIzquierda)
+	{
+		if(this->aceleracionIzquierda < this->aceleracionMax)
+			this->aceleracionIzquierda++;
+
+		this->cameraPositionY -= this->aceleracionIzquierda * this->velocidadMov;
+		this->cameraTargetY -= this->aceleracionIzquierda * this->velocidadMov;
+	}
+	else if(!this->movIzquierda && this->aceleracionIzquierda > 0)
+	{
+		this->aceleracionIzquierda--;
+
+		this->cameraPositionY -= this->aceleracionIzquierda * this->velocidadMov;
+		this->cameraTargetY -= this->aceleracionIzquierda * this->velocidadMov;
+	}
+
+	if(this->movArriba)
+	{
+		if(this->aceleracionArriba < this->aceleracionMax)
+			this->aceleracionArriba++;
+
+		this->cameraPositionZ += this->aceleracionArriba * this->velocidadMov;
+		this->cameraTargetZ += this->aceleracionArriba * this->velocidadMov;
+	}
+	else if(!this->movArriba && this->aceleracionArriba > 0)
+	{
+		this->aceleracionArriba--;
+
+		this->cameraPositionZ += this->aceleracionArriba * this->velocidadMov;
+		this->cameraTargetZ += this->aceleracionArriba * this->velocidadMov;
+	}
+
+	if(this->movAbajo)
+	{
+		if(this->aceleracionAbajo < this->aceleracionMax)
+			this->aceleracionAbajo++;
+
+		this->cameraPositionZ -= this->aceleracionAbajo * this->velocidadMov;
+		this->cameraTargetZ -= this->aceleracionAbajo * this->velocidadMov;
+	}
+	else if(!this->movArriba && this->aceleracionAbajo > 0)
+	{
+		this->aceleracionAbajo--;
+
+		this->cameraPositionZ -= this->aceleracionAbajo * this->velocidadMov;
+		this->cameraTargetZ -= this->aceleracionAbajo * this->velocidadMov;
+	}
+
+	// FIN Movimiento de la camara
+	//////////////////////////////
+
+
+
 	// The position of your camera, in world space
 	glm::vec3 cameraPosition = glm::vec3(
 		this->cameraPositionX,
@@ -137,13 +257,13 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos la superficie
 	glm::mat4 mSuperficie = glm::mat4(1.0f);
-	mSuperficie = glm::translate(mSuperficie, glm::vec3(-30.0, 0.0, 0.0));
+	mSuperficie = glm::translate(mSuperficie, glm::vec3(10.0, 0.0, 0.0));
 	// mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 1.0, 0.0));
 	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
 
 	// Dibujamos la superficie de agua
 	glm::mat4 mSupAgua = glm::mat4(1.0f);
-	mSupAgua = glm::translate(mSupAgua, glm::vec3(-30.0, 0.0, 5.0));
+	mSupAgua = glm::translate(mSupAgua, glm::vec3(-10.0, 0.0, 5.0));
 	// mSupAgua = glm::rotate(mSupAgua, this->grado, glm::vec3(0.0, 1.0, 0.0));
 	this->superficieAgua.render(mSupAgua, this->view_matrix, projection_matrix);
 
@@ -151,19 +271,19 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Dibujamos cangrejo
 
-	// // Movimiento
-	// if(this->cangrejoSentido == 1 && this->cangrejoPosY < 4.0)
-	// 	this->cangrejoPosY += 0.003;
-	// else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
-	// 	this->cangrejoPosY -= 0.003;
+	// Movimiento
+	if(this->cangrejoSentido == 1 && this->cangrejoPosY < 4.0)
+		this->cangrejoPosY += 0.003;
+	else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
+		this->cangrejoPosY -= 0.003;
 
-	// if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;
-	// else if(this->cangrejoPosY >= 4.0) this->cangrejoSentido = -1;
+	if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;
+	else if(this->cangrejoPosY >= 4.0) this->cangrejoSentido = -1;
 
 	glm::mat4 mCangrejo = glm::mat4(1.0f);
 	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -this->cangrejoPosY, 0.45));
-	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.3, 0.3, 0.3));
-	mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.2, 0.2, 0.2));
+	// mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 
 	// Dibujamos el pez
@@ -172,7 +292,7 @@ void Scene::render(GLuint height, GLuint width)
 
 	// Rotación para efecto de delantamiento
 	float dosPi = 6.283185307;
-	this->pezGradoRotacion += 0.02;
+	this->pezGradoRotacion += 0.01;
 	if(this->pezGradoRotacion >= dosPi) this->pezGradoRotacion = 0.0;
 	float radio = 7.5;
 
@@ -185,7 +305,7 @@ void Scene::render(GLuint height, GLuint width)
 	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
 	mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
 		glm::vec3(0.0, 0.0, 1.0));
-	mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	// mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->pez.render(mPez, this->view_matrix, projection_matrix);
 
 	// Dibujamos rocas
@@ -194,8 +314,8 @@ void Scene::render(GLuint height, GLuint width)
 	mRoca = glm::scale(mRoca, glm::vec3(0.7, 0.6, 0.5));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
 	mRoca = glm::scale(mRoca, glm::vec3(0.7, 0.8, 0.7));
-	mRoca = glm::translate(mRoca, glm::vec3(-1.0, -0.5, -0.05));
-	// mRoca = glm::rotate(mRoca, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	mRoca = glm::translate(mRoca, glm::vec3(-1.0, -0.5, 0.4));
+	mRoca = glm::rotate(mRoca, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
 	mRoca = glm::translate(mRoca, glm::vec3(-1.5, -2.5, 0.1));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
@@ -206,11 +326,11 @@ void Scene::render(GLuint height, GLuint width)
 	glm::mat4 mPlanta = glm::mat4(1.0f);
 	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
 	// mPlanta = glm::rotate(mPlanta, 90.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
 	mPlanta = glm::mat4(1.0f);
-	mPlanta = glm::translate(mPlanta, glm::vec3(1.3, 1.8, -0.05));
+	mPlanta = glm::translate(mPlanta, glm::vec3(1.3, 1.8, 0.25));
 	mPlanta = glm::rotate(mPlanta, -30.0f, glm::vec3(0.0, 0.0, 1.0));
 	// mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	mPlanta = glm::scale(mPlanta, glm::vec3(1.0, 0.7, 0.6));
@@ -258,45 +378,75 @@ void Scene::onKeyDown(int nKey, char cAscii)
 	// Adelante
 	if(cAscii == 'w')
 	{
-		this->cameraPositionX -= 0.07;
-		this->cameraTargetX -= 0.07;
+		this->movAdelante = true;
 	}
 	// Atras
 	else if(cAscii == 's')
 	{
-		this->cameraPositionX += 0.07;
-		this->cameraTargetX += 0.07;
+		this->movAtras = true;
 	}
-
 	// Derecha
 	else if(cAscii == 'd')
 	{
-		this->cameraPositionY += 0.07;
-		this->cameraTargetY += 0.07;
+		this->movDerecha = true;
 	}
 	// Izquierda
 	else if(cAscii == 'a')
 	{
-		this->cameraPositionY -= 0.07;
-		this->cameraTargetY -= 0.07;
+		this->movIzquierda = true;
 	}
 	// Subir
 	else if(cAscii == 'i')
 	{
-		this->cameraPositionZ += 0.07;
-		this->cameraTargetZ += 0.07;
+		this->movArriba = true;
 	}
-	// Subir
+	// Bajar
 	else if(cAscii == 'k')
 	{
-		this->cameraPositionZ -= 0.07;
-		this->cameraTargetZ -= 0.07;
+		this->movAbajo = true;
 	}
 
+	// DEBUG
 	if(cAscii == '+') 
-		this->grado--;
+		this->grado -= 10;
 	else if(cAscii == '-') 	
-		this->grado++;
+		this->grado += 10;
+	// END DEBUG
+}
+
+// Manejador del evento de tecla liberada.
+void Scene::onKeyUp(int nKey, char cAscii)
+{
+	// Adelante
+	if(cAscii == 'w')
+	{
+		this->movAdelante = false;
+	}
+	// Atras
+	else if(cAscii == 's')
+	{
+		this->movAtras = false;
+	}
+	// Derecha
+	else if(cAscii == 'd')
+	{
+		this->movDerecha = false;
+	}
+	// Izquierda
+	else if(cAscii == 'a')
+	{
+		this->movIzquierda = false;
+	}
+	// Subir
+	else if(cAscii == 'i')
+	{
+		this->movArriba = false;
+	}
+	// Bajar
+	else if(cAscii == 'k')
+	{
+		this->movAbajo = false;
+	}
 }
 
 

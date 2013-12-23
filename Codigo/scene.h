@@ -55,6 +55,20 @@ private:
 	GLfloat cameraTargetX;
 	GLfloat cameraTargetY;
 	GLfloat cameraTargetZ;
+	int aceleracionMax;
+	float velocidadMov;
+	bool movAdelante;
+	bool movAtras;
+	bool movDerecha;
+	bool movIzquierda;
+	bool movArriba;
+	bool movAbajo;
+	int aceleracionAdelante;
+	int aceleracionAtras;
+	int aceleracionDerecha;
+	int aceleracionIzquierda;
+	int aceleracionArriba;
+	int aceleracionAbajo;
 
 	// Objetos
 	// (Definir atributos relacionados con objetos AQUI)
@@ -108,6 +122,9 @@ public:
 
 	// Manejador del evento de tecla presionada.
 	void onKeyDown(int nKey, char cAscii);
+
+	// Manejador del evento de tecla liberada.
+	void onKeyUp(int nKey, char cAscii);
 
 	// Manejador del evento de movimiento de la rueda del mouse.
 	void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);

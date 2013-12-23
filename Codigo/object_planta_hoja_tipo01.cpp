@@ -94,20 +94,26 @@ void PlantaHojaTipo01::create()
 
 	float deformacion_pc0x = 0.0;
 	float deformacion_pc0y = 0.0;
+	float deformacion_pc0z = 0.0;
 
 	float deformacion_pc1x = 3.0;
 	float deformacion_pc1y = 0.6;
+	float deformacion_pc1z = 0.0;
 
 	float deformacion_pc2x = 7.5;
 	float deformacion_pc2y = -0.1;
+	float deformacion_pc2z= 0.0;
 
 	float deformacion_pc3x = 10.0;
 	float deformacion_pc3y = 0.0;
+	float deformacion_pc3z = 0.0;
 
 	float deformacion_pcx[] = {deformacion_pc0x, deformacion_pc1x,
 		deformacion_pc2x, deformacion_pc3x};
 	float deformacion_pcy[] = {deformacion_pc0y, deformacion_pc1y,
 		deformacion_pc2y, deformacion_pc3y};
+	float deformacion_pcz[] = {deformacion_pc0z, deformacion_pc1z,
+		deformacion_pc2z, deformacion_pc3z};
 
 
 
@@ -161,11 +167,18 @@ void PlantaHojaTipo01::create()
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
-		float distancia = Matematica::curvaBezier((k * 1.0) / 
-			(this->ESTIRAMIENTO-1),	grosor_pcy);
+		// Calculamos el ancho de fragmento de la hoja
+		float paso_actual = (k * 1.0) / (this->ESTIRAMIENTO-1);
 
-		float deformacion = Matematica::curvaBezier((k * 1.0) /  
-			(this->ESTIRAMIENTO-1), deformacion_pcy);
+		float distancia = Matematica::curvaBezier(paso_actual,	grosor_pcy);
+
+		// Calculamos la deformación (doblez) de la hoja
+		float deformacion = Matematica::curvaBezier(paso_actual, deformacion_pcy);
+
+		// Calculamos el vector tangente dado por el doblez de la hoja
+		float t_barrido[3];
+		Matematica::vectorTangenteCurvaBezier(paso_actual, deformacion_pcy, deformacion_pcz, deformacion_pcx, t_barrido);
+
 
 		// Puntos de control
 		float pc0x = 0.0 * distancia + deformacion;
@@ -203,17 +216,24 @@ void PlantaHojaTipo01::create()
 			this->object_texture_buffer[y++] = ((k * 1.0) 
 				/ (this->ESTIRAMIENTO-1));
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBezierVectores(j * PASO, pcx, pcy, pcz, t, b, n);
+			// Calculamos el vector tangente dado por la curvatura de la hoja
+			float t[3];
+			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
+
+	// Tejemos los puntos insertandolos en el index buffer para crear
+	// la superficie del objeto
 
 	int sentido = 1;
 	int k = 0;
@@ -251,7 +271,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(0, 255, 0);
+	this->changeObjectColor(0, 200, 0);
 
 	// Bind tiempo para variación de movimiento
 	// ########################################
@@ -285,20 +305,86 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	   
+	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ka = glm::vec3(0 / 255.0f,
+							 85 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(0, 255, 0);
+	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+							 this->G / 255.0f, 
+							 this->B / 255.0f);
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 1.0;
+
+	// Light Intensity
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
+		"LightIntensity");
+
+	if(location_light_intensity >= 0) 
+		glUniform4fv( location_light_intensity, 1, &light_intensity[0]); 
+
+	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	GLuint location_light_intensity = glGetUniformLocation(
+	// La
+	GLuint location_la = glGetUniformLocation(
+		this->programHandle, "La");
+
+	if(location_la >= 0) 
+		glUniform3fv( location_la, 1, &La[0]); 
+	
+	// Ld
+	GLuint location_ld = glGetUniformLocation(
 		this->programHandle, "Ld");
 
-	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+	if(location_ld >= 0) 
+		glUniform3fv( location_ld, 1, &Ld[0]); 
+
+	// Ls
+	GLuint location_ls = glGetUniformLocation(
+		this->programHandle, "Ls");
+
+	if(location_ls >= 0) 
+		glUniform3fv( location_ls, 1, &Ls[0]); 
+
+
+	// Ka
+	GLuint location_ka = glGetUniformLocation(
+		this->programHandle, "Ka");
+
+	if(location_ka >= 0) 
+		glUniform3fv( location_ka, 1, &Ka[0]); 
+	
+	// Kd
+	GLuint location_kd = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_kd >= 0) 
+		glUniform3fv( location_kd, 1, &Kd[0]); 
+
+	// Ks
+	GLuint location_ks = glGetUniformLocation(
+		this->programHandle, "Ks");
+
+	if(location_ks >= 0) 
+		glUniform3fv( location_ks, 1, &Ks[0]); 
+
+
+	// Shininess
+	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
+		"Shininess");
+
+	if(location_shininess >= 0)
+		glUniform1f(location_shininess, Shininess); 
+
 
 
 
@@ -321,7 +407,6 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 
-
 	// Set the Tex1 sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Tex1");
 
@@ -330,7 +415,6 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1i(loc, 0);
 	else
 		fprintf(stderr, "Uniform variable Tex1 not found!\n");
-
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);

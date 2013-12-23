@@ -164,6 +164,15 @@ void PezAletaTrasera::create()
 
 	int i = 0;
 	int y = 0;
+	int w = 0;
+
+
+	// Vector tangente correspondiente al barrido
+	float t_barrido[3];
+	t_barrido[0] = 0.0;
+	t_barrido[1] = 1.0;
+	t_barrido[2] = 0.0;
+
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
@@ -212,6 +221,19 @@ void PezAletaTrasera::create()
 			this->object_texture_buffer[y++] = ((k * 1.0) 
 				/ (this->ESTIRAMIENTO-1));
 			this->object_texture_buffer[y++] = (j * PASO);
+
+			// Calculamos el vector tangente dado por la curvatura de la hoja
+			float t[3];
+			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
@@ -238,88 +260,6 @@ void PezAletaTrasera::create()
 			}
 
 			sentido = 1;
-		}
-	}
-	
-
-	// NORMALES
-
-	// k = 0;
-
-	// for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
-	// 	for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-	// 	{
-	// 		this->object_normal_buffer[k++] = 1.0;
-	// 		this->object_normal_buffer[k++] = 1.0;
-	// 		this->object_normal_buffer[k++] = 0.0;
-	// 	}
-	// }
-
-	k = 0;
-
-	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
-			float u[3], v[3];
-
-			int realI, realJ;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-			{
-				realI = i+1;
-				realJ = j-1;
-			}
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j+1;
-			}
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-			{
-				realI = i-1;
-				realJ = j-1;
-			}
-			else
-			{
-				realI = i+1;
-				realJ = j+1;
-			}
-			
-			// Tomamos vectores adyacentes u y v
-			u[0] = this->object_vertex_buffer[malla[realI][j] * 3] - 
-				this->object_vertex_buffer[malla[i][j] * 3];
-			u[1] = this->object_vertex_buffer[malla[realI][j] * 3 + 1] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			u[2] = this->object_vertex_buffer[malla[realI][j] * 3 + 2] - 
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-			v[0] = this->object_vertex_buffer[malla[i][realJ] * 3] -
-				this->object_vertex_buffer[malla[i][j] * 3];
-			v[1] = this->object_vertex_buffer[malla[i][realJ] * 3 + 1] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 1];
-			v[2] = this->object_vertex_buffer[malla[i][realJ] * 3 + 2] -
-				this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-			float *n;
-
-			if((j == (this->CANT_PUNTOS-1)) && (i < (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-			else if((j < (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(v, u);
-			else if((j == (this->CANT_PUNTOS-1)) && (i == (this->ESTIRAMIENTO-1)))
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-			else
-				// Calculamos la normal a u y v
-				n = Matematica::productoVectorial(u, v);
-
-			n = Matematica::normalizar(n);
-
-			this->object_normal_buffer[k++] = n[0];
-			this->object_normal_buffer[k++] = n[1];
-			this->object_normal_buffer[k++] = n[2];
 		}
 	}
 }

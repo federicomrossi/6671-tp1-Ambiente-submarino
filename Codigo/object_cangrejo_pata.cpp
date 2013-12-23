@@ -63,11 +63,11 @@ void CangrejoPata::create(int direccion)
 	}
 	this->sentidoMuslo = 1;
 
-	this->maxGradoPierna = 90.0;
+	this->maxGradoPierna = 180.0;
 	this->minGradoPierna = 35.0;
 	this->gradoPierna = 35.0;
 	if(direccion == 1) this->gradoPierna = 35.0;
-	else if(direccion == -1) this->gradoPierna = 90.0;
+	else if(direccion == -1) this->gradoPierna = 180.0;
 
 	this->maxGradoPie = 70.0;
 	this->minGradoPie = 40.0;
@@ -77,7 +77,7 @@ void CangrejoPata::create(int direccion)
 
 
 	// Creamos el eje coordenado
-	this->ejeCoordenado.create(3);
+	// this->ejeCoordenado.create(3);
 
 	// Creamos el muslo
 	this->muslo.create();
@@ -97,7 +97,7 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::mat4 &projection_matrix)
 {
 	// Dibujamos el eje coordenado
-	this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
+	// this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
 
 	if(direccion == 1)
 	{
@@ -222,7 +222,7 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	m = glm::rotate(m, this->gradoPierna * 1.0f, glm::vec3(1.0, 0.0, 0.0));
 
 	// // // Dibujamos el eje coordenado
-	this->ejeCoordenado.render(m, view_matrix, projection_matrix);
+	// this->ejeCoordenado.render(m, view_matrix, projection_matrix);
 
 	this->pierna.render(m, view_matrix, projection_matrix);
 
@@ -231,7 +231,7 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	m = glm::rotate(m, this->gradoPie * 1.0f, glm::vec3(1.0, 0.0, 0.0));
 
 	// Dibujamos el eje coordenado
-	this->ejeCoordenado.render(m, view_matrix, projection_matrix);
+	// this->ejeCoordenado.render(m, view_matrix, projection_matrix);
 
 	glm::mat4 mPie = glm::mat4(1.0f);
 	mPie = glm::translate(m, glm::vec3(0.0, 0.0, 2.0));

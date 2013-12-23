@@ -35,6 +35,11 @@ protected:
 	int image_height;
 	int image_channels;
 
+	// Colores que definen al objeto en formato RGB
+	int R;
+	int G;
+	int B;
+
 	// Carga los shaders
 	void loadShaderPrograms(std::string vertShaderFile, 
 		std::string fragShaderFile);
