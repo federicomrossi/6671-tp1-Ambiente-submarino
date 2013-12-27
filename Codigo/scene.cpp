@@ -86,7 +86,10 @@ void Scene::initialize()
 	this->plantaAcuatica.create();
 
 	// Establecemos un color inicial para la escena
-	glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
+	glClearColor(147.0f / 255.0, 
+				 157.0f / 255.0, 
+				 255.0f / 255.0, 
+				 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 }
@@ -269,22 +272,23 @@ void Scene::render(GLuint height, GLuint width)
 
 
 
-	// Dibujamos cangrejo
+	// // Dibujamos cangrejo
 
-	// Movimiento
-	if(this->cangrejoSentido == 1 && this->cangrejoPosY < 4.0)
-		this->cangrejoPosY += 0.003;
-	else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
-		this->cangrejoPosY -= 0.003;
+	// // // Movimiento
+	// // if(this->cangrejoSentido == 1 && this->cangrejoPosY < 4.0)
+	// // 	this->cangrejoPosY += 0.003;
+	// // else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
+	// // 	this->cangrejoPosY -= 0.003;
 
-	if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;
-	else if(this->cangrejoPosY >= 4.0) this->cangrejoSentido = -1;
+	// // if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;
+	// // else if(this->cangrejoPosY >= 4.0) this->cangrejoSentido = -1;
 
-	glm::mat4 mCangrejo = glm::mat4(1.0f);
-	mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -this->cangrejoPosY, 0.45));
-	mCangrejo = glm::scale(mCangrejo, glm::vec3(0.2, 0.2, 0.2));
+	// glm::mat4 mCangrejo = glm::mat4(1.0f);
+	// // mCangrejo = glm::translate(mCangrejo, glm::vec3(0.5, -this->cangrejoPosY, 0.45));
+	// mCangrejo = glm::translate(mCangrejo, glm::vec3(0.0, 0.0, 0.5));
+	// mCangrejo = glm::scale(mCangrejo, glm::vec3(0.2, 0.2, 0.2));
 	// mCangrejo = glm::rotate(mCangrejo, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
+	// this->cangrejo.render(mCangrejo, this->view_matrix, projection_matrix);
 
 	// Dibujamos el pez
 
@@ -302,6 +306,7 @@ void Scene::render(GLuint height, GLuint width)
 
 	glm::mat4 mPez = glm::mat4(1.0f);
 	mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY, this->pezPosZ));
+	// mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
 	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
 	mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
 		glm::vec3(0.0, 0.0, 1.0));
@@ -313,13 +318,16 @@ void Scene::render(GLuint height, GLuint width)
 	mRoca = glm::translate(mRoca, glm::vec3(2.3, 2.0, -0.1));
 	mRoca = glm::scale(mRoca, glm::vec3(0.7, 0.6, 0.5));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::scale(mRoca, glm::vec3(0.7, 0.8, 0.7));
+	mRoca = glm::scale(mRoca, glm::vec3(0.3, 0.8, 0.7));
 	mRoca = glm::translate(mRoca, glm::vec3(-1.0, -0.5, 0.4));
 	mRoca = glm::rotate(mRoca, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
 	mRoca = glm::translate(mRoca, glm::vec3(-1.5, -2.5, 0.1));
+	mRoca = glm::rotate(mRoca, 10.0f, glm::vec3(1.0, 0.0, 0.0));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
-	mRoca = glm::translate(mRoca, glm::vec3(-9.0, -8.0, -0.1));
+	mRoca = glm::translate(mRoca, glm::vec3(-9.0, -8.0, 0.45));
+	mRoca = glm::scale(mRoca, glm::vec3(0.6, 1.0, 1.0));
+	mRoca = glm::rotate(mRoca, -25.0f, glm::vec3(1.0, 0.0, 0.0));
 	this->roca.render(mRoca, this->view_matrix, projection_matrix);
 
 	// Dibujamos una planta

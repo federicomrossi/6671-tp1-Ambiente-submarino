@@ -22,10 +22,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/CrabVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/CangrejoVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/CrabFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/CangrejoFShader.frag";
 }
 
 
@@ -341,42 +341,6 @@ void CangrejoCuerpo::create()
 			sentido = 1;
 		}
 	}
-
-
-	// // NORMALES
-
-
-	// k = 0;
-
-	// for(int i=0; i < (this->ESTIRAMIENTO-1); i++) {
-	// 	for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-	// 	{
-	// 		float u[3], v[3];
-			
-	// 		// Tomamos vectores adyacentes u y v
-	// 		u[0] = this->object_vertex_buffer[malla[i+1][j] * 3] - 
-	// 			this->object_vertex_buffer[malla[i][j] * 3];
-	// 		u[1] = this->object_vertex_buffer[malla[i+1][j] * 3 + 1] - 
-	// 			this->object_vertex_buffer[malla[i][j] * 3 + 1];
-	// 		u[2] = this->object_vertex_buffer[malla[i+1][j] * 3 + 2] - 
-	// 			this->object_vertex_buffer[malla[i][j] * 3 + 2];
-			
-	// 		v[0] = this->object_vertex_buffer[malla[i][j+1] * 3] -
-	// 			this->object_vertex_buffer[malla[i][j] * 3];
-	// 		v[1] = this->object_vertex_buffer[malla[i][j+1] * 3 + 1] -
-	// 			this->object_vertex_buffer[malla[i][j] * 3 + 1];
-	// 		v[2] = this->object_vertex_buffer[malla[i][j+1] * 3 + 2] -
-	// 			this->object_vertex_buffer[malla[i][j] * 3 + 2];
-
-
-	// 		// Calculamos la normal a u y v
-	// 		float *n = Matematica::productoVectorial(u, v);
-
-	// 		this->object_normal_buffer[k++] = n[0];
-	// 		this->object_normal_buffer[k++] = n[1];
-	// 		this->object_normal_buffer[k++] = n[2];
-	// 	}
-	// }
 }
 
 
@@ -394,14 +358,6 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
 	mCuerpo = glm::translate(model_matrix, glm::vec3(-1.25, 0.0, 0.0));
-
-// Damos forma del cuerpo a la esfera y la renderizamos
-	// glm::mat4 mCuerpo = glm::mat4(1.0f);
-	// mCuerpo = glm::scale(model_matrix, glm::vec3(1.2, 1.1, 0.5));
-	// mCuerpo = glm::rotate(mCuerpo, 15.0f, glm::vec3(0.0, 1.0, 0.0));
-	// this->spiralSphere.changeObjectColor(157, 243, 232);
-	// this->spiralSphere.render(mCuerpo, view_matrix, projection_matrix);
-
 
 	
 
@@ -425,22 +381,88 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	///////////////////////////////////////////
 
 
-	//////////////////////////////////////
 	// Bind Light Settings
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// ###################
+
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	   
+	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+							 0 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(200, 0, 0);
+	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+							 this->G / 255.0f, 
+							 this->B / 255.0f);
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 1.0;
+
+	// Light Intensity
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
+		"LightIntensity");
+
+	if(location_light_intensity >= 0) 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+
+	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	GLuint location_light_intensity = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
+	
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
+
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
+
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
+
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
+
+
+	// Ka
+	GLuint location_ka = glGetUniformLocation(
+		this->programHandle, "Ka");
+
+	if(location_ka >= 0) 
+		glUniform3fv( location_ka, 1, &Ka[0]); 
+	
+	// Kd
+	GLuint location_kd = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_kd >= 0) 
+		glUniform3fv( location_kd, 1, &Kd[0]); 
+
+	// Ks
+	GLuint location_ks = glGetUniformLocation(
+		this->programHandle, "Ks");
+
+	if(location_ks >= 0) 
+		glUniform3fv( location_ks, 1, &Ks[0]); 
+
+
+	// Shininess
+	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
+		"Shininess");
+
+	if(location_shininess >= 0)
+		glUniform1f(location_shininess, Shininess); 
 	//
 	///////////////////////////////////////////
 

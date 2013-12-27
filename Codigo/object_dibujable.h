@@ -29,23 +29,30 @@ protected:
 	GLuint vertShader;					// Vertex shader
 	GLuint fragShader;					// Fragment shader
 	GLuint texture_id;					// ID de la textura
+	GLuint normalmap_id;				// ID de la textura de mapa de normales
 
 	unsigned char* image_buffer;
 	int image_witdh;
 	int image_height;
 	int image_channels;
 
+	unsigned char* normalmap_buffer;
+	int normalmap_witdh;
+	int normalmap_height;
+	int normalmap_channels;
+
 	// Colores que definen al objeto en formato RGB
-	int R;
-	int G;
-	int B;
+	int R, G, B;
 
 	// Carga los shaders
 	void loadShaderPrograms(std::string vertShaderFile, 
 		std::string fragShaderFile);
 
-	// Carga e inicia las texturas
+	// Carga e inicia la textura
 	void loadAndInitTexture(const char* filename);
+
+	// Carga e inicia la textura y el mapa de normales
+	void loadAndInitTexture(const char* filename, const char* normalmap);
 
 public:
 

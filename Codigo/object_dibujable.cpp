@@ -219,22 +219,42 @@ void ObjectDibujable::loadAndInitTexture(const char* filename)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->image_witdh, this->image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image_buffer);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	// // Copy file to OpenGL
-	// glActiveTexture(GL_TEXTURE0);
-	// glGenTextures(1, &this->texture_id);
-	// glBindTexture(GL_TEXTURE_2D, this->textureure_id);
-
-	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_witdh, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_buffer);
-	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	// // Set the Tex1 sampler uniform to refer to texture unit 0
-	// int loc = glGetUniformLocation(this->programHandle, "Tex1");
-
-	// if( loc >= 0 )
-	// 	// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-	// 	glUniform1i(loc, 0);
-	// else
-	// 	fprintf(stderr, "Uniform variable Tex1 not found!\n");
 }
+
+// Carga e inicia las texturas
+void ObjectDibujable::loadAndInitTexture(const char* filename, 
+	const char* normalmap)
+{
+	// Load texture file
+	this->image_buffer  = SOIL_load_image(filename, &this->image_witdh, &this->image_height, &this->image_channels, SOIL_LOAD_RGBA);
+
+	GLuint texIDs[2];
+
+	// Copy file to OpenGL
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(2, texIDs);
+	this->texture_id = texIDs[0];
+	this->normalmap_id = texIDs[1];
+
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);  
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->image_witdh, this->image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image_buffer);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+
+	// Load normalmap texture file
+	this->normalmap_buffer  = SOIL_load_image(normalmap, 
+		&this->normalmap_witdh, &this->normalmap_height, 
+		&this->normalmap_channels, SOIL_LOAD_RGBA);
+
+	// Copy file to OpenGL
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);  
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->normalmap_witdh, 
+		this->normalmap_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 
+		this->normalmap_buffer);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+}
+

@@ -166,7 +166,7 @@ void SpiralSphere::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 {
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(100, 100, 100);
+	this->changeObjectColor(255, 255, 255);
 	
 	///////////////////////////////////////////
 	// Bind View Matrix

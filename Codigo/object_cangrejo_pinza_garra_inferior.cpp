@@ -23,10 +23,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/CangrejoVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/CangrejoFShader.frag";
 }
 
 
@@ -360,22 +360,88 @@ void CangrejoPinzaGarraInferior::render(glm::mat4 model_matrix, glm::mat4 &view_
 	///////////////////////////////////////////
 
 
-	//////////////////////////////////////
 	// Bind Light Settings
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// ###################
+
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	   
+	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+							 0 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(200, 0, 0);
+	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+							 this->G / 255.0f, 
+							 this->B / 255.0f);
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 1.0;
+
+	// Light Intensity
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
+		"LightIntensity");
+
+	if(location_light_intensity >= 0) 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+
+	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	GLuint location_light_intensity = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
+	
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
+
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
+
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
+
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
+
+
+	// Ka
+	GLuint location_ka = glGetUniformLocation(
+		this->programHandle, "Ka");
+
+	if(location_ka >= 0) 
+		glUniform3fv( location_ka, 1, &Ka[0]); 
+	
+	// Kd
+	GLuint location_kd = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_kd >= 0) 
+		glUniform3fv( location_kd, 1, &Kd[0]); 
+
+	// Ks
+	GLuint location_ks = glGetUniformLocation(
+		this->programHandle, "Ks");
+
+	if(location_ks >= 0) 
+		glUniform3fv( location_ks, 1, &Ks[0]); 
+
+
+	// Shininess
+	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
+		"Shininess");
+
+	if(location_shininess >= 0)
+		glUniform1f(location_shininess, Shininess); 
 	//
 	///////////////////////////////////////////
 

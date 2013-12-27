@@ -231,8 +231,8 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"Tiempo");
 	this->tiempo += 0.01f;
 
-	// if(algae_time >= 0)
-	glUniform1f(algae_time, this->tiempo); 
+	if(algae_time >= 0)
+		glUniform1f(algae_time, this->tiempo); 
 
 
 	// Bind View Matrix
@@ -259,7 +259,7 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// ###################
 
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec4 light_position = glm::vec4(1.0f, 1.0f, -1.0f, 1.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -278,7 +278,7 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform4fv( location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
@@ -287,26 +287,26 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// La
-	GLuint location_la = glGetUniformLocation(
-		this->programHandle, "La");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_la >= 0) 
-		glUniform3fv( location_la, 1, &La[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
 	
-	// Ld
-	GLuint location_ld = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
 
-	if(location_ld >= 0) 
-		glUniform3fv( location_ld, 1, &Ld[0]); 
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
 
-	// Ls
-	GLuint location_ls = glGetUniformLocation(
-		this->programHandle, "Ls");
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
 
-	if(location_ls >= 0) 
-		glUniform3fv( location_ls, 1, &Ls[0]); 
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka

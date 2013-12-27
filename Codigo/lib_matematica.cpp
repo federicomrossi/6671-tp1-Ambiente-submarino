@@ -410,13 +410,13 @@ void Matematica::vectorTangenteCurvaBSpline(float u, float px[3], float py[3],
 	float b01 = (-2 * u + 1);
 	float b02 = u;
 
-	if((b00 == 0 && b01 == 0 && b02 == 0) || u == 0) {
+	if((b00 == 0 && b01 == 0 && b02 == 0) || u == 0.0) {
 		// Primer derivada de las bases de bspline
 		b00 = ((u+0.01) - 1);
 		b01 = (-2 * (u+0.01) + 1);
 		b02 = (u+0.01);
 	}
-	else if ((b00 == 0 && b01 == 0 && b02 == 0) || u == 1) {
+	else if ((b00 == 0 && b01 == 0 && b02 == 0) || u == 1.0) {
 		// Primer derivada de las bases de bspline
 		b00 = ((u-0.01) - 1);
 		b01 = (-2 * (u-0.01) + 1);

@@ -23,10 +23,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/DiffuseShadingVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/CangrejoVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/DiffuseShadingFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/CangrejoFShader.frag";
 }
 
 
@@ -43,6 +43,7 @@ CangrejoPataPierna::CangrejoPataPierna()
 {
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_tangent_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 }
 
@@ -129,6 +130,10 @@ void CangrejoPataPierna::create()
 		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
+	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO;
+	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
+
 
 	// Unimos los puntos
 
@@ -143,6 +148,14 @@ void CangrejoPataPierna::create()
 
 	int i = 0;
 	int w = 0;
+	int z = 0;
+
+	// Vector tangente correspondiente al barrido
+	float t_barrido[3];
+	t_barrido[0] = 0.0;
+	t_barrido[1] = 0.0;
+	t_barrido[2] = 1.0;
+
 
 	// Iteramos sobre cada nivel del objeto
 	for(int q = 0; q < this->ESTIRAMIENTO; q++)
@@ -199,19 +212,28 @@ void CangrejoPataPierna::create()
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy012);
 			float ppz = q * 0.05f;
 
-			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			// Calculamos el vector tangente a la curva en el punto
+			float t[3];
+			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx012, pcy012, pcz012, t);
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBSplineVectores(j * PASO, pcx012, pcy012, pcz012, t, b, n);
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
 			this->object_normal_buffer[w++] = n[0];
 			this->object_normal_buffer[w++] = n[1];
 			this->object_normal_buffer[w++] = n[2];
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -222,19 +244,28 @@ void CangrejoPataPierna::create()
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
 			float ppz = q * 0.05f;
 
-			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			// Calculamos el vector tangente a la curva en el punto
+			float t[3];
+			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx123, pcy123, pcz123, t);
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBSplineVectores(j * PASO, pcx123, pcy123, pcz123, t, b, n);
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
 			this->object_normal_buffer[w++] = n[0];
 			this->object_normal_buffer[w++] = n[1];
 			this->object_normal_buffer[w++] = n[2];
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -245,19 +276,28 @@ void CangrejoPataPierna::create()
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy230);
 			float ppz = q * 0.05f;
 
-			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			// Calculamos el vector tangente a la curva en el punto
+			float t[3];
+			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx230, pcy230, pcz230, t);
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBSplineVectores(j * PASO, pcx230, pcy230, pcz230, t, b, n);
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
 			this->object_normal_buffer[w++] = n[0];
 			this->object_normal_buffer[w++] = n[1];
 			this->object_normal_buffer[w++] = n[2];
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -268,19 +308,28 @@ void CangrejoPataPierna::create()
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy301);
 			float ppz = q * 0.05f;
 
-			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			// Calculamos el vector tangente a la curva en el punto
+			float t[3];
+			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx301, pcy301, pcz301, t);
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBSplineVectores(j * PASO, pcx301, pcy301, pcz301, t, b, n);
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
 			this->object_normal_buffer[w++] = n[0];
 			this->object_normal_buffer[w++] = n[1];
 			this->object_normal_buffer[w++] = n[2];
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
 		}
 	}
 
@@ -347,22 +396,88 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	///////////////////////////////////////////
 
 
-	//////////////////////////////////////
 	// Bind Light Settings
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// ###################
+
 	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	   
+	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+							 0 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(200, 0, 0);
+	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+							 this->G / 255.0f, 
+							 this->B / 255.0f);
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 1.0;
+
+	// Light Intensity
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
+		"LightIntensity");
+
+	if(location_light_intensity >= 0) 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+
+	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	GLuint location_light_intensity = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
+	
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
+
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
+
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
+
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
+
+
+	// Ka
+	GLuint location_ka = glGetUniformLocation(
+		this->programHandle, "Ka");
+
+	if(location_ka >= 0) 
+		glUniform3fv( location_ka, 1, &Ka[0]); 
+	
+	// Kd
+	GLuint location_kd = glGetUniformLocation(
+		this->programHandle, "Kd");
+
+	if(location_kd >= 0) 
+		glUniform3fv( location_kd, 1, &Kd[0]); 
+
+	// Ks
+	GLuint location_ks = glGetUniformLocation(
+		this->programHandle, "Ks");
+
+	if(location_ks >= 0) 
+		glUniform3fv( location_ks, 1, &Ks[0]); 
+
+
+	// Shininess
+	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
+		"Shininess");
+
+	if(location_shininess >= 0)
+		glUniform1f(location_shininess, Shininess); 
 	//
 	///////////////////////////////////////////
 

@@ -59,7 +59,9 @@ PezCuerpo::~PezCuerpo() { }
 void PezCuerpo::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg");
+	//this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg");
+	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
+		"textures/pez-cuerpo-normalmap-texture-01.png");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -96,7 +98,7 @@ void PezCuerpo::create()
 	float inferior_pc2y = 1.0;
 
 	float inferior_pc3x = 0.0;
-	float inferior_pc3y = 0.0;
+	float inferior_pc3y = 0.001;
 
 	float inferior_pcx[] = {inferior_pc0x, inferior_pc1x, inferior_pc2x, inferior_pc3x};
 	float inferior_pcy[] = {inferior_pc0y, inferior_pc1y, inferior_pc2y, inferior_pc3y};
@@ -273,7 +275,7 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppz;
 
 			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = 0.5;
+			this->object_texture_buffer[y++] = j / 8.0;
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -308,7 +310,7 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppz;
 
 			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = 0.5;
+			this->object_texture_buffer[y++] = j / 8.0 + (this->CANT_PUNTOS / CANT_CURVAS);
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -343,7 +345,7 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppz;
 
 			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = 0.5;
+			this->object_texture_buffer[y++] = j / 8.0 + 2 * (this->CANT_PUNTOS / CANT_CURVAS);
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -378,8 +380,7 @@ void PezCuerpo::create()
 			this->object_vertex_buffer[i++] = ppz;
 
 			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = 0.5;
-
+			this->object_texture_buffer[y++] = j / 8.0 + 3 * (this->CANT_PUNTOS / CANT_CURVAS);
 		}
 	}
 
@@ -450,16 +451,16 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//////////////////////////////////////
 	// Bind Light Settings
 
-	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec4 light_position = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
-	glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
+	glm::vec3 light_intensity = glm::vec3(0.2f, 0.2f, 0.2f);
+	glm::vec4 light_position = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
+	// glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(18 / 255.0f,
-							 82 / 255.0f, 
-							 106 / 255.0f);
+	glm::vec3 Ka = glm::vec3(8 / 255.0f,
+							 72 / 255.0f, 
+							 56 / 255.0f);
 	this->changeObjectColor(166, 224, 246);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
@@ -472,7 +473,7 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		this->programHandle, "LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform4fv(location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv(location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(
@@ -481,26 +482,26 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// La
-	GLuint location_la = glGetUniformLocation(
-		this->programHandle, "La");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_la >= 0) 
-		glUniform3fv( location_la, 1, &La[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
 	
-	// Ld
-	GLuint location_ld = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
 
-	if(location_ld >= 0) 
-		glUniform3fv( location_ld, 1, &Ld[0]); 
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
 
-	// Ls
-	GLuint location_ls = glGetUniformLocation(
-		this->programHandle, "Ls");
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
 
-	if(location_ls >= 0) 
-		glUniform3fv( location_ls, 1, &Ls[0]); 
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka
@@ -510,12 +511,12 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -551,32 +552,36 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"ModelMatrix"); 
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
-			&mCuerpo[0][0]); 
+			&mCuerpo[0][0]);
 
 
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable Tex1 not found!\n");
 
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
 
-	if( loc >= 0 )
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTex not found!\n");
 
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
-		this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }

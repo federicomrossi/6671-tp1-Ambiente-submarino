@@ -56,7 +56,8 @@ Roca::~Roca() { }
 void Roca::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/rock-texture-01.jpg");
+	this->loadAndInitTexture("textures/rock-texture-01.jpg",
+		"textures/rock-normalmap-texture-01.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -106,7 +107,7 @@ void Roca::create()
 	// Puntos de control de la CURVA DE ESQUELETO INFERIOR
 
 	float radio_pc0x = 10.0;
-	float radio_pc0y = 0.0;
+	float radio_pc0y = 0.0001;
 
 	float radio_pc1x = 5.0;
 	float radio_pc1y = 0.9;
@@ -115,7 +116,7 @@ void Roca::create()
 	float radio_pc2y = 1.0;
 
 	float radio_pc3x = 0.0;
-	float radio_pc3y = 0.0;
+	float radio_pc3y = 0.0001;
 
 	float radio_pcx[] = {radio_pc0x, radio_pc1x, radio_pc2x, radio_pc3x};
 	float radio_pcy[] = {radio_pc0y, radio_pc1y, radio_pc2y, radio_pc3y};
@@ -788,7 +789,7 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//////////////////////////////////////
 	// Bind Light Settings
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.4f, 0.4f, 0.4f);
 	glm::vec4 light_position = glm::vec4(-8.0f, -8.0f, 2.0f, 1.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -804,11 +805,10 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	float Shininess = 1.0;
 
 	// Light Intensity
-	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
-		"LightIntensity");
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, "LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform4fv( location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
@@ -817,26 +817,26 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// La
-	GLuint location_la = glGetUniformLocation(
-		this->programHandle, "La");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_la >= 0) 
-		glUniform3fv( location_la, 1, &La[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
 	
-	// Ld
-	GLuint location_ld = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
 
-	if(location_ld >= 0) 
-		glUniform3fv( location_ld, 1, &Ld[0]); 
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
 
-	// Ls
-	GLuint location_ls = glGetUniformLocation(
-		this->programHandle, "Ls");
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
 
-	if(location_ls >= 0) 
-		glUniform3fv( location_ls, 1, &Ls[0]); 
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka
@@ -846,12 +846,12 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -891,58 +891,27 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 
-
-	// glBindAttribLocation(this->programHandle, 10, "Tangent");
-	// GLuint vaoHandle;
-
-	// // object_tangent_buffer
-
-	// GLuint vboHandles[1];
-	// glGenBuffers(1, vboHandles);
-	// GLuint tangentBufferHandle = vboHandles[0];
-
-	// glBindBuffer(GL_ARRAY_BUFFER, tangentBufferHandle);
-	// glBufferData(GL_ARRAY_BUFFER, this->object_tangent_buffer_size * sizeof(GLfloat), this->object_tangent_buffer, GL_STATIC_DRAW);
-
-	// glGenVertexArrays(1, &vaoHandle);
-	// glBindVertexArray(vaoHandle);
-
-	// glEnableVertexAttribArray(0);
-
-	// glBindBuffer(GL_ARRAY_BUFFER, tangentBufferHandle);
-	// glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-
-	// glBindVertexArray(vaoHandle);
+	//  the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable Tex1 not found!\n");
 
 
-
-	// Bind tangent array
-	GLuint location_tangent = glGetUniformLocation(this->programHandle, 
-		"Tangent"); 
-	if(location_tangent >= 0)
-		glUniform1fv(location_tangent, this->object_tangent_buffer_size, 
-			this->object_tangent_buffer);
-
-
-
-
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
-
-	if( loc >= 0 )
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable Tex1 not found!\n");
-
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTex not found!\n");
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
@@ -950,4 +919,5 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }

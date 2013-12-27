@@ -10,6 +10,7 @@ uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
 uniform mat3 NormalMatrix;
 uniform mat4 ProjectionMatrix;
+varying vec3 Normal;
 
 void main()
 {
@@ -18,6 +19,8 @@ void main()
 	vec4 eyeCoords = ViewMatrix * ModelMatrix * gl_Vertex;
 	vec3 s = normalize(vec3(LightPosition - eyeCoords));
 	
+	Normal = gl_Normal;
+
 	// The diffuse shading equation
 	LightIntensity =  Ld * Kd * max( dot( s, tnorm ), 0.0 );
 			
