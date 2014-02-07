@@ -1,7 +1,7 @@
 #version 110
 
-uniform vec3 LightIntensity;	// A, D, D intensity
-uniform vec4 LightPosition;		// Light position in eye coords;
+uniform vec3 LightIntensity;		// A, D, D intensity
+uniform vec4 LightPosition;			// Light position in eye coords;
 
 varying vec2 TexCoord;
 varying vec3 LightDir;
@@ -14,6 +14,10 @@ uniform mat4 ProjectionMatrix;
 
 varying vec3 Normal;
 varying vec3 Tangent;
+
+
+// varying vec3 ReflectDir;			// The direction of the reflected ray
+
 
 
 void main()

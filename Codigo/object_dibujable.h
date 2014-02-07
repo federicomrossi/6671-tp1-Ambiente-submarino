@@ -30,6 +30,7 @@ protected:
 	GLuint fragShader;					// Fragment shader
 	GLuint texture_id;					// ID de la textura
 	GLuint normalmap_id;				// ID de la textura de mapa de normales
+	GLuint cubemap_id;					// ID de la textura del mapa de reflexión
 
 	unsigned char* image_buffer;
 	int image_witdh;
@@ -40,6 +41,12 @@ protected:
 	int normalmap_witdh;
 	int normalmap_height;
 	int normalmap_channels;
+
+	unsigned char* cubemap_buffer;
+	int cubemap_witdh;
+	int cubemap_height;
+	int cubemap_channels;
+
 
 	// Colores que definen al objeto en formato RGB
 	int R, G, B;
@@ -53,6 +60,10 @@ protected:
 
 	// Carga e inicia la textura y el mapa de normales
 	void loadAndInitTexture(const char* filename, const char* normalmap);
+
+	// Carga e inicia las texturas para el mapa de reflexión
+	void loadAndInitReflectionTexture(const char* baseFilename);
+
 
 public:
 

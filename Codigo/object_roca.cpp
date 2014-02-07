@@ -763,6 +763,7 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 {
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
+	glActiveTexture(GL_TEXTURE0);
 	
 	this->changeObjectColor(180,180,180);
 
@@ -894,13 +895,21 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//  the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	else fprintf(stderr, "Uniform variable TexRoca not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTex not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexRoca not found!\n");
+
+	// Activamos textura
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);  
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);

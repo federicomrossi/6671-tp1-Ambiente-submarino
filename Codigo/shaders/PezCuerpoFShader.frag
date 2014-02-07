@@ -18,6 +18,12 @@ varying vec3 Normal;
 varying vec3 Tangent;
 
 
+
+// varying vec3 ReflectDir;		// The direction of the reflected ray
+// uniform samplerCube CubeMapTex;	// The cube map
+
+
+
 vec3 phongModel(vec3 norm, vec3 diffR) {
 	vec3 r = reflect(-LightDir, norm);
 	vec3 ambient = LightIntensity * Ka;

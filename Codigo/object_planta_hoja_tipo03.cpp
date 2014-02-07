@@ -435,8 +435,12 @@ void PlantaHojaTipo03::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
 		glUniform1i(loc, 0);
 	else
-		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+		fprintf(stderr, "Uniform variable TexPlantaHojaTipo03 not found!\n");
 
+
+	// Activamos textura
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);

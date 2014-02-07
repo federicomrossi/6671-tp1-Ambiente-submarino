@@ -379,10 +379,12 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Tex1 sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Tex1");
 
-	if( loc >= 0 )
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	if( loc >= 0 ) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexSuperficie not found!\n");
+
+	// Activamos textura
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);

@@ -214,7 +214,7 @@ void ObjectDibujable::loadAndInitTexture(const char* filename)
 	// Copy file to OpenGL
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &this->texture_id);
-	glBindTexture(GL_TEXTURE_2D, this->texture_id);  
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->image_witdh, this->image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image_buffer);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -258,3 +258,43 @@ void ObjectDibujable::loadAndInitTexture(const char* filename,
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
+
+// Carga e inicia las texturas para el mapa de reflexión
+void ObjectDibujable::loadAndInitReflectionTexture(const char* baseFilename)
+{
+
+	// Copy file to OpenGL
+	glActiveTexture(GL_TEXTURE2);
+	glGenTextures(1, &this->cubemap_id);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemap_id);
+
+
+	const char * suffixes[] = { "posx", "negx", "posy",
+								"negy", "posz", "negz" };
+
+	GLuint targets[] = {
+		GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+		GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+		GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+		GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+		GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+		GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
+	};
+
+	for(int i=0; i<6; i++)
+	{
+		std::string texName = std::string(baseFilename) + "_" + suffixes[i] + ".png";
+		
+		// Load texture file
+		this->cubemap_buffer = SOIL_load_image(texName.c_str(), &this->cubemap_witdh, &this->cubemap_height, &this->cubemap_channels, SOIL_LOAD_RGBA);
+		
+		glTexImage2D(targets[i], 0, GL_RGBA, this->cubemap_witdh, this->cubemap_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->cubemap_buffer);
+	}
+
+	// Typical cube map settings
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+}

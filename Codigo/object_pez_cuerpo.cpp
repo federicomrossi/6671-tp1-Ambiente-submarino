@@ -63,6 +63,9 @@ void PezCuerpo::create()
 	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
 		"textures/pez-cuerpo-normalmap-texture-01.png");
 
+	// Cargamos las texturas del cube map
+	this->loadAndInitReflectionTexture("textures/pez-cuerpo-cubemap-texture");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
@@ -558,14 +561,32 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	else fprintf(stderr, "Uniform variable TexPezCuerpo not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTex not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexPezCuerpo not found!\n");
 
+
+	// // Set the CubeMapTex uniform to texture unit 2
+	// int locCM = glGetUniformLocation(this->programHandle, "CubeMapTex");
+	// if(locCM >= 0) glUniform1i(locCM, 2);
+	// else fprintf(stderr, "Uniform variable CubeMapTexPezCuerpo not found!\n");
+
+
+	// Activamos textura
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
+	// Activamos el cube map
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemap_id);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
