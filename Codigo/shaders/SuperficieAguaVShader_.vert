@@ -7,9 +7,9 @@ uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
 uniform mat3 NormalMatrix;
 uniform mat4 ProjectionMatrix;
+uniform float Tiempo;
 
 varying vec2 TexCoord;
-uniform float TIMEEE;
 
 
 void main()
@@ -21,10 +21,8 @@ void main()
 	TexCoord = gl_MultiTexCoord0.xy;
 
 	vec4 aux = gl_Vertex;
-	aux.x = aux.x + 0.07 * exp(aux.z) * cos(0.15*TIMEEE) * sin(0.5*aux.z);
-	aux.y = aux.y + 0.07 * exp(aux.z) * cos(0.15*TIMEEE) * sin(0.5*aux.z);
-			
-	// Convert position to clip coordinates and pass along
+	aux.z = aux.z + 0.4 + cos(4.0 * Tiempo) * 0.2 * sin(0.5 * aux.x) * cos(0.5 * aux.y);
+
+
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * aux;
 }
-

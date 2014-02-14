@@ -1,36 +1,46 @@
 #version 110
 
-varying vec3 LightIntensity;
-varying vec2 TexCoord;
+uniform vec3 LightIntensity;		// A, D, D intensity
+uniform vec4 LightPosition;			// Light position in eye coords;
 
-uniform vec4 LightPosition; // Light position in eye coords.
-uniform vec3 Kd; // Diffuse reflectivity
-uniform vec3 Ld; // Light source intensity
+varying vec2 TexCoord;
+varying vec3 LightDir;
+varying vec3 ViewDir;
 
 uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
 uniform mat3 NormalMatrix;
 uniform mat4 ProjectionMatrix;
+
+varying vec3 Normal;
+varying vec3 Tangent;
+varying vec3 n;
+varying vec3 t;
+varying vec3 pos;
+
 uniform float Tiempo;
+
+// varying vec3 ReflectDir;			// The direction of the reflected ray
+
 
 void main()
 {
-	// Convert normal and position to eye coords
-	vec3 tnorm = normalize( NormalMatrix * gl_Normal);
-	vec4 eyeCoords = ModelMatrix * gl_Vertex;
-	vec3 s = normalize(vec3(LightPosition - eyeCoords));
-	
-	// Pasamos las coordenadas de texturas a los FShaders
+	Normal = gl_Normal;
+	Tangent = vec3(gl_Color);
+
+	// Transform normal and tangent to eye space
+	n = normalize(NormalMatrix * gl_Normal);
+	t = normalize(NormalMatrix * vec3(gl_Color));
+	// Get the position in eye coordinates
+	pos = vec3(ModelMatrix * gl_Vertex);
+
+	// Pass along the texture coordinate
 	TexCoord = gl_MultiTexCoord0.xy;
 
-	// The diffuse shading equation
-	LightIntensity =  Ld * Kd * max( dot( s, tnorm ), 0.0 );
-
 	vec4 aux = gl_Vertex;
-	// aux.x = aux.x + 0.07 * exp(aux.z) * cos(0.15*Tiempo) * sin(0.5*aux.x);
 	aux.x = aux.x + 0.2 * exp(aux.y) * cos(25.0*Tiempo) * sin(aux.y);
 			
 	// Convert position to clip coordinates and pass along
-	// gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * gl_Vertex;
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * aux;
 }
+

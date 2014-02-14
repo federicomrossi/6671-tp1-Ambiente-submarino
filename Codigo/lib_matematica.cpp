@@ -220,19 +220,19 @@ void Matematica::vectorTangenteCurvaBezier(float u, float px[4], float py[4],
 	float pz[4], float t[3])
 {
 	// Primer derivada de las bases de bezier
-	float b00 = (-3.0 * pow(u, 2) + 6.0 * u - 3.0);
-	float b01 = (9.0 * pow(u, 2) - 12.0 * u + 3.0);
-	float b02 = (-9.0 * pow(u, 2) + 6.0 * u);
-	float b03 = (3.0 * pow(u, 2));
+	double b00 = (-3.0 * pow(u, 2) + 6.0 * u - 3.0);
+	double b01 = (9.0 * pow(u, 2) - 12.0 * u + 3.0);
+	double b02 = (-9.0 * pow(u, 2) + 6.0 * u);
+	double b03 = (3.0 * pow(u, 2));
 
-	if((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 0) {
+	if((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 0.0) {
 		// Primer derivada de las bases de bezier
 		b00 = (-3.0 * pow(u+0.01, 2) + 6.0 * (u+0.01) - 3.0);
 		b01 = (9.0 * pow(u+0.01, 2) - 12.0 * (u+0.01) + 3.0);
 		b02 = (-9.0 * pow(u+0.01, 2) + 6.0 * (u+0.01));
 		b03 = (3.0 * pow(u+0.01, 2));		
 	}
-	else if ((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 1) {
+	else if ((b00 == 0 && b01 == 0 && b02 == 0  && b03 == 0) || u == 1.0) {
 		// Primer derivada de las bases de bezier
 		b00 = (-3.0 * pow(u-0.01, 2) + 6.0 * (u-0.01) - 3.0);
 		b01 = (9.0 * pow(u-0.01, 2) - 12.0 * (u-0.01) + 3.0);
@@ -245,20 +245,20 @@ void Matematica::vectorTangenteCurvaBezier(float u, float px[4], float py[4],
 	float ty = 0;
 	float tz = 0;
 
-	tx += b00 * px[0];
-	tx += b01 * px[1];
-	tx += b02 * px[2];
-	tx += b03 * px[3];
+	tx += Matematica::nextFloat(b00 * px[0]);
+	tx += Matematica::nextFloat(b01 * px[1]);
+	tx += Matematica::nextFloat(b02 * px[2]);
+	tx += Matematica::nextFloat(b03 * px[3]);
 	
-	ty += b00 * py[0];
-	ty += b01 * py[1];
-	ty += b02 * py[2];
-	ty += b03 * py[3];
+	ty += Matematica::nextFloat(b00 * py[0]);
+	ty += Matematica::nextFloat(b01 * py[1]);
+	ty += Matematica::nextFloat(b02 * py[2]);
+	ty += Matematica::nextFloat(b03 * py[3]);
 
-	tz += b00 * pz[0];
-	tz += b01 * pz[1];
-	tz += b02 * pz[2];
-	tz += b03 * pz[3];
+	tz += Matematica::nextFloat(b00 * pz[0]);
+	tz += Matematica::nextFloat(b01 * pz[1]);
+	tz += Matematica::nextFloat(b02 * pz[2]);
+	tz += Matematica::nextFloat(b03 * pz[3]);
 
 	float tTemp[3];
 	tTemp[0] = tx;
@@ -448,4 +448,11 @@ void Matematica::vectorTangenteCurvaBSpline(float u, float px[3], float py[3],
 	float *a;
 	a = Matematica::normalizar(tTemp);
 	std::copy(a, a+3, t);
+}
+
+
+float Matematica::nextFloat(double a) {
+   union { float a; int b; } c = { .a = a };
+   c.b += 1;
+   return c.a;
 }

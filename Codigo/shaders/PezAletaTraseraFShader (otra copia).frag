@@ -14,12 +14,20 @@ uniform vec3 Ka;				// Ambient reflectivity
 uniform vec3 Ks;				// Specular reflectivity
 uniform float Shininess;		// Specular shininess factor
 
+varying vec3 Normal;
+varying vec3 Tangent;
+
+
+
+// varying vec3 ReflectDir;		// The direction of the reflected ray
+// uniform samplerCube CubeMapTex;	// The cube map
+
 
 
 vec3 phongModel(vec3 norm, vec3 diffR) {
 	vec3 r = reflect(-LightDir, norm);
 	vec3 ambient = LightIntensity * Ka;
-	float sDotN = max(dot(LightDir, norm), 1.0);
+	float sDotN = max(dot(LightDir, norm), 0.0);
 	vec3 diffuse = LightIntensity * diffR * sDotN;
 	vec3 spec = vec3(0.0);
 
@@ -41,6 +49,14 @@ void main()
 
 	gl_FragColor =  vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
 	// gl_FragColor = texColor;
-	// gl_FragColor = normal;
-	// gl_FragColor = vec4(LightIntensity, 1.0);
+	// gl_FragColor = vec4(Tangent, 1.0);
+
+	// 	vec3 FrontColor = phongModel(normal.xyz, texColor.rgb);
+	// vec3 BackColor = phongModel(-normal.xyz, texColor.rgb)
+
+	// if( gl_FrontFacing ) {
+	// 	gl_FragColor = vec4(FrontColor, 1.0);
+	// } else {
+	// 	gl_FragColor = vec4(BackColor, 1.0);
+	// }
 }

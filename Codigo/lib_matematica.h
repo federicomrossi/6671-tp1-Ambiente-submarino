@@ -73,6 +73,9 @@ public:
 	// B-Spline dado por el valor del parametro u. 
 	static void vectorTangenteCurvaBSpline(float u, float px[3], float py[3], 
 		float pz[3], float t[3]);
+
+	// Devuelve el float mas cercano al double pasado por parámetro
+	static float nextFloat(double a);
 };
 
 

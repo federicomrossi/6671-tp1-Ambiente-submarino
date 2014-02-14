@@ -272,6 +272,14 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
 	float Shininess = 1.0;
+
+	// Fog
+	float FogMinDist = 0.0;
+	float FogMaxDist = 2.0;
+	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
+								   36.0f / 255.0,
+								   60.0f / 255.0);
+
 	
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
@@ -336,7 +344,32 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"Shininess");
 
 	if(location_shininess >= 0)
-		glUniform1f(location_shininess, Shininess); 
+		glUniform1f(location_shininess, Shininess);
+
+
+
+	// FoxMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FoxMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
 
 

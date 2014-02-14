@@ -165,6 +165,7 @@ void PlantaHojaTipo01::create()
 	int y = 0;
 	int w = 0;
 
+
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
 		// Calculamos el ancho de fragmento de la hoja
@@ -200,6 +201,7 @@ void PlantaHojaTipo01::create()
 		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
 		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
 		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
+		
 
 
 		for(int j = 0; j < this->CANT_PUNTOS; j++) 
@@ -305,7 +307,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
 	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -320,12 +322,21 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
 	float Shininess = 1.0;
 
+
+	// Fog
+	float FogMinDist = 4.0;
+	float FogMaxDist = 10.0;
+	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
+								   36.0f / 255.0,
+								   60.0f / 255.0);
+
+
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
 		"LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform4fv( location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
@@ -334,26 +345,26 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// La
-	GLuint location_la = glGetUniformLocation(
-		this->programHandle, "La");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_la >= 0) 
-		glUniform3fv( location_la, 1, &La[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
 	
-	// Ld
-	GLuint location_ld = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
 
-	if(location_ld >= 0) 
-		glUniform3fv( location_ld, 1, &Ld[0]); 
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
 
-	// Ls
-	GLuint location_ls = glGetUniformLocation(
-		this->programHandle, "Ls");
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
 
-	if(location_ls >= 0) 
-		glUniform3fv( location_ls, 1, &Ls[0]); 
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka
@@ -385,6 +396,29 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess); 
 
+
+	// FoxMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FoxMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
 
 

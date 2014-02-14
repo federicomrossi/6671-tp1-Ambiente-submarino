@@ -68,8 +68,13 @@ void PezAletaLateral::create(int orientacion)
 	// Creamos el eje coordenado
 	// this->ejeCoordenado.create(3);
 
-		// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg");
+	// Cargamos la textura
+	// this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg");
+	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg", 
+		"textures/pez-aleta-normalmap-texture-01.png");
+
+	// 	// Cargamos las texturas del cube map
+	// this->loadAndInitReflectionTexture("textures/pez-cuerpo-cubemap-texture");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -197,10 +202,13 @@ void PezAletaLateral::create(int orientacion)
 		float ondulacion = Matematica::curvaBezier((k * 1.0) / 
 			(this->ESTIRAMIENTO-1),	ondulacion_pcy);
 
-		// Calculamos el vector tangente dado por el doblez de la hoja
+		// Calculamos el vector tangente dado por el doblez de la aleta
 		float t_barrido[3];
 		Matematica::vectorTangenteCurvaBezier(paso_actual, ondulacion_pcx, ondulacion_pcy, ondulacion_pcz, t_barrido);
 
+		t_barrido[0] = t_barrido[0] * this->ORIENTACION_ALETA;
+		t_barrido[1] = t_barrido[1] * this->ORIENTACION_ALETA;
+		t_barrido[2] = t_barrido[2] * this->ORIENTACION_ALETA;
 
 		// Puntos de control
 		float pc0x = ondulacion * 0.4;
@@ -238,9 +246,18 @@ void PezAletaLateral::create(int orientacion)
 				/ (this->ESTIRAMIENTO-1));
 			this->object_texture_buffer[y++] = (j * PASO);
 
-			// Calculamos el vector tangente dado por la curvatura de la hoja
+			// Calculamos el vector tangente dado por la curvatura de la aleta
 			float t[3];
 			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
+
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
+
+			t[0] = 0.0;
+			t[1] = 0.0;
+			t[2] = 1.0;
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t, t_barrido);
@@ -290,8 +307,6 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(255, 255, 255);
-	
 
 	// Bind tiempo para variación de movimiento
 	// ########################################
@@ -333,27 +348,44 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ka = glm::vec3(8 / 255.0f,
+	// 						 72 / 255.0f, 
+	// 						 56 / 255.0f);
+	// this->changeObjectColor(0, 255, 0);
+	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+	// 						 this->G / 255.0f, 
+	// 						 this->B / 255.0f);
+	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	// float Shininess = 1.0;
+
+	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.2f, 0.2f, 0.2f);
+	glm::vec4 light_position = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(0 / 255.0f,
-							 85 / 255.0f, 
-							 0 / 255.0f);
-	this->changeObjectColor(0, 255, 0);
+	glm::vec3 Ka = glm::vec3(8 / 255.0f,
+							 72 / 255.0f, 
+							 56 / 255.0f);
+	this->changeObjectColor(0, 0, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 1.0;
+	float Shininess = 0.5;
 
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
 		"LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform4fv( location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
@@ -362,26 +394,26 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// La
-	GLuint location_la = glGetUniformLocation(
-		this->programHandle, "La");
+	// // La
+	// GLuint location_la = glGetUniformLocation(
+	// 	this->programHandle, "La");
 
-	if(location_la >= 0) 
-		glUniform3fv( location_la, 1, &La[0]); 
+	// if(location_la >= 0) 
+	// 	glUniform3fv( location_la, 1, &La[0]); 
 	
-	// Ld
-	GLuint location_ld = glGetUniformLocation(
-		this->programHandle, "Ld");
+	// // Ld
+	// GLuint location_ld = glGetUniformLocation(
+	// 	this->programHandle, "Ld");
 
-	if(location_ld >= 0) 
-		glUniform3fv( location_ld, 1, &Ld[0]); 
+	// if(location_ld >= 0) 
+	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
 
-	// Ls
-	GLuint location_ls = glGetUniformLocation(
-		this->programHandle, "Ls");
+	// // Ls
+	// GLuint location_ls = glGetUniformLocation(
+	// 	this->programHandle, "Ls");
 
-	if(location_ls >= 0) 
-		glUniform3fv( location_ls, 1, &Ls[0]); 
+	// if(location_ls >= 0) 
+	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka
@@ -391,12 +423,12 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -435,28 +467,38 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexPezAletaLateral not found!\n");
 
-	if( loc >= 0 )
-		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable TexPezAletaLateral not found!\n");
+
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTexPezAletaLateral not found!\n");
+
 
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
+
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
@@ -464,4 +506,5 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }

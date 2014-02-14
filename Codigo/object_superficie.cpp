@@ -243,7 +243,7 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
 	glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 8.0f, 1.0f);
 	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -259,11 +259,11 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	float Shininess = 1.0;
 
 	// Fog
-	float FogMaxDist = 1.0;
-	float FogMinDist = 0.0;
-	glm::vec3 FogColor = glm::vec3(147.0f / 255.0, 
-								   157.0f / 255.0,
-								   255.0f / 255.0);
+	float FogMinDist = 4.0;
+	float FogMaxDist = 10.0;
+	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
+								   36.0f / 255.0,
+								   60.0f / 255.0);
 	
 
 	// Light Intensity

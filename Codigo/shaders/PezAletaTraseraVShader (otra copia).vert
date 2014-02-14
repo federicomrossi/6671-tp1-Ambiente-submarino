@@ -16,10 +16,8 @@ varying vec3 Normal;
 varying vec3 Tangent;
 
 uniform float Tiempo;
-uniform float Sentido;
 
 // varying vec3 ReflectDir;			// The direction of the reflected ray
-
 
 
 void main()
@@ -50,7 +48,7 @@ void main()
 	TexCoord = gl_MultiTexCoord0.xy;
 
 	vec4 aux = gl_Vertex;
-	aux.x = aux.x + Sentido * 0.15 * cos(25.0 * Tiempo) * sin(aux.y);
+	aux.x = aux.x + 0.2 * exp(aux.y) * cos(25.0*Tiempo) * sin(aux.y);
 			
 	// Convert position to clip coordinates and pass along
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * aux;

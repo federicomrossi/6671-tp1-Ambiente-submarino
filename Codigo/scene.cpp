@@ -86,9 +86,9 @@ void Scene::initialize()
 	this->plantaAcuatica.create();
 
 	// Establecemos un color inicial para la escena
-	glClearColor(147.0f / 255.0, 
-				 157.0f / 255.0, 
-				 255.0f / 255.0, 
+	glClearColor(0.0f / 255.0, 
+				 36.0f / 255.0, 
+				 60.0f / 255.0, 
 				 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
@@ -295,22 +295,22 @@ void Scene::render(GLuint height, GLuint width)
 	// Movimiento del pez
 
 	// Rotación para efecto de delantamiento
-	// float dosPi = 6.283185307;
-	// this->pezGradoRotacion += 0.01;
-	// if(this->pezGradoRotacion >= dosPi) this->pezGradoRotacion = 0.0;
-	// float radio = 7.5;
+	float dosPi = 6.283185307;
+	this->pezGradoRotacion += 0.01;
+	if(this->pezGradoRotacion >= dosPi) this->pezGradoRotacion = 0.0;
+	float radio = 7.5;
 
-	// this->pezPosX = radio * cos(this->pezGradoRotacion);
-	// this->pezPosY = radio * sin(this->pezGradoRotacion);
-	// this->pezPosZ = 1.5;
+	this->pezPosX = radio * cos(this->pezGradoRotacion);
+	this->pezPosY = radio * sin(this->pezGradoRotacion);
+	this->pezPosZ = 1.5;
 
 	glm::mat4 mPez = glm::mat4(1.0f);
-	// mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY, this->pezPosZ));
-	mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
+	mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY, this->pezPosZ));
+	// mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
 	mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
-	// mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
-	// 	glm::vec3(0.0, 0.0, 1.0));
-	mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
+		glm::vec3(0.0, 0.0, 1.0));
+	// mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	this->pez.render(mPez, this->view_matrix, projection_matrix);
 
 	// Dibujamos rocas

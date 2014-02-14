@@ -46,6 +46,7 @@ PezAletaTrasera::PezAletaTrasera()
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_tangent_buffer = NULL;
 	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 
@@ -61,7 +62,8 @@ PezAletaTrasera::~PezAletaTrasera() { }
 void PezAletaTrasera::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-aleta-texture-01.jpg");
+	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg", 
+		"textures/pez-aleta-normalmap-texture-01.png");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -152,6 +154,9 @@ void PezAletaTrasera::create()
 		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
+	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO;
+	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
 
 	// Unimos los puntos
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
@@ -165,7 +170,7 @@ void PezAletaTrasera::create()
 	int i = 0;
 	int y = 0;
 	int w = 0;
-
+	int z = 0;
 
 	// Vector tangente correspondiente al barrido
 	float t_barrido[3];
@@ -184,7 +189,6 @@ void PezAletaTrasera::create()
 
 		float ondulacion = Matematica::curvaBezier((k * 1.0) / 
 			(this->ESTIRAMIENTO-1),	ondulacion_pcy);
-
 
 		// Puntos de control
 		float pc0x = 0.0;
@@ -225,6 +229,11 @@ void PezAletaTrasera::create()
 			// Calculamos el vector tangente dado por la curvatura de la hoja
 			float t[3];
 			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
+
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -308,20 +317,60 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	   
+	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.2f, 0.2f, 0.2f);
+	glm::vec4 light_position = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 Ka = glm::vec3(8 / 255.0f,
+							 72 / 255.0f, 
+							 56 / 255.0f);
+	this->changeObjectColor(82, 103, 146);
+	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+							 this->G / 255.0f, 
+							 this->B / 255.0f);
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 0.5;
+
+
+	// Light Intensity
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
+		"LightIntensity");
+
+	if(location_light_intensity >= 0) 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+
+	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	GLuint location_light_intensity = glGetUniformLocation(
-		this->programHandle, "Ld");
 
-	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+	// Ka
+	GLuint location_ka = glGetUniformLocation(
+		this->programHandle, "Ka");
+
+	if(location_ka >= 0) 
+		glUniform3fv( location_ka, 1, &Ka[0]); 
+
+	// Ks
+	GLuint location_ks = glGetUniformLocation(
+		this->programHandle, "Ks");
+
+	if(location_ks >= 0) 
+		glUniform3fv( location_ks, 1, &Ks[0]); 
+
+
+	// Shininess
+	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
+		"Shininess");
+
+	if(location_shininess >= 0)
+		glUniform1f(location_shininess, Shininess);
 
 
 
@@ -343,28 +392,37 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
 
-	if( loc >= 0 )
-		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable TexPezAletaTrasera not found!\n");
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexPezAletaTrasera not found!\n");
+
+
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTexPezAletaTrasera not found!\n");
 
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
 	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
 		this->object_index_buffer);
@@ -372,5 +430,6 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 

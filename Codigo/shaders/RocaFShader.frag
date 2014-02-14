@@ -1,46 +1,48 @@
 #version 110
 
+varying vec3 Position;
+varying vec3 Normal;
 varying vec2 TexCoord;
-varying vec3 LightDir;
-varying vec3 ViewDir;
 
-uniform sampler2D Texture;
-uniform sampler2D NormalMapTex;
-
-uniform vec3 LightIntensity;	// A, D, D intensity
+uniform vec3 LightIntensity;
 uniform vec4 LightPosition;		// Light position in eye coords;
-
 uniform vec3 Ka;				// Ambient reflectivity
+uniform vec3 Kd;				// Diffuse reflectivity
 uniform vec3 Ks;				// Specular reflectivity
 uniform float Shininess;		// Specular shininess factor
 
+uniform float FogMaxDist;
+uniform float FogMinDist;
+uniform vec3 FogColor;
+
+uniform sampler2D Texture;
 
 
-vec3 phongModel(vec3 norm, vec3 diffR) {
-	vec3 r = reflect(-LightDir, norm);
-	vec3 ambient = LightIntensity * Ka;
-	float sDotN = max(dot(LightDir, norm), 1.0);
-	vec3 diffuse = LightIntensity * diffR * sDotN;
-	vec3 spec = vec3(0.0);
+vec3 ads()
+{
+	// vec3 n = normalize(Normal);
+	vec3 s = normalize(LightPosition.xyz - Position.xyz);
+	vec3 v = normalize(vec3(-Position));
+	vec3 h = normalize(v+s);
 
-	if(sDotN > 0.0)
-		spec = LightIntensity * Ks * pow(max(dot(r, ViewDir), 0.0), Shininess);
+	vec3 ambient = Ka * LightIntensity;
+	vec3 diffuse = LightIntensity * Kd * max(0.0, dot(s, Normal));
+	vec3 spec = LightIntensity * Ks * pow(max(0.0, dot(h, Normal)), Shininess);
 
 	return ambient + diffuse + spec;
 }
 
-
-
 void main()
 {
-	// Lookup the normal from the normal map
-	vec4 normal = texture2D(NormalMapTex, TexCoord);
+	float dist = abs(Position.z);
+	// float dist = length( Position.xyz );
+	float fogFactor = (FogMaxDist - dist) / (FogMaxDist - FogMinDist);
+	fogFactor = clamp(fogFactor, 0.0, 1.0);
 
-	// The color texture is used as diffuse reflectivity
+	vec3 shadeColor = ads();
+	vec3 color = mix(FogColor, shadeColor, fogFactor);
+
 	vec4 texColor = texture2D(Texture, TexCoord);
-
-	gl_FragColor =  vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
-	// gl_FragColor = texColor;
-	// gl_FragColor = normal;
-	// gl_FragColor = vec4(LightIntensity, 1.0);
+	gl_FragColor =  texColor * vec4(color, 1.0);
 }
+

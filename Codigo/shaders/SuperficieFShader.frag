@@ -21,7 +21,7 @@ uniform sampler2D Tex1;
 vec3 ads()
 {
 	// vec3 n = normalize(Normal);
-	vec3 s = normalize(vec3(LightPosition) - Position.xyz);
+	vec3 s = normalize(LightPosition.xyz - Position.xyz);
 	vec3 v = normalize(vec3(-Position));
 	vec3 h = normalize(v+s);
 
@@ -35,6 +35,7 @@ vec3 ads()
 void main()
 {
 	float dist = abs(Position.z);
+	// float dist = length( Position.xyz );
 	float fogFactor = (FogMaxDist - dist) / (FogMaxDist - FogMinDist);
 	fogFactor = clamp(fogFactor, 0.0, 1.0);
 
@@ -42,5 +43,5 @@ void main()
 	vec3 color = mix(FogColor, shadeColor, fogFactor);
 
 	vec4 texColor = texture2D(Tex1, TexCoord);
-	gl_FragColor =  vec4(color, 1.0);
+	gl_FragColor =  texColor * vec4(color, 1.0);
 }
