@@ -44,6 +44,7 @@ CangrejoPataPierna::CangrejoPataPierna()
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
 	this->object_tangent_buffer = NULL;
+	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 }
 
@@ -55,6 +56,10 @@ CangrejoPataPierna::~CangrejoPataPierna() { }
 // Crea un objeto
 void CangrejoPataPierna::create()
 {
+	// Cargamos la textura
+	this->loadAndInitTexture("textures/cangrejo-textura-01.jpg", 
+		"textures/cangrejo-normailmap-textura-01.png");
+
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
@@ -110,7 +115,7 @@ void CangrejoPataPierna::create()
 	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
 	this->ESTIRAMIENTO = 40;
-
+	int DIMENSIONES_TEXTURA = 2;
 
 
 
@@ -119,6 +124,11 @@ void CangrejoPataPierna::create()
 
 	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS * this->ESTIRAMIENTO;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
+
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
+
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
@@ -147,6 +157,7 @@ void CangrejoPataPierna::create()
 
 
 	int i = 0;
+	int y = 0;
 	int w = 0;
 	int z = 0;
 
@@ -234,6 +245,9 @@ void CangrejoPataPierna::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -266,6 +280,9 @@ void CangrejoPataPierna::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -298,6 +315,9 @@ void CangrejoPataPierna::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -330,6 +350,9 @@ void CangrejoPataPierna::create()
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 	}
 
@@ -366,15 +389,13 @@ void CangrejoPataPierna::create()
 void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 	
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mPierna = glm::mat4(1.0f);
 	mPierna = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 0.0));
 
-
-
-	
 
 	///////////////////////////////////////////
 	// Bind View Matrix
@@ -412,7 +433,7 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 1.0;
+	float Shininess = 0.5;
 
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
@@ -499,15 +520,42 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&mPierna[0][0]); 
 
+	
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexCangrejoPataMuslo not found!\n");
+
+
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPataMuslo not found!\n");
+
+
+	// Activamos textura
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
+	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
-		this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }

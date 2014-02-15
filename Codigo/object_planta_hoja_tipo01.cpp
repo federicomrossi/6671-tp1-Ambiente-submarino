@@ -278,7 +278,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind tiempo para variación de movimiento
 	// ########################################
 	GLfloat algae_time = glGetUniformLocation(this->programHandle,
-		"TIMEEE");
+		"Tiempo");
 	this->tiempo += 0.01f;
 
 	// if(algae_time >= 0)
@@ -307,28 +307,44 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
+	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
+	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ka = glm::vec3(0 / 255.0f,
+	// 						 85 / 255.0f, 
+	// 						 0 / 255.0f);
+	// this->changeObjectColor(0, 255, 0);
+	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+	// 						 this->G / 255.0f, 
+	// 						 this->B / 255.0f);
+	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	// float Shininess = 1.0;
+
+	glm::vec3 light_intensity = glm::vec3(0.8f, 0.8f, 1.0f);
+	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(0 / 255.0f,
-							 85 / 255.0f, 
-							 0 / 255.0f);
-	this->changeObjectColor(0, 255, 0);
+	glm::vec3 Ka = glm::vec3(8 / 255.0f,
+							 72 / 255.0f, 
+							 56 / 255.0f);
+	this->changeObjectColor(166, 224, 246);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 1.0;
+	float Shininess = 20.0;
 
 
 	// Fog
-	float FogMinDist = 4.0;
-	float FogMaxDist = 10.0;
+	GLfloat FogMinDist = 3.0;
+	GLfloat FogMaxDist = 15.0;
 	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
 								   36.0f / 255.0,
 								   60.0f / 255.0);
+
 
 
 	// Light Intensity
@@ -374,12 +390,12 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -397,7 +413,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1f(location_shininess, Shininess); 
 
 
-	// FoxMaxDist
+	// FogMaxDist
 	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
 		"FogMaxDist");
 
@@ -405,7 +421,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
 
-	// FoxMinDist
+	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
@@ -423,7 +439,8 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(model_matrix)));
+
 
 	// Bind Normal MAtrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
@@ -440,15 +457,10 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
-
-	if( loc >= 0 )
-		// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable TexPlantaHOjaTipo01 not found!\n");
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexPlantaHojaTipo01 not found!\n");
 
 
 	// Activamos textura

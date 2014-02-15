@@ -69,7 +69,6 @@ void PezAletaLateral::create(int orientacion)
 	// this->ejeCoordenado.create(3);
 
 	// Cargamos la textura
-	// this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg");
 	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg", 
 		"textures/pez-aleta-normalmap-texture-01.png");
 
@@ -348,51 +347,46 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ka = glm::vec3(8 / 255.0f,
-	// 						 72 / 255.0f, 
-	// 						 56 / 255.0f);
-	// this->changeObjectColor(0, 255, 0);
-	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
-	// 						 this->G / 255.0f, 
-	// 						 this->B / 255.0f);
-	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	// float Shininess = 1.0;
-
-	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	glm::vec3 light_intensity = glm::vec3(0.2f, 0.2f, 0.2f);
-	glm::vec4 light_position = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = glm::vec3(0.8f, 0.8f, 1.0f);
+	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
+	// glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ka = glm::vec3(8 / 255.0f,
 							 72 / 255.0f, 
 							 56 / 255.0f);
-	this->changeObjectColor(0, 0, 0);
+	this->changeObjectColor(166, 224, 246);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 0.5;
+	float Shininess = 20.0;
+
+
+	// Fog
+	GLfloat FogMinDist = 3.0;
+	GLfloat FogMaxDist = 15.0;
+	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
+								   36.0f / 255.0,
+								   60.0f / 255.0);
+
 
 	// Light Intensity
-	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
-		"LightIntensity");
+	GLuint location_light_intensity = glGetUniformLocation(
+		this->programHandle, "LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv(location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
-	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
-		"LightPosition");
+	GLuint location_light_position = glGetUniformLocation(
+		this->programHandle, "LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
+
 
 	// // La
 	// GLuint location_la = glGetUniformLocation(
@@ -446,11 +440,33 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1f(location_shininess, Shininess);
 
 
+	// FogMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FogMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(model_matrix)));
 
 	// Bind Normal MAtrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 

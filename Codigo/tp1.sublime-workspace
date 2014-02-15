@@ -344,18 +344,50 @@
 			}
 		},
 		{
-			"file": "object_pez_aleta_lateral.cpp",
+			"file": "object_cangrejo.cpp",
 			"settings":
 			{
-				"buffer_size": 14605,
+				"buffer_size": 6843,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "object_pez_cuerpo.cpp",
+			"file": "object_cangrejo_pata_pie.cpp",
 			"settings":
 			{
-				"buffer_size": 17859,
+				"buffer_size": 16295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "shaders/CangrejoFShader.frag",
+			"settings":
+			{
+				"buffer_size": 1192,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/CangrejoVShader.vert",
+			"settings":
+			{
+				"buffer_size": 1331,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "object_cangrejo_pata.cpp",
+			"settings":
+			{
+				"buffer_size": 6465,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cangrejo_cuerpo.h",
+			"settings":
+			{
+				"buffer_size": 1333,
 				"line_ending": "Unix"
 			}
 		},
@@ -368,19 +400,43 @@
 			}
 		},
 		{
-			"file": "shaders/CangrejoVShader.vert",
+			"file": "object_cangrejo_pata_muslo.h",
 			"settings":
 			{
-				"buffer_size": 1331,
-				"line_ending": "Windows"
+				"buffer_size": 1421,
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "shaders/CangrejoFShader.frag",
+			"file": "object_cangrejo_pata_muslo.cpp",
 			"settings":
 			{
-				"buffer_size": 1192,
-				"line_ending": "Windows"
+				"buffer_size": 16290,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cangrejo_pata_pie.h",
+			"settings":
+			{
+				"buffer_size": 1377,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cangrejo_pata_pierna.h",
+			"settings":
+			{
+				"buffer_size": 1395,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "object_cangrejo_pata_pierna.cpp",
+			"settings":
+			{
+				"buffer_size": 16229,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -393,6 +449,10 @@
 			[
 				"set glsl",
 				"Set Syntax: OpenGL SL"
+			],
+			[
+				"set c++",
+				"Set Syntax: C++"
 			],
 			[
 				"enable",
@@ -499,10 +559,6 @@
 				"Set Syntax: HTML"
 			],
 			[
-				"set c++",
-				"Set Syntax: C++"
-			],
-			[
 				"set C++",
 				"Set Syntax: C++"
 			],
@@ -515,7 +571,7 @@
 				"Preferences: Browse Packages"
 			]
 		],
-		"width": 458.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -532,6 +588,18 @@
 	},
 	"file_history":
 	[
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/CangrejoFShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/CangrejoVShader.vert",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.h",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaLateralVShader.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaLateralFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.h",
@@ -541,7 +609,6 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_dibujable.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/HojaPlantaFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/HojaPlantaVShader.vert",
@@ -564,17 +631,12 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_acuatica.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_dorsal.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cube.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_superior.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_garra_inferior.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_brazo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza_antebrazo.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pinza.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_ojo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_cuerpo.cpp",
@@ -588,9 +650,6 @@
 		"/home/federicorossi/Descargas/prueba2NormalShader.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoFShader_alt.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoVShader_alt.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pierna.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_muslo.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_cangrejo_pata_pie.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/DiffuseShadingFShader (copia).frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/DiffuseShadingVShader (copia).vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaDorsalVShader.vert",
@@ -656,10 +715,7 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/00 - Prueba del Framework/glWindow.cpp",
 		"/home/federicorossi/Descargas/DemoShadingDifusoTexturas/myWindow.cpp",
 		"/home/federicorossi/Descargas/DemoShadingDifusoTexturas/main.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/TexturingAndDiffuseShadingVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/TexturingAndDiffuseShadingFShader.frag",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/Plantilla (copia)/Makefile",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp"
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/TexturingAndDiffuseShadingVShader.vert"
 	],
 	"find":
 	{
@@ -677,6 +733,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"0.5",
+			"(t_barrido, t);",
+			"-",
+			"n[",
+			"n",
+			"n[0]",
 			"0.4",
 			"0.4f",
 			"0.4",
@@ -798,13 +860,7 @@
 			"100",
 			"220",
 			"180",
-			"200",
-			"n[",
-			"/",
-			"normal[",
-			"DiffuseShading",
-			"Trasera",
-			"TIMEEE"
+			"200"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -822,7 +878,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -864,8 +920,8 @@
 						"selection":
 						[
 							[
-								2223,
-								2223
+								2314,
+								2314
 							]
 						],
 						"settings":
@@ -881,18 +937,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "object_pez_aleta_lateral.cpp",
+					"file": "object_cangrejo.cpp",
 					"settings":
 					{
-						"buffer_size": 14605,
+						"buffer_size": 6843,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								77,
-								77
+								2059,
+								2061
 							]
 						],
 						"settings":
@@ -901,34 +957,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "object_pez_cuerpo.cpp",
-					"settings":
-					{
-						"buffer_size": 17859,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13864,
-								13864
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 22.0,
-						"translation.y": 5679.0,
+						"translation.y": 1108.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -936,23 +965,23 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
-					"buffer": 4,
-					"file": "object_cangrejo_cuerpo.cpp",
+					"buffer": 3,
+					"file": "object_cangrejo_pata_pie.cpp",
 					"settings":
 					{
-						"buffer_size": 18611,
+						"buffer_size": 16295,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14533,
-								14533
+								16292,
+								16292
 							]
 						],
 						"settings":
@@ -961,7 +990,34 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5993.0,
+						"translation.y": 6958.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "shaders/CangrejoFShader.frag",
+					"settings":
+					{
+						"buffer_size": 1192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								142,
+								142
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -978,35 +1034,8 @@
 						"selection":
 						[
 							[
-								728,
-								728
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 156.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "shaders/CangrejoFShader.frag",
-					"settings":
-					{
-						"buffer_size": 1192,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								443,
-								443
+								112,
+								112
 							]
 						],
 						"settings":
@@ -1023,13 +1052,231 @@
 			]
 		},
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 6,
+					"file": "object_cangrejo_pata.cpp",
+					"settings":
+					{
+						"buffer_size": 6465,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1765,
+								1765
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 747.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "object_cangrejo_cuerpo.h",
+					"settings":
+					{
+						"buffer_size": 1333,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								757,
+								757
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 234.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "object_cangrejo_cuerpo.cpp",
+					"settings":
+					{
+						"buffer_size": 18611,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11525,
+								11525
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4648.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 9,
+					"file": "object_cangrejo_pata_muslo.h",
+					"settings":
+					{
+						"buffer_size": 1421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								839,
+								839
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "object_cangrejo_pata_muslo.cpp",
+					"settings":
+					{
+						"buffer_size": 16290,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5993,
+								5993
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3625.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "object_cangrejo_pata_pie.h",
+					"settings":
+					{
+						"buffer_size": 1377,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								839,
+								839
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "object_cangrejo_pata_pierna.h",
+					"settings":
+					{
+						"buffer_size": 1395,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "object_cangrejo_pata_pierna.cpp",
+					"settings":
+					{
+						"buffer_size": 16229,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1073,7 +1320,7 @@
 		"cols":
 		[
 			0.0,
-			0.437774524158,
+			0.5,
 			1.0
 		],
 		"rows":

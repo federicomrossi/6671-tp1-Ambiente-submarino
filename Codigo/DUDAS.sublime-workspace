@@ -328,26 +328,50 @@
 	"buffers":
 	[
 		{
-			"file": "shaders/PezAletaTraseraFShader.frag",
+			"file": "shaders/HojaPlantaVShader.vert",
 			"settings":
 			{
-				"buffer_size": 2017,
+				"buffer_size": 707,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "object_pez_aleta_trasera.cpp",
+			"file": "shaders/HojaPlantaFShader.frag",
 			"settings":
 			{
-				"buffer_size": 12073,
+				"buffer_size": 1212,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "object_planta_hoja_tipo01.cpp",
+			"settings":
+			{
+				"buffer_size": 12700,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "shaders/PezAletaTraseraVShader.vert",
+			"file": "object_pez_cuerpo.cpp",
 			"settings":
 			{
-				"buffer_size": 1064,
+				"buffer_size": 18613,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "shaders/PezCuerpoVShader.vert",
+			"settings":
+			{
+				"buffer_size": 1179,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/PezCuerpoFShader.frag",
+			"settings":
+			{
+				"buffer_size": 2407,
 				"line_ending": "Windows"
 			}
 		},
@@ -355,7 +379,7 @@
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 12819,
+				"buffer_size": 12820,
 				"line_ending": "Unix"
 			}
 		},
@@ -393,18 +417,26 @@
 			}
 		},
 		{
-			"file": "shaders/SuperficieAguaFShader.frag",
+			"file": "shaders/PezAletaLateralFShader.frag",
 			"settings":
 			{
-				"buffer_size": 1212,
+				"buffer_size": 1568,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "object_superficie_agua.cpp",
+			"file": "shaders/PezAletaLateralVShader.vert",
 			"settings":
 			{
-				"buffer_size": 10463,
+				"buffer_size": 1507,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "object_pez_aleta_lateral.cpp",
+			"settings":
+			{
+				"buffer_size": 14640,
 				"line_ending": "Unix"
 			}
 		}
@@ -416,11 +448,11 @@
 		"selected_items":
 		[
 			[
-				"SET GLSL",
+				"set glsl",
 				"Set Syntax: OpenGL SL"
 			],
 			[
-				"set glsl",
+				"SET GLSL",
 				"Set Syntax: OpenGL SL"
 			],
 			[
@@ -548,7 +580,7 @@
 				"Preferences: Browse Packages"
 			]
 		],
-		"width": 458.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -565,6 +597,15 @@
 	},
 	"file_history":
 	[
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/Plantillas/PhongModel.Texture.VShader.vert",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/Plantillas/PhongModel.Texture.FShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/Plantillas/PhongModel.Texture.NormalMap.FShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/Plantillas/PhongModel.Texture.NormalMap.VShader.vert",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaTraseraFShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie_agua.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/SuperficieAguaFShader.frag",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
+		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaTraseraVShader.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/SuperficieAguaVShader.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_lateral.cpp",
@@ -579,18 +620,13 @@
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_cuerpo.h",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoVShader.vert",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezCuerpoFShader.frag",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaTraseraFShader.frag",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/PezAletaTraseraVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_aleta_trasera.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo01.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_spiralSphere.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_pez_ojo.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/SuperficieFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/SuperficieVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/SuperficieAguaFShader.frag",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/lib_matematica.h",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_superficie_agua.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo03.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_planta_hoja_tipo02.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/HojaPlantaFShader.frag",
@@ -688,11 +724,7 @@
 		"/home/federicorossi/Descargas/6671-tp1-Ambiente-submarino-master/Codigo/object_planta_hoja_tipo03.cpp",
 		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Ejercicios/00 - Prueba del Framework/glWindow.cpp",
 		"/home/federicorossi/Descargas/DemoShadingDifusoTexturas/myWindow.cpp",
-		"/home/federicorossi/Descargas/DemoShadingDifusoTexturas/main.cpp",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/TexturingAndDiffuseShadingVShader.vert",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/shaders/TexturingAndDiffuseShadingFShader.frag",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/Plantilla (copia)/Makefile",
-		"/run/media/federicorossi/Archivos/Federico/66.71 Sistemas Graficos/Trabajos practicos/TP1/Codigo/object_eje_coordenado.cpp"
+		"/home/federicorossi/Descargas/DemoShadingDifusoTexturas/main.cpp"
 	],
 	"find":
 	{
@@ -710,6 +742,32 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"x",
+			"to",
+			"RGB",
+			"norm",
+			"binormal",
+			"tang",
+			"varying ",
+			"pos",
+			"nnuevo",
+			"z",
+			"y",
+			"nn",
+			"y",
+			"z",
+			"x",
+			"z",
+			"x",
+			"Tangent",
+			"1.0",
+			"0.2",
+			"1",
+			"model_matrix",
+			"NormalMatrix",
+			"1",
+			"(",
+			"normal",
 			"-",
 			"Dir",
 			"dir",
@@ -811,33 +869,7 @@
 			"int ",
 			"bool ",
 			"100",
-			"0.0007",
-			"+",
-			"Derecha",
-			"+",
-			"Adelante",
-			"this->aceleracion",
-			"cont",
-			"float ",
-			"bool ",
-			"k",
-			"y",
-			"0",
-			"1.0",
-			"algae_time",
-			"la",
-			"La",
-			"L",
-			"ld",
-			"Ld",
-			"ld",
-			"Ld",
-			"_position",
-			"light_intensity",
-			"120",
-			"p",
-			"0",
-			"t"
+			"0.0007"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -855,23 +887,28 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"sheets":
+			[
+			]
+		},
+		{
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "shaders/PezAletaTraseraFShader.frag",
+					"file": "shaders/HojaPlantaVShader.vert",
 					"settings":
 					{
-						"buffer_size": 2017,
+						"buffer_size": 707,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1214,
-								1214
+								213,
+								213
 							]
 						],
 						"settings":
@@ -880,58 +917,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 546.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 1,
-					"file": "object_pez_aleta_trasera.cpp",
-					"settings":
-					{
-						"buffer_size": 12073,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6411,
-								6411
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2752.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "shaders/PezAletaTraseraVShader.vert",
+					"buffer": 1,
+					"file": "shaders/HojaPlantaFShader.frag",
 					"settings":
 					{
-						"buffer_size": 1064,
+						"buffer_size": 1212,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								771,
-								771
+								437,
+								437
 							]
 						],
 						"settings":
@@ -944,27 +948,21 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
+				},
 				{
-					"buffer": 3,
-					"file": "scene.cpp",
+					"buffer": 2,
+					"file": "object_planta_hoja_tipo01.cpp",
 					"settings":
 					{
-						"buffer_size": 12819,
+						"buffer_size": 12700,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8386,
-								8386
+								10318,
+								10318
 							]
 						],
 						"settings":
@@ -973,13 +971,131 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3714.0,
+						"translation.y": 5265.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "object_pez_cuerpo.cpp",
+					"settings":
+					{
+						"buffer_size": 18613,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14000,
+								14000
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5827.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
+					"file": "shaders/PezCuerpoVShader.vert",
+					"settings":
+					{
+						"buffer_size": 1179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								486,
+								486
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "shaders/PezCuerpoFShader.frag",
+					"settings":
+					{
+						"buffer_size": 2407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								941,
+								941
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 351.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 6,
+					"file": "scene.cpp",
+					"settings":
+					{
+						"buffer_size": 12820,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1639,
+								1639
+							],
+							[
+								1671,
+								1671
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 819.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "scene.h",
 					"settings":
 					{
@@ -1006,7 +1122,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 8,
 					"settings":
 					{
 						"buffer_size": 283,
@@ -1016,8 +1132,8 @@
 						"selection":
 						[
 							[
-								277,
-								277
+								283,
+								283
 							]
 						],
 						"settings":
@@ -1034,11 +1150,11 @@
 			]
 		},
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
-					"buffer": 6,
+					"buffer": 9,
 					"file": "object_dibujable.h",
 					"settings":
 					{
@@ -1065,7 +1181,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 10,
 					"file": "object_dibujable.cpp",
 					"settings":
 					{
@@ -1092,19 +1208,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "shaders/SuperficieAguaFShader.frag",
+					"buffer": 11,
+					"file": "shaders/PezAletaLateralFShader.frag",
 					"settings":
 					{
-						"buffer_size": 1212,
+						"buffer_size": 1568,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1118,
-								1118
+								338,
+								338
 							]
 						],
 						"settings":
@@ -1113,25 +1229,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 195.0,
+						"translation.y": 390.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "object_superficie_agua.cpp",
+					"buffer": 12,
+					"file": "shaders/PezAletaLateralVShader.vert",
 					"settings":
 					{
-						"buffer_size": 10463,
+						"buffer_size": 1507,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6896,
-								6896
+								467,
+								467
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "object_pez_aleta_lateral.cpp",
+					"settings":
+					{
+						"buffer_size": 14640,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5677,
+								5677
 							]
 						],
 						"settings":
@@ -1140,7 +1283,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3432.0,
+						"translation.y": 2381.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1188,13 +1331,13 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.516105417277,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
-			0.923780487805,
+			0.0762195121951,
 			1.0
 		]
 	},
