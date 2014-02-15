@@ -85,10 +85,10 @@ void main()
 	vec3 shadeColor = phongModel(NormalSide.xyz, texColor.rgb);
 
 	vec3 color = mix(FogColor, shadeColor, fogFactor);
-	// gl_FragColor =  vec4(color, 1.0);
+	gl_FragColor =  vec4(color, 1.0);
 
 	// # DEBUG
 	// gl_FragColor = texColor;
-	gl_FragColor = vec4(NormalSide, 1.0);
+	// gl_FragColor = vec4(NormalSide, 1.0);
 	// # END DEBUG
 }
