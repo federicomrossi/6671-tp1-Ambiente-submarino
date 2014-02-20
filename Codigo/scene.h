@@ -46,6 +46,7 @@ private:
 	float initialFoV;					// Initial Field of View
 	float speed;						// Speed of movement
 	float mouseSpeed;					// Mouse speed
+	bool pause;
 
 
 	// Camera

@@ -339,7 +339,7 @@
 			"file": "scene.cpp",
 			"settings":
 			{
-				"buffer_size": 12819,
+				"buffer_size": 12927,
 				"line_ending": "Unix"
 			}
 		},
@@ -352,6 +352,14 @@
 			}
 		},
 		{
+			"file": "shaders/HojaPlantaFShader.frag",
+			"settings":
+			{
+				"buffer_size": 2128,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "object_cangrejo_pata_pie.cpp",
 			"settings":
 			{
@@ -360,19 +368,27 @@
 			}
 		},
 		{
+			"file": "object_pez_cuerpo.cpp",
+			"settings":
+			{
+				"buffer_size": 18547,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "shaders/CangrejoFShader.frag",
 			"settings":
 			{
-				"buffer_size": 1192,
-				"line_ending": "Windows"
+				"buffer_size": 0,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "shaders/CangrejoVShader.vert",
 			"settings":
 			{
-				"buffer_size": 1331,
-				"line_ending": "Windows"
+				"buffer_size": 0,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -878,7 +894,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -913,15 +929,15 @@
 					"file": "scene.cpp",
 					"settings":
 					{
-						"buffer_size": 12819,
+						"buffer_size": 12927,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2314,
-								2314
+								7857,
+								7857
 							]
 						],
 						"settings":
@@ -930,7 +946,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1320.0,
+						"translation.y": 3656.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -947,8 +963,8 @@
 						"selection":
 						[
 							[
-								2059,
-								2061
+								2414,
+								2414
 							]
 						],
 						"settings":
@@ -961,6 +977,33 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "shaders/HojaPlantaFShader.frag",
+					"settings":
+					{
+						"buffer_size": 2128,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1272,
+								1272
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShaderLanguages/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 533.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
 				}
 			]
 		},
@@ -969,7 +1012,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "object_cangrejo_pata_pie.cpp",
 					"settings":
 					{
@@ -990,25 +1033,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6958.0,
+						"translation.y": 6295.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "shaders/CangrejoFShader.frag",
+					"buffer": 5,
+					"file": "object_pez_cuerpo.cpp",
 					"settings":
 					{
-						"buffer_size": 1192,
+						"buffer_size": 18547,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								142,
-								142
+								16204,
+								16204
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7215.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "shaders/CangrejoFShader.frag",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1023,19 +1093,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "shaders/CangrejoVShader.vert",
 					"settings":
 					{
-						"buffer_size": 1331,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								112,
-								112
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1056,7 +1126,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "object_cangrejo_pata.cpp",
 					"settings":
 					{
@@ -1083,7 +1153,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
 					"file": "object_cangrejo_cuerpo.h",
 					"settings":
 					{
@@ -1110,7 +1180,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "object_cangrejo_cuerpo.cpp",
 					"settings":
 					{
@@ -1143,7 +1213,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "object_cangrejo_pata_muslo.h",
 					"settings":
 					{
@@ -1170,7 +1240,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "object_cangrejo_pata_muslo.cpp",
 					"settings":
 					{
@@ -1197,7 +1267,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 13,
 					"file": "object_cangrejo_pata_pie.h",
 					"settings":
 					{
@@ -1224,7 +1294,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 14,
 					"file": "object_cangrejo_pata_pierna.h",
 					"settings":
 					{
@@ -1251,7 +1321,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 15,
 					"file": "object_cangrejo_pata_pierna.cpp",
 					"settings":
 					{

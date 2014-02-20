@@ -60,10 +60,8 @@ void PezCuerpo::create()
 {
 	// Cargamos la textura
 	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
-		"textures/pez-cuerpo-normalmap-texture-01.png");
-
-	// Cargamos las texturas del cube map
-	this->loadAndInitReflectionTexture("textures/pez-cuerpo-cubemap-texture");
+		"textures/pez-cuerpo-normalmap-texture-01.png",
+		"textures/water-texture-03.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -600,6 +598,12 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
 	else fprintf(stderr, "Uniform variable NormalMapTexPezCuerpo not found!\n");
+
+
+	// Set the SphereMapTex sampler uniform to refer to texture unit 2
+	int locSM = glGetUniformLocation(this->programHandle, "SphereMapTex");
+	if(locSM >= 0) glUniform1i(locSM, 2);
+	else fprintf(stderr, "Uniform variable SphereMapTexPezCuerpo not found!\n");
 
 
 	// // Set the CubeMapTex uniform to texture unit 2

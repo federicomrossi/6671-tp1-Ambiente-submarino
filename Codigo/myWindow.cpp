@@ -131,7 +131,7 @@ void myWindow::OnKeyUp(int nKey, char cAscii)
 	{
 		SetFullscreen(true);
 	}
-	else if (cAscii == 'p')
+	else if (cAscii == 'l')
 	{
 		SetFullscreen(false);
 	}

@@ -30,6 +30,7 @@ protected:
 	GLuint fragShader;					// Fragment shader
 	GLuint texture_id;					// ID de la textura
 	GLuint normalmap_id;				// ID de la textura de mapa de normales
+	GLuint spheremap_id;					// ID de la textura del mapa esférico
 	GLuint cubemap_id;					// ID de la textura del mapa de reflexión
 
 	unsigned char* image_buffer;
@@ -42,10 +43,10 @@ protected:
 	int normalmap_height;
 	int normalmap_channels;
 
-	unsigned char* cubemap_buffer;
-	int cubemap_witdh;
-	int cubemap_height;
-	int cubemap_channels;
+	unsigned char* spheremap_buffer;
+	int spheremap_witdh;
+	int spheremap_height;
+	int spheremap_channels;
 
 
 	// Colores que definen al objeto en formato RGB
@@ -61,9 +62,9 @@ protected:
 	// Carga e inicia la textura y el mapa de normales
 	void loadAndInitTexture(const char* filename, const char* normalmap);
 
-	// Carga e inicia las texturas para el mapa de reflexión
-	void loadAndInitReflectionTexture(const char* baseFilename);
-
+	// Carga e inicia la textura, el mapa de normales y el mapa esférico
+	void loadAndInitTexture(const char* filename, const char* normalmap,
+		const char* spheremap);
 
 public:
 

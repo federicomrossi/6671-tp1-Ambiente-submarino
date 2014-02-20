@@ -62,7 +62,7 @@ void main()
 	if(gl_FrontFacing) {
 		NormalSide = Normal;
 	} else {
-		NormalSide = -Normal;
+		NormalSide = Normal;
 	}
 
 	Binormal = normalize(cross(NormalSide, Tangent)) * GlColor.w;
