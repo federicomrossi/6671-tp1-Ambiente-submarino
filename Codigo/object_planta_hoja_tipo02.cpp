@@ -20,15 +20,25 @@
 
 
 
+// // Constantes de CONFIGURACION
+// namespace {
+	
+// 	// Ruta del archivo del vertex shader
+// 	const std::string FILE_VERT_SHADER = "shaders/HojaPlantaVShader.vert";
+	
+// 	// Ruta del archivo del fragment shader
+// 	const std::string FILE_FRAG_SHADER = "shaders/HojaPlantaFShader.frag";
+// }
 // Constantes de CONFIGURACION
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/HojaPlantaVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/PhongModel.NormalMap.VShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/HojaPlantaFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/PhongModel.NormalMap.FShader.frag";
 }
+
 
 
 
@@ -47,6 +57,7 @@ PlantaHojaTipo02::PlantaHojaTipo02()
 	// Inicializamos buffers
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_tangent_buffer = NULL;
 	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 
@@ -63,7 +74,8 @@ PlantaHojaTipo02::~PlantaHojaTipo02() { }
 void PlantaHojaTipo02::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/leaf-texture-01.jpg");
+	this->loadAndInitTexture("textures/leaf-texture-01.jpg", 
+		"textures/leaf-normalmap-texture-01.png");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -150,6 +162,11 @@ void PlantaHojaTipo02::create()
 		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
+	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO;
+	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
+
+
 
 	// Unimos los puntos
 
@@ -164,6 +181,8 @@ void PlantaHojaTipo02::create()
 	int i = 0;
 	int y = 0;
 	int w = 0;
+	int z = 0;
+
 
 	for(int k = 0; k < this->ESTIRAMIENTO; k++)
 	{
@@ -221,6 +240,11 @@ void PlantaHojaTipo02::create()
 			float t[3];
 			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
 
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t, t_barrido);
 			float *n = Matematica::normalizar(temp);
@@ -269,10 +293,8 @@ void PlantaHojaTipo02::create()
 void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(0, 200, 0);
 
 	// Bind tiempo para variación de movimiento
 	// ########################################
@@ -311,10 +333,10 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(8 / 255.0f,
-							 72 / 255.0f, 
-							 56 / 255.0f);
-	this->changeObjectColor(166, 224, 246);
+	glm::vec3 Ka = glm::vec3(41 / 255.0f,
+							 90 / 255.0f, 
+							 5 / 255.0f);
+	this->changeObjectColor(128, 157, 64);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
@@ -323,7 +345,7 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Fog
-	GLfloat FogMinDist = 3.0;
+	GLfloat FogMinDist = 0.0;
 	GLfloat FogMaxDist = 15.0;
 	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
 								   36.0f / 255.0,
@@ -373,12 +395,12 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// // Kd
-	// GLuint location_kd = glGetUniformLocation(
-	// 	this->programHandle, "Kd");
+	// Kd
+	GLuint location_kd = glGetUniformLocation(
+		this->programHandle, "Kd");
 
-	// if(location_kd >= 0) 
-	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
+	if(location_kd >= 0) 
+		glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -441,31 +463,32 @@ void PlantaHojaTipo02::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 
-	// Set the Texture sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Texture");
-	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPlantaHojaTipo02 not found!\n");
+	// Set the NormalMapTex sampler uniform to refer to texture unit 1
+	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
+	if(locNM >= 0) glUniform1i(locNM, 1);
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoCuerpo not found!\n");
 
-
-	// Activamos textura
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, this->texture_id);
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
-		this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 

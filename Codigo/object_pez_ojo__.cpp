@@ -1,5 +1,5 @@
 /*  
- *  CLASS SUPERFICIE
+ *  CLASS PEZ_OJO
  */
 
 
@@ -14,19 +14,20 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
-#include "object_superficie.h"
+#include "object_pez_ojo.h"
+
 
 
 // Constantes de CONFIGURACION
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/SuperficieVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/RocaVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/SuperficieFShader.frag";
-	
+	const std::string FILE_FRAG_SHADER = "shaders/RocaFShader.frag";
 }
+
 
 
 
@@ -37,7 +38,7 @@ namespace {
 
 
 // Constructor
-Superficie::Superficie()
+PezOjo::PezOjo() 
 {
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
@@ -48,67 +49,56 @@ Superficie::Superficie()
 
 
 // Destructor
-Superficie::~Superficie() { }
+PezOjo::~PezOjo() { }
 
 
 // Crea un objeto
-void Superficie::create(int ancho)
+void PezOjo::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/sand-texture-04.jpg");
+	this->loadAndInitTexture("textures/rock-texture-01.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
-	
-
-	// Almacenamos el ancho que debe tener la superficie
-	this->ESTIRAMIENTO = ancho;
 
 
-	// CREACIÓN DEL OBJETO
-
-	// Configuración del paso entre un punto y otro.
-	float PASO = 0.25;
-
-	// Valores para cálculos (no modificar)
-	this->CANT_PUNTOS = int(ceil(1.0 / PASO)) + 1;
 	int DIMENSIONES = 3;
 	int DIMENSIONES_TEXTURA = 2;
+	float PI = 3.1415f;
+	float ro = 1.0f;
+	int phi;
+	int tita;
+	int num_puntos = 8;
+
+	this->ESTIRAMIENTO = num_puntos;
+	this->CANT_PUNTOS = num_puntos;
 
 
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
 
-	this->object_vertex_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* this->ESTIRAMIENTO;
+	this->object_vertex_buffer_size = DIMENSIONES * num_puntos * num_puntos;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
-	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
-		* this->ESTIRAMIENTO; 
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA  * num_puntos * num_puntos; 
 	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = 2 * this->CANT_PUNTOS 
-		* (this->ESTIRAMIENTO-1);
+	this->object_index_buffer_size = 2 * num_puntos * num_puntos;
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
-
-	this->object_normal_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* this->ESTIRAMIENTO;
+	this->object_normal_buffer_size = DIMENSIONES * num_puntos * num_puntos;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
-	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
-		* this->ESTIRAMIENTO;
+	this->object_tangent_buffer_size = DIMENSIONES * num_puntos * num_puntos;
 	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
 
 
 
-
 	// Unimos los puntos
-
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
 	int e = 0;
@@ -116,81 +106,41 @@ void Superficie::create(int ancho)
 		for(int n = 0; n < this->CANT_PUNTOS; n++)
 			malla[m][n] = e++;
 
-
+	
 	int i = 0;
 	int y = 0;
 	int w = 0;
 	int z = 0;
 
-	float t_barrido[3];
-	t_barrido[0] = 0.0;
-	t_barrido[1] = 1.0;
-	t_barrido[2] = 0.0;
 
-
-
-	for(int k = -(this->ESTIRAMIENTO / 2); k < (this->ESTIRAMIENTO / 2); k++)
+	for(phi = 0; phi < num_puntos; phi++)
 	{
-		// Puntos de control
-		float pc0x = (this->ESTIRAMIENTO / 2);
-		float pc0y = k;
-		float pc0z = 0.0;
-
-		float pc1x = (this->ESTIRAMIENTO / 4);
-		float pc1y = k;
-		float pc1z = 0.5 * cos(k);
-
-		float pc2x = -(this->ESTIRAMIENTO / 4);
-		float pc2y = k;
-		float pc2z = 0.6 * sin(k);
-
-		float pc3x = -(this->ESTIRAMIENTO / 2);
-		float pc3y = k;
-		float pc3z = 0.0;
-
-		float pcx[] = {pc0x, pc1x, pc2x, pc3x};
-		float pcy[] = {pc0y, pc1y, pc2y, pc3y};
-		float pcz[] = {pc0z, pc1z, pc2z, pc3z};
-
-
-		for(int j = 0; j < this->CANT_PUNTOS; j++) 
+		for(tita = 0; tita < num_puntos; tita++)
 		{
-			float ppx = Matematica::curvaBezier(j * PASO, pcx);
-			float ppy = Matematica::curvaBezier(j * PASO, pcy);
-			float ppz = Matematica::curvaBezier(j * PASO, pcz);
+			float vx = ro * std::sin(PI / num_puntos * phi) * std::cos(2 * PI / num_puntos * tita);
+			float vy = ro * std::sin(PI / num_puntos * phi) * std::sin(2 * PI / num_puntos * tita);
+			float vz = ro * std::cos(PI / num_puntos * phi);
 
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
-
-			this->object_texture_buffer[y++] = (j * PASO) 
-				* (this->ESTIRAMIENTO / 2);
-			this->object_texture_buffer[y++] = ((k * 1.0) 
-				/ (this->ESTIRAMIENTO-1)) * (this->ESTIRAMIENTO / 2);
-
-			// Calculamos el vector tangente dado por la curvatura de la hoja
-			float t[3];
-			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
-
-			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
-
-			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
-			float *n = Matematica::normalizar(temp);
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = vx;
+			this->object_vertex_buffer[i++] = vy;
+			this->object_vertex_buffer[i++] = vz;
 
 			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = n[0];
-			this->object_normal_buffer[w++] = n[1];
-			this->object_normal_buffer[w++] = n[2];
+			this->object_normal_buffer[w++] = 1.0;
+			this->object_normal_buffer[w++] = 1.0;
+			this->object_normal_buffer[w++] = 1.0;
+
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = 0.0;
+			this->object_tangent_buffer[z++] = 0.0;
+			this->object_tangent_buffer[z++] = 1.0;
+
+			this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
+			this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
 		}
 	}
 
-
-	// Tejemos los puntos insertandolos en el index buffer para crear
-	// la superficie del objeto
 
 	int sentido = 1;
 	int k = 0;
@@ -219,21 +169,20 @@ void Superficie::create(int ancho)
 }
 
 
-
-
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void PezOjo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
-{	
+{
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
+	glActiveTexture(GL_TEXTURE0);
 	
+	this->changeObjectColor(180,180,180);
 
+	///////////////////////////////////////////
 	// Bind View Matrix
-	// ################
-
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -248,38 +197,37 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_projection_matrix >= 0) 
 		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,
 			&projection_matrix[0][0]); 
+	//
+	///////////////////////////////////////////
 
 
-
+	//////////////////////////////////////
 	// Bind Light Settings
-	// ###################
 
 	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
-	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
-	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
+	glm::vec4 light_position = glm::vec4(-8.0f, -8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(67 / 255.0f,
-							 77 / 255.0f, 
-							 18 / 255.0f);
-	this->changeObjectColor(199, 215, 126);
+	glm::vec3 Ka = glm::vec3(90 / 255.0f,
+							 49 / 255.0f, 
+							 49 / 255.0f);
+	this->changeObjectColor(186, 143, 143);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
-	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 20.0;
+	glm::vec3 Ks = glm::vec3(0.5f, 0.5f, 0.5f);
+	float Shininess = 1.0;
 
 	// Fog
-	GLfloat FogMinDist = 0.0;
-	GLfloat FogMaxDist = 15.0;
+	float FogMinDist = 4.0;
+	float FogMaxDist = 10.0;
 	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
 								   36.0f / 255.0,
 								   60.0f / 255.0);
-	
 
 	// Light Intensity
-	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
-		"LightIntensity");
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, "LightIntensity");
 
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
@@ -320,12 +268,12 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -340,7 +288,9 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"Shininess");
 
 	if(location_shininess >= 0)
-		glUniform1f(location_shininess, Shininess); 
+		glUniform1f(location_shininess, Shininess);
+
+
 
 
 	// FoxMaxDist
@@ -367,10 +317,12 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
 
+	//
+	///////////////////////////////////////////
+
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(model_matrix)));
-
+	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
 
 	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
@@ -387,15 +339,17 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// Set the Texture sampler uniform to refer to texture unit 0
+
+	//  the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPlantaHojaTipo01 not found!\n");
+	else fprintf(stderr, "Uniform variable TexPezOjo not found!\n");
+
+
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
-
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -403,11 +357,12 @@ void Superficie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
+		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);

@@ -61,7 +61,6 @@ vec3 phongModel(vec3 norm, vec3 diffR) {
 void main()
 {
 	// Calcule of the fog factors to apply 
-	// float dist = abs(Position.z);
 	float dist = length( Position.xyz );
 	float fogFactor = (FogMaxDist - dist) / (FogMaxDist - FogMinDist);
 	fogFactor = clamp(fogFactor, 0.0, 1.0);
@@ -94,7 +93,7 @@ void main()
 	LightDir = normalize(LightPosition.xyz - Position);
 	ViewDir = toObjectLocal * normalize(-Position);
 
-	vec3 shadeColor = phongModel(nmToTBN, texColor.rgb+ vec3(sm) * 0.4);
+	vec3 shadeColor = phongModel(nmToTBN, texColor.rgb + vec3(sm) * 0.5);
 	vec3 color = mix(FogColor, shadeColor, fogFactor);
 
 	gl_FragColor =  vec4(color, 1.0);

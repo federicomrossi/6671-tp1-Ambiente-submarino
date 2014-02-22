@@ -1,18 +1,17 @@
 /*  
- *  CLASS PLANTA
+ *  CLASS PEZ_OJO
  */  
 
 
-#ifndef OBJECT_PLANTA_HOJA_TIPO_O3_H
-#define OBJECT_PLANTA_HOJA_TIPO_03_H
+#ifndef OBJECT_PEZ_OJO_H
+#define OBJECT_PEZ_OJO_H
 
 
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp> 
 #include <vector>
 #include "object_dibujable.h"
-
-
+ 
 
 
 
@@ -21,11 +20,10 @@
  * ***************************************************************************/
 
 
-class PlantaHojaTipo03 : public ObjectDibujable
+class PezOjo : public ObjectDibujable
 {
 private:
 
-	// Buffers
 	GLfloat* object_vertex_buffer;
 	GLfloat* object_normal_buffer;
 	GLfloat* object_tangent_buffer;
@@ -37,24 +35,19 @@ private:
 	unsigned int object_texture_buffer_size;
 	unsigned int object_index_buffer_size;
 
-	// Atributos del movimiento
-	GLfloat tiempo;
-	
 	// Caracteristicas del objeto
 	int CANT_PUNTOS;
 	int ESTIRAMIENTO;				// Niveles que posee el objeto de
 									// estiramiento
-	float ESPACIADO_ESTIRAMIENTO;	// Espacio entre cada nivel de altura del
-									// estiramiento del objeto.
-
-
+	float ESPACIADO_ESTIRAMIENTO;	// Espacio entre cada nivel de altur
+	
 public:
 
 	// Constructor
-	PlantaHojaTipo03();
+	PezOjo();
 
 	// Destructor
-	~PlantaHojaTipo03();
+	~PezOjo();
 
 	// Crea un objeto
 	virtual void create();
@@ -64,14 +57,6 @@ public:
 	// debe renderizarce el objeto.
 	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
-
-	// Permite setear la amplitud de la hoja. Debe setearse antes de crear
-	// el objeto.
-	void setAmplitud(float amplitud);
-
-	// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
-	// antes de crear el objeto.
-	void setVelocidad(float velocidad);
 };
 
 #endif

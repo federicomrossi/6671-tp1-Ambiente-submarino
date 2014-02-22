@@ -80,12 +80,12 @@ void Scene::initialize()
 	this->grado = 0.0f;
 	// this->ejeCoordenado.create(4);
 	// this->grid.create(20);
-	// this->superficie.create(80);
-	// this->superficieAgua.create(80);
+	this->superficie.create(80);
+	this->superficieAgua.create(80);
 	// this->cangrejo.create();
 	// this->roca.create();
 	this->pez.create();
-	// this->plantaAcuatica.create();
+	this->plantaAcuatica.create();
 
 	// Establecemos un color inicial para la escena
 	glClearColor(0.0f / 255.0, 
@@ -262,17 +262,17 @@ void Scene::render(GLuint height, GLuint width)
 	// this->grid.changeObjectColor(128, 128, 128);
 	// this->grid.render(model_matrix_grid, this->view_matrix, projection_matrix);
 
-	// // Dibujamos la superficie
-	// glm::mat4 mSuperficie = glm::mat4(1.0f);
-	// mSuperficie = glm::translate(mSuperficie, glm::vec3(10.0, 0.0, 0.0));
-	// // mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 1.0, 0.0));
-	// this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
+	// Dibujamos la superficie
+	glm::mat4 mSuperficie = glm::mat4(1.0f);
+	mSuperficie = glm::translate(mSuperficie, glm::vec3(10.0, 0.0, 0.0));
+	// mSuperficie = glm::rotate(mSuperficie, this->grado, glm::vec3(0.0, 1.0, 0.0));
+	this->superficie.render(mSuperficie, this->view_matrix, projection_matrix);
 
-	// // Dibujamos la superficie de agua
-	// glm::mat4 mSupAgua = glm::mat4(1.0f);
-	// mSupAgua = glm::translate(mSupAgua, glm::vec3(-10.0, 0.0, 5.0));
-	// // mSupAgua = glm::rotate(mSupAgua, this->grado, glm::vec3(0.0, 1.0, 0.0));
-	// this->superficieAgua.render(mSupAgua, this->view_matrix, projection_matrix);
+	// Dibujamos la superficie de agua
+	glm::mat4 mSupAgua = glm::mat4(1.0f);
+	mSupAgua = glm::translate(mSupAgua, glm::vec3(-10.0, 0.0, 4.0));
+	// mSupAgua = glm::rotate(mSupAgua, this->grado, glm::vec3(0.0, 1.0, 0.0));
+	this->superficieAgua.render(mSupAgua, this->view_matrix, projection_matrix);
 
 
 
@@ -334,25 +334,25 @@ void Scene::render(GLuint height, GLuint width)
 	// mRoca = glm::rotate(mRoca, -25.0f, glm::vec3(1.0, 0.0, 0.0));
 	// this->roca.render(mRoca, this->view_matrix, projection_matrix);
 
-	// // Dibujamos una planta
-	// glm::mat4 mPlanta = glm::mat4(1.0f);
-	// mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
-	// // mPlanta = glm::rotate(mPlanta, 90.0f, glm::vec3(0.0, 0.0, 1.0));
+	// Dibujamos una planta
+	glm::mat4 mPlanta = glm::mat4(1.0f);
+	mPlanta = glm::translate(mPlanta, glm::vec3(1.9, 2.3, -0.05));
+	// mPlanta = glm::rotate(mPlanta, 90.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
+
+	mPlanta = glm::mat4(1.0f);
+	mPlanta = glm::translate(mPlanta, glm::vec3(1.3, 1.8, 0.25));
+	mPlanta = glm::rotate(mPlanta, -30.0f, glm::vec3(0.0, 0.0, 1.0));
 	// mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	// this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
+	mPlanta = glm::scale(mPlanta, glm::vec3(0.3, 0.3, 0.3));
+	this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
 
-	// mPlanta = glm::mat4(1.0f);
-	// mPlanta = glm::translate(mPlanta, glm::vec3(1.3, 1.8, 0.25));
-	// mPlanta = glm::rotate(mPlanta, -30.0f, glm::vec3(0.0, 0.0, 1.0));
-	// // mPlanta = glm::rotate(mPlanta, this->grado, glm::vec3(0.0, 0.0, 1.0));
-	// mPlanta = glm::scale(mPlanta, glm::vec3(1.0, 0.7, 0.6));
-	// this->plantaAcuatica.render(mPlanta, this->view_matrix, projection_matrix);
-
-	// glm::mat4 mPlanta1 = glm::mat4(1.0f);
-	// glm::mat4 mPlanta2 = glm::mat4(1.0f);
-	// mPlanta1 = glm::translate(mPlanta1, glm::vec3(-1.0, -1.5, -0.05));
-	// mPlanta1 = glm::scale(mPlanta1, glm::vec3(0.7, 0.7, 0.7));
-	// this->plantaAcuatica.render(mPlanta1, this->view_matrix, projection_matrix);
+	glm::mat4 mPlanta1 = glm::mat4(1.0f);
+	glm::mat4 mPlanta2 = glm::mat4(1.0f);
+	mPlanta1 = glm::translate(mPlanta1, glm::vec3(-1.0, -1.5, -0.05));
+	mPlanta1 = glm::scale(mPlanta1, glm::vec3(0.7, 0.7, 0.7));
+	this->plantaAcuatica.render(mPlanta1, this->view_matrix, projection_matrix);
 
 
 	///////////////////////////////////////////////////////////////////////////

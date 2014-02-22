@@ -18,11 +18,8 @@ varying vec3 Position;
 varying vec3 Tangent;
 varying vec3 Binormal;
 varying vec3 Normal;
-// varying mat3 toObjectLocal;
 
 varying vec2 TexCoord;
-
-// varying vec3 ReflectDir;			// The direction of the reflected ray
 
 
 
@@ -33,19 +30,14 @@ void main()
 	Tangent = normalize(NormalMatrix * vec3(gl_Color));
 	Binormal = normalize(cross(Normal, Tangent)) * gl_Color.w;
 
-	// // Matrix for transformation to tangent space
-	// toObjectLocal = mat3(Tangent.x, Binormal.x, Normal.x,
-	// 					 Tangent.y, Binormal.y, Normal.y,
-	// 					 Tangent.z, Binormal.z, Normal.z);
-
 	// Get the position in eye coordinates
-	Position = vec3(ModelMatrix * gl_Vertex);
+	Position = vec3(ViewMatrix * ModelMatrix * gl_Vertex);
 
 	// Pass along the texture coordinate
 	TexCoord = gl_MultiTexCoord0.xy;
 
 
-	vec3 u = Position;
+	vec3 u = vec3(ViewMatrix * ModelMatrix * gl_Vertex);
 	vec3 n = Normal;
 	vec3 r = reflect(u, n);
 	float m = 2.0 * sqrt( r.x*r.x + r.y*r.y + (r.z+1.0)*(r.z+1.0) );

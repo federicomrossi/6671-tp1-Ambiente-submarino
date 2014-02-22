@@ -1,5 +1,5 @@
 /*  
- *  CLASS PEZ
+ *  CLASS PEZ_OJO
  */
 
 
@@ -14,8 +14,7 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
-
-#include "object_pez_cuerpo.h"
+#include "object_ojo.h"
 
 
 
@@ -23,13 +22,11 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/PezCuerpoVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/RocaVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/PezCuerpoFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/RocaFShader.frag";
 }
-
-
 
 
 
@@ -41,7 +38,7 @@ namespace {
 
 
 // Constructor
-PezCuerpo::PezCuerpo()
+PezOjo::PezOjo() 
 {
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
@@ -52,77 +49,18 @@ PezCuerpo::PezCuerpo()
 
 
 // Destructor
-PezCuerpo::~PezCuerpo() { }
+PezOjo::~PezOjo() { }
 
 
 // Crea un objeto
-void PezCuerpo::create()
+void PezOjo::create()
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
-		"textures/pez-cuerpo-normalmap-texture-01.png",
-		"textures/pez-cuerpo-spheremap-texture-03.jpg");
+	this->loadAndInitTexture("textures/rock-texture-01.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
-
-
-	// Puntos de control de la CURVA DE ESQUELETO SUPERIOR
-
-	float superior_pc0x = 0.0;
-	float superior_pc0y = 0.15;
-
-	float superior_pc1x = 9.0;
-	float superior_pc1y = 1.0;
-
-	float superior_pc2x = 10.0;
-	float superior_pc2y = 1.5;
-
-	float superior_pc3x = 10.0;
-	float superior_pc3y = 0.0;
-
-	float superior_pcx[] = {superior_pc0x, superior_pc1x, superior_pc2x, superior_pc3x};
-	float superior_pcy[] = {superior_pc0y, superior_pc1y, superior_pc2y, superior_pc3y};
-
-
-	// Puntos de control de la CURVA DE ESQUELETO INFERIOR
-
-	float inferior_pc0x = 10.0;
-	float inferior_pc0y = 0.15;
-
-	float inferior_pc1x = 9.0;
-	float inferior_pc1y = 0.5;
-
-	float inferior_pc2x = 0.1;
-	float inferior_pc2y = 1.0;
-
-	float inferior_pc3x = 0.0;
-	float inferior_pc3y = 0.001;
-
-	float inferior_pcx[] = {inferior_pc0x, inferior_pc1x, inferior_pc2x, inferior_pc3x};
-	float inferior_pcy[] = {inferior_pc0y, inferior_pc1y, inferior_pc2y, inferior_pc3y};
-
-
-
-	// Puntos de control de la CURVA DE ANCHO DEL ESQUELETO
-
-	float ancho_pc0x = 0.0;
-	float ancho_pc0y = 0.0;
-
-	float ancho_pc1x = 2.0;
-	float ancho_pc1y = 0.3;
-
-	float ancho_pc2x = 8.0;
-	float ancho_pc2y = 0.3;
-
-	float ancho_pc3x = 10.0;
-	float ancho_pc3y = 0.0;
-
-	float ancho_pcx[] = {ancho_pc0x, ancho_pc1x, ancho_pc2x, ancho_pc3x};
-	float ancho_pcy[] = {ancho_pc0y, ancho_pc1y, ancho_pc2y, ancho_pc3y};
-
-
 
 
 	// Configuración del paso entre un punto y otro.
@@ -131,12 +69,11 @@ void PezCuerpo::create()
 	int CANT_CURVAS = 4;
 
 	// Valores para cálculos (no modificar)
-	this->ESTIRAMIENTO = 16;
+	this->ESTIRAMIENTO = 10;
 	this->CANT_PUNTOS = CANT_CURVAS * (int(ceil(1.0 / PASO)) + 1);
 	int DIMENSIONES = 3;
-	this->ESPACIADO_ESTIRAMIENTO = 0.2;
+	this->ESPACIADO_ESTIRAMIENTO = 0.1;
 	int DIMENSIONES_TEXTURA = 2;
-
 
 
 
@@ -149,7 +86,6 @@ void PezCuerpo::create()
 	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
 		* this->ESTIRAMIENTO; 
 	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
-
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
@@ -164,6 +100,26 @@ void PezCuerpo::create()
 	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
 		* this->ESTIRAMIENTO;
 	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
+
+
+
+	// Puntos de control de la CURVA DE ESQUELETO INFERIOR
+
+	float radio_pc0x = 10.0;
+	float radio_pc0y = 0.0001;
+
+	float radio_pc1x = 5.0;
+	float radio_pc1y = 0.9;
+
+	float radio_pc2x = 3.0;
+	float radio_pc2y = 1.0;
+
+	float radio_pc3x = 0.0;
+	float radio_pc3y = 0.0001;
+
+	float radio_pcx[] = {radio_pc0x, radio_pc1x, radio_pc2x, radio_pc3x};
+	float radio_pcy[] = {radio_pc0y, radio_pc1y, radio_pc2y, radio_pc3y};
+
 
 
 	// Unimos los puntos
@@ -191,35 +147,26 @@ void PezCuerpo::create()
 	// Iteramos sobre cada nivel del objeto
 	for(int q = 0; q < this->ESTIRAMIENTO; q++)
 	{
-		// Calculamos la curva de bezier que da forma al esqueleto superior
-		float distancia_sup = Matematica::curvaBezier((q * 1.0) / 
-			(this->ESTIRAMIENTO-1),	superior_pcy);
-
 		// Calculamos la curva de bezier que da forma al esqueleto inferior
-		float distancia_inf = Matematica::curvaBezier((q * 1.0) / 
-			(this->ESTIRAMIENTO-1),	inferior_pcy);
-
-		// Calculamos la curva de bezier que da el ancho del cuerpo
-		float ancho = Matematica::curvaBezier((q * 1.0) / 
-			(this->ESTIRAMIENTO-1), ancho_pcy);
-
+		float radio = Matematica::curvaBezier((q * 1.0) / 
+			(this->ESTIRAMIENTO-1),	radio_pcy);
 
 		// Puntos de control
-		float pc0x = 1.0  * distancia_inf;
-		float pc0y = -1.0 * ancho;
+		float pc0x = 1.0 * radio;
+		float pc0y = -1.0 * radio;
 		float pc0z = 0.0;
 
-		float pc1x = -1.0 * distancia_sup;
-		float pc1y = -1.0 * ancho;
+		float pc1x = -1.0 * radio;
+		float pc1y = -1.0 * radio;
 		float pc1z = 0.0;
 
-		float pc2x = -1.0 * distancia_sup;
-		float pc2y = 1.0 * ancho;
+		float pc2x = -1.0 * radio;
+		float pc2y = 1.0 * radio;
 		float pc2z = 0.0;
 
-		float pc3x = 1.0  * distancia_inf;
-		float pc3y = 1.0 * ancho;
-		float pc3z = 0.0;
+		float pc3x = 1.0 * radio;
+		float pc3y = 1.0 * radio;
+		float pc3z = 0.5;
 
 		// Armamos arreglos para los trozos que conforman la curva
 		float pcx012[] = {pc0x, pc1x, pc2x};
@@ -237,15 +184,17 @@ void PezCuerpo::create()
 		float pcz230[] = {pc2z, pc3z, pc0z};
 		float pcz301[] = {pc3z, pc0z, pc1z};
 
-		float punto_cierre_x;
-		float punto_cierre_y;
-		float punto_cierre_z;
-
-
 
 		// Segmento 0-1-2 de la curva
 		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
+			float var = 0.0;
+			if(((j%3) == 0 )&& q < this->ESTIRAMIENTO-1 && q > 0 && j > 0)
+				var =  Matematica::numeroAleatorio(-0.05, 0.05);
+
+			if(q == this->ESTIRAMIENTO-1) 
+				var += -this->ESPACIADO_ESTIRAMIENTO / 2;
+
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx012);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy012);
@@ -261,7 +210,7 @@ void PezCuerpo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *temp = Matematica::productoVectorial(t, t_barrido);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -270,17 +219,24 @@ void PezCuerpo::create()
 			this->object_normal_buffer[w++] = n[2];
 
 			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppx + var;
 			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			this->object_vertex_buffer[i++] = ppz + var;
 
-			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = j / 8.0;
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 1-2-3 de la curva
 		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
+			float var = 0.0;
+			if(((j%3) == 0 )&& q < this->ESTIRAMIENTO-1 && q > 0 && j > 0)
+				var =  Matematica::numeroAleatorio(-0.05, 0.05);
+
+			if(q == this->ESTIRAMIENTO-1) 
+				var += -this->ESPACIADO_ESTIRAMIENTO / 2;
+
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx123);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
@@ -296,7 +252,7 @@ void PezCuerpo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *temp = Matematica::productoVectorial(t, t_barrido);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -305,17 +261,24 @@ void PezCuerpo::create()
 			this->object_normal_buffer[w++] = n[2];
 
 			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppx + var;
 			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			this->object_vertex_buffer[i++] = ppz + var;
 
-			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = j / 8.0 + (this->CANT_PUNTOS / CANT_CURVAS);
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 2-3-0 de la curva
 		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
+			float var = 0.0;
+			if(((j%3) == 0 )&& q < this->ESTIRAMIENTO-1 && q > 0 && j > 0)
+				var =  Matematica::numeroAleatorio(-0.05, 0.05);
+
+			if(q == this->ESTIRAMIENTO-1) 
+				var += -this->ESPACIADO_ESTIRAMIENTO / 2;
+
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx230);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy230);
@@ -331,7 +294,7 @@ void PezCuerpo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *temp = Matematica::productoVectorial(t, t_barrido);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -340,17 +303,25 @@ void PezCuerpo::create()
 			this->object_normal_buffer[w++] = n[2];
 
 			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppx + var;
 			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			this->object_vertex_buffer[i++] = ppz + var;
 
-			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = j / 8.0 + 2 * (this->CANT_PUNTOS / CANT_CURVAS);
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 
 		// Segmento 3-0-1 de la curva
 		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
 		{
+			float var = 0.0;
+			if(((j%3) == 0 )&& q < this->ESTIRAMIENTO-1 && q > 0 && j > 0 
+				&& j < (this->CANT_PUNTOS / CANT_CURVAS)-1)
+				var =  Matematica::numeroAleatorio(-0.05, 0.05);
+
+			if(q == this->ESTIRAMIENTO-1) 
+				var += -this->ESPACIADO_ESTIRAMIENTO / 2;
+
 			// Calculamos los puntos
 			float ppx = Matematica::curvaBSpline(j * PASO, pcx301);
 			float ppy = Matematica::curvaBSpline(j * PASO, pcy301);
@@ -366,7 +337,7 @@ void PezCuerpo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *temp = Matematica::productoVectorial(t, t_barrido);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -375,14 +346,15 @@ void PezCuerpo::create()
 			this->object_normal_buffer[w++] = n[2];
 
 			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppx + var;
 			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
+			this->object_vertex_buffer[i++] = ppz + var;
 
-			this->object_texture_buffer[y++] = (q * 1.0) / this->ESTIRAMIENTO;
-			this->object_texture_buffer[y++] = j / 8.0 + 3 * (this->CANT_PUNTOS / CANT_CURVAS);
+			this->object_texture_buffer[y++] = (j * PASO);
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 		}
 	}
+
 
 
 
@@ -416,17 +388,14 @@ void PezCuerpo::create()
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void PezOjo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
+	glActiveTexture(GL_TEXTURE0);
 	
-	// Ponemos el objeto en el centro del eje coordenado
-	glm::mat4 mCuerpo = glm::mat4(1.0f);
-	mCuerpo = glm::translate(model_matrix, glm::vec3(-1.5, 0.0, 0.0));
-	mCuerpo = glm::rotate(mCuerpo, 90.0f, glm::vec3(0.0, 1.0, 0.0));
-
+	this->changeObjectColor(180,180,180);
 
 	///////////////////////////////////////////
 	// Bind View Matrix
@@ -440,7 +409,7 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Projection Matrix
 	GLuint location_projection_matrix = glGetUniformLocation(
 		this->programHandle, "ProjectionMatrix"); 
-
+	
 	if(location_projection_matrix >= 0) 
 		glUniformMatrix4fv( location_projection_matrix, 1, GL_FALSE,
 			&projection_matrix[0][0]); 
@@ -451,42 +420,37 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//////////////////////////////////////
 	// Bind Light Settings
 
-	glm::vec3 light_intensity = glm::vec3(0.8f, 0.8f, 1.0f);
-	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
-	// glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
-	// glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
-	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
+	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
+	glm::vec4 light_position = glm::vec4(-8.0f, -8.0f, 2.0f, 1.0f);
+	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(8 / 255.0f,
-							 72 / 255.0f, 
-							 56 / 255.0f);
-	this->changeObjectColor(166, 224, 246);
+	glm::vec3 Ka = glm::vec3(90 / 255.0f,
+							 49 / 255.0f, 
+							 49 / 255.0f);
+	this->changeObjectColor(186, 143, 143);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
-	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 20.0;
-
+	glm::vec3 Ks = glm::vec3(0.5f, 0.5f, 0.5f);
+	float Shininess = 1.0;
 
 	// Fog
-	GLfloat FogMinDist = 0.0;
-	GLfloat FogMaxDist = 20.0;
+	float FogMinDist = 4.0;
+	float FogMaxDist = 10.0;
 	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
 								   36.0f / 255.0,
 								   60.0f / 255.0);
 
-
 	// Light Intensity
-	GLuint location_light_intensity = glGetUniformLocation(
-		this->programHandle, "LightIntensity");
+	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, "LightIntensity");
 
 	if(location_light_intensity >= 0) 
-		glUniform3fv(location_light_intensity, 1, &light_intensity[0]); 
+		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
 	// Light Position
-	GLuint location_light_position = glGetUniformLocation(
-		this->programHandle, "LightPosition");
+	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
+		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
@@ -540,10 +504,12 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"Shininess");
 
 	if(location_shininess >= 0)
-		glUniform1f(location_shininess, Shininess); 
+		glUniform1f(location_shininess, Shininess);
 
 
-	// FogMaxDist
+
+
+	// FoxMaxDist
 	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
 		"FogMaxDist");
 
@@ -551,7 +517,7 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
 
-	// FogMinDist
+	// FoxMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
@@ -566,14 +532,15 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_FogColor >= 0) 
 		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
+
 	//
 	///////////////////////////////////////////
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(mCuerpo)));
+	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
 
-	// Bind Normal MAtrix
+	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
 		"NormalMatrix"); 
 	if( location_normal_matrix >= 0 ) 
@@ -585,39 +552,20 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		"ModelMatrix"); 
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
-			&mCuerpo[0][0]);
+			&model_matrix[0][0]);
 
 
-	// Set the Texture sampler uniform to refer to texture unit 0
+
+	//  the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPezCuerpo not found!\n");
+	else fprintf(stderr, "Uniform variable TexPezOjo not found!\n");
 
-
-	// Set the NormalMapTex sampler uniform to refer to texture unit 1
-	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
-	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexPezCuerpo not found!\n");
-
-
-	// Set the SphereMapTex sampler uniform to refer to texture unit 2
-	int locSM = glGetUniformLocation(this->programHandle, "SphereMapTex");
-	if(locSM >= 0) glUniform1i(locSM, 2);
-	else fprintf(stderr, "Uniform variable SphereMapTexPezCuerpo not found!\n");
 
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
-
-	// Activamos normal map
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
-
-	// Activamos enviroment map
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, this->spheremap_id);
-
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -625,11 +573,12 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
-	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
+	glNormalPointer(GL_FLOAT, 0, object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
 	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
+		this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);

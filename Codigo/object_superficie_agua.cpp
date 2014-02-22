@@ -44,6 +44,7 @@ SuperficieAgua::SuperficieAgua()
 	
 	this->object_index_buffer = NULL;
 	this->object_normal_buffer = NULL;
+	this->object_tangent_buffer = NULL;
 	this->object_texture_buffer = NULL;
 	this->object_vertex_buffer = NULL;
 }
@@ -102,6 +103,11 @@ void SuperficieAgua::create(int ancho)
 		* this->ESTIRAMIENTO;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
+	this->object_tangent_buffer_size = DIMENSIONES * this->CANT_PUNTOS 
+		* this->ESTIRAMIENTO;
+	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
+
+
 
 	// Unimos los puntos
 
@@ -116,6 +122,12 @@ void SuperficieAgua::create(int ancho)
 	int i = 0;
 	int y = 0;
 	int w = 0;
+	int z = 0;
+
+	float t_barrido[3];
+	t_barrido[0] = 0.0;
+	t_barrido[1] = 1.0;
+	t_barrido[2] = 0.0;
 
 
 	for(int k = -(this->ESTIRAMIENTO / 2); k < (this->ESTIRAMIENTO / 2); k++)
@@ -156,14 +168,23 @@ void SuperficieAgua::create(int ancho)
 			this->object_texture_buffer[y++] = ((k + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
 
 
-			// Calculamos los vectores tangente, binormal y normal en el punto
-			float t[3], b[3], n[3];
-			Matematica::curvaBezierVectores(j * PASO, pcx, pcy, pcz, t, b, n);
+			// Calculamos el vector tangente dado por la curvatura de la hoja
+			float t[3];
+			Matematica::vectorTangenteCurvaBezier(j * PASO, pcx, pcy, pcz, t);
+
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = t[1];
+			this->object_tangent_buffer[z++] = t[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
-			// this->object_normal_buffer[w++] = n[0];
-			// this->object_normal_buffer[w++] = n[1];
-			// this->object_normal_buffer[w++] = n[2];
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 		}
 	}
 
@@ -195,21 +216,21 @@ void SuperficieAgua::create(int ancho)
 
 
 
-	// NORMALES
+	// // NORMALES
 
-	k = 0;
+	// k = 0;
 
-	for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
-		for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-		{
+	// for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
+	// 	for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
+	// 	{
 			
 
-			// Cargamos las coordenadas en el buffer
-			this->object_normal_buffer[k++] = 1.0;
-			this->object_normal_buffer[k++] = 1.0;
-			this->object_normal_buffer[k++] = 1.0;
-		}
-	}
+	// 		// Cargamos las coordenadas en el buffer
+	// 		this->object_normal_buffer[k++] = 1.0;
+	// 		this->object_normal_buffer[k++] = 1.0;
+	// 		this->object_normal_buffer[k++] = 1.0;
+	// 	}
+	// }
 }
 
 
@@ -258,9 +279,32 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec4 light_position = glm::vec4(1.0f, 1.0f, -1.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec4 light_position = glm::vec4(1.0f, 1.0f, -1.0f, 1.0f);
+	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
+	// glm::vec3 Ka = glm::vec3(12 / 255.0f,
+	// 						 12 / 255.0f, 
+	// 						 99 / 255.0f);
+	// this->changeObjectColor(121,121,212);
+	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
+	// 						 this->G / 255.0f, 
+	// 						 this->B / 255.0f);
+	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	// float Shininess = 1.0;
+
+	// // Fog
+	// float FogMinDist = 0.0;
+	// float FogMaxDist = 2.0;
+	// glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
+	// 							   36.0f / 255.0,
+	// 							   60.0f / 255.0);
+
+
+	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
+	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ka = glm::vec3(12 / 255.0f,
@@ -271,11 +315,11 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 1.0;
+	float Shininess = 20.0;
 
 	// Fog
-	float FogMinDist = 0.0;
-	float FogMaxDist = 2.0;
+	GLfloat FogMinDist = 0.0;
+	GLfloat FogMaxDist = 20.0;
 	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
 								   36.0f / 255.0,
 								   60.0f / 255.0);
@@ -372,9 +416,9 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
 
 
-
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(model_matrix)));
+
 
 	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
@@ -391,14 +435,10 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// Set the Tex1 sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Tex1");
-
-	if( loc >= 0 )
-		glUniform1i(loc, 0);
-	else
-		fprintf(stderr, "Uniform variable TexSuperficieAgua not found!\n");
-
+	// Set the Texture sampler uniform to refer to texture unit 0
+	int loc = glGetUniformLocation(this->programHandle, "Texture");
+	if(loc >= 0) glUniform1i(loc, 0);
+	else fprintf(stderr, "Uniform variable TexPlantaHojaTipo01 not found!\n");
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
@@ -408,15 +448,17 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, this->object_vertex_buffer);
 	glNormalPointer(GL_FLOAT, 0, this->object_normal_buffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, this->object_texture_buffer);
+	glColorPointer(3, GL_FLOAT, 0, this->object_tangent_buffer);
 
-	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, 
-		this->object_index_buffer);
+	glDrawElements(GL_TRIANGLE_STRIP, this->object_index_buffer_size, GL_UNSIGNED_INT, this->object_index_buffer);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }

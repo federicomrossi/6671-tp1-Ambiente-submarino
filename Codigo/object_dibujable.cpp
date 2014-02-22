@@ -270,9 +270,10 @@ void ObjectDibujable::loadAndInitTexture(const char* filename, const char* norma
 
 	// Copy file to OpenGL
 	glActiveTexture(GL_TEXTURE0);
-	glGenTextures(2, texIDs);
+	glGenTextures(3, texIDs);
 	this->texture_id = texIDs[0];
 	this->normalmap_id = texIDs[1];
+	this->spheremap_id = texIDs[2];
 
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);  
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->image_witdh, this->image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image_buffer);
@@ -311,8 +312,8 @@ void ObjectDibujable::loadAndInitTexture(const char* filename, const char* norma
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	glEnable(GL_TEXTURE_GEN_S);
-	glEnable(GL_TEXTURE_GEN_T);
+	// glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	// glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	// glEnable(GL_TEXTURE_GEN_S);
+	// glEnable(GL_TEXTURE_GEN_T);
 }
