@@ -69,39 +69,48 @@ void CangrejoPataMuslo::create()
 
 	float forma_pc0x = 0.0;
 	float forma_pc0y = 0.0;
+	float forma_pc0z = 0.0001;
 
 	float forma_pc1x = 1.0;
 	float forma_pc1y = 0.5;
+	float forma_pc1z = 0.0001;
 
 	float forma_pc2x = 9.0;
 	float forma_pc2y = 0.5;
+	float forma_pc2z = 0.0001;
 
 	float forma_pc3x = 10.0;
 	float forma_pc3y = 0.0;
+	float forma_pc3z = 0.0001;
 
 	float forma_pcx[] = {forma_pc0x, forma_pc1x, forma_pc2x, forma_pc3x};
 	float forma_pcy[] = {forma_pc0y, forma_pc1y, forma_pc2y, forma_pc3y};
+	float forma_pcz[] = {forma_pc0z, forma_pc1z, forma_pc2z, forma_pc3z};
 
 
 	
-
 
 	// Puntos de control de la CURVA DE ANCHO DEL ESQUELETO
 
 	float ancho_pc0x = 0.0;
 	float ancho_pc0y = 0.0;
+	float ancho_pc0z = 0.0001;
 
 	float ancho_pc1x = 2.0;
 	float ancho_pc1y = 0.3;
+	float ancho_pc1z = 0.0001;
 
 	float ancho_pc2x = 8.0;
 	float ancho_pc2y = 0.3;
+	float ancho_pc2z = 0.0001;
 
 	float ancho_pc3x = 10.0;
 	float ancho_pc3y = 0.0;
+	float ancho_pc3z = 0.0001;
 
 	float ancho_pcx[] = {ancho_pc0x, ancho_pc1x, ancho_pc2x, ancho_pc3x};
 	float ancho_pcy[] = {ancho_pc0y, ancho_pc1y, ancho_pc2y, ancho_pc3y};
+	float ancho_pcz[] = {ancho_pc0z, ancho_pc1z, ancho_pc2z, ancho_pc3z};
 
 
 
@@ -233,7 +242,7 @@ void CangrejoPataMuslo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -246,8 +255,8 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -268,7 +277,7 @@ void CangrejoPataMuslo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -281,8 +290,8 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -303,7 +312,7 @@ void CangrejoPataMuslo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -316,8 +325,8 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -338,7 +347,7 @@ void CangrejoPataMuslo::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -351,8 +360,8 @@ void CangrejoPataMuslo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 	}
 
@@ -426,10 +435,10 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+	glm::vec3 Ka = glm::vec3(100/ 255.0f,
 							 0 / 255.0f, 
 							 0 / 255.0f);
-	this->changeObjectColor(200, 0, 0);
+	this->changeObjectColor(255, 0, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
@@ -485,12 +494,12 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -558,13 +567,13 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable TexCangrejoCuerpo not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoCuerpo not found!\n");
 
 
 	// Activamos textura

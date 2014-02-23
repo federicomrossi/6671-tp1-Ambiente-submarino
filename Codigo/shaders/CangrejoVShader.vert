@@ -31,7 +31,7 @@ void main()
 	Binormal = normalize(cross(Normal, Tangent)) * gl_Color.w;
 
 	// Get the position in eye coordinates
-	Position = vec3(ModelMatrix * gl_Vertex);
+	Position = vec3(ViewMatrix * ModelMatrix * gl_Vertex);
 
 	// Pass along the texture coordinate
 	TexCoord = gl_MultiTexCoord0.xy;

@@ -55,14 +55,14 @@ void Cangrejo::create()
 	this->cangrejoCuerpo.create();
 
 	// // Creamos las patas
-	// this->cangrejoPataDer01.create(1);
-	// this->cangrejoPataDer02.create(1);
-	// this->cangrejoPataDer02.setDelay(50.0);
-	// this->cangrejoPataDer03.create(1);
-	// this->cangrejoPataIzq01.create(1);
-	// this->cangrejoPataIzq02.create(1);
-	// this->cangrejoPataIzq02.setDelay(50.0);
-	// this->cangrejoPataIzq03.create(1);
+	this->cangrejoPataDer01.create(1);
+	this->cangrejoPataDer02.create(1);
+	this->cangrejoPataDer02.setDelay(50.0);
+	this->cangrejoPataDer03.create(1);
+	this->cangrejoPataIzq01.create(1);
+	this->cangrejoPataIzq02.create(1);
+	this->cangrejoPataIzq02.setDelay(50.0);
+	this->cangrejoPataIzq03.create(1);
 
 	// // Creamos los ojos
 	// this->cangrejoOjo.create();
@@ -135,50 +135,50 @@ void Cangrejo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// this->cangrejoOjo.render(mOjoIzq, view_matrix, projection_matrix);
 
 
-	// // Escalamos la matriz inicial para las patas
-	// glm::mat4 mPata = glm::mat4(1.0f);
-	// mPata = glm::scale(model_matrix, glm::vec3(0.5, 0.5, 0.5));
+	// Escalamos la matriz inicial para las patas
+	glm::mat4 mPata = glm::mat4(1.0f);
+	mPata = glm::scale(model_matrix, glm::vec3(0.5, 0.5, 0.5));
 
-	// // Dibujamos las patas derechas
-	// glm::mat4 mPataDer01 = glm::mat4(1.0f);
-	// mPataDer01 = glm::translate(mPata, glm::vec3(0.9, -0.75, -0.8));
-	// mPataDer01 = glm::rotate(mPataDer01, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataDer01.render(mPataDer01, view_matrix, projection_matrix);
+	// Dibujamos las patas derechas
+	glm::mat4 mPataDer01 = glm::mat4(1.0f);
+	mPataDer01 = glm::translate(mPata, glm::vec3(0.9, -0.75, -0.8));
+	mPataDer01 = glm::rotate(mPataDer01, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataDer01.render(mPataDer01, view_matrix, projection_matrix);
 
-	// glm::mat4 mPataDer02 = glm::mat4(1.0f);
-	// mPataDer02 = glm::translate(mPata, glm::vec3(0.5, -0.70, -0.8));
-	// mPataDer02 = glm::rotate(mPataDer02, -25.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataDer02 = glm::rotate(mPataDer02, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataDer02.render(mPataDer02, view_matrix, projection_matrix);
+	glm::mat4 mPataDer02 = glm::mat4(1.0f);
+	mPataDer02 = glm::translate(mPata, glm::vec3(0.5, -0.70, -0.8));
+	mPataDer02 = glm::rotate(mPataDer02, -25.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataDer02 = glm::rotate(mPataDer02, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataDer02.render(mPataDer02, view_matrix, projection_matrix);
 
-	// glm::mat4 mPataDer03 = glm::mat4(1.0f);
-	// mPataDer03 = glm::translate(mPata, glm::vec3(0.1, -0.60, -0.8));
-	// mPataDer03 = glm::rotate(mPataDer03, -45.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataDer03 = glm::rotate(mPataDer03, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataDer03.render(mPataDer03, view_matrix, projection_matrix);
+	glm::mat4 mPataDer03 = glm::mat4(1.0f);
+	mPataDer03 = glm::translate(mPata, glm::vec3(0.1, -0.60, -0.8));
+	mPataDer03 = glm::rotate(mPataDer03, -45.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataDer03 = glm::rotate(mPataDer03, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataDer03.render(mPataDer03, view_matrix, projection_matrix);
 
 
 
-	// // Dibujamos las patas izquierdas
-	// glm::mat4 mPataIzq01 = glm::mat4(1.0f);
-	// mPataIzq01 = glm::translate(mPata, glm::vec3(0.9, 0.75, -0.8));
-	// mPataIzq01 = glm::rotate(mPataIzq01, 180.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataIzq01 = glm::rotate(mPataIzq01, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataIzq01.render(mPataIzq01, view_matrix, projection_matrix);
+	// Dibujamos las patas izquierdas
+	glm::mat4 mPataIzq01 = glm::mat4(1.0f);
+	mPataIzq01 = glm::translate(mPata, glm::vec3(0.9, 0.75, -0.8));
+	mPataIzq01 = glm::rotate(mPataIzq01, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataIzq01 = glm::rotate(mPataIzq01, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataIzq01.render(mPataIzq01, view_matrix, projection_matrix);
 
-	// glm::mat4 mPataIzq02 = glm::mat4(1.0f);
-	// mPataIzq02 = glm::translate(mPata, glm::vec3(0.5, 0.70, -0.8));
-	// mPataIzq02 = glm::rotate(mPataIzq02, 180.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataIzq02 = glm::rotate(mPataIzq02, 25.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataIzq02 = glm::rotate(mPataIzq02, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataIzq02.render(mPataIzq02, view_matrix, projection_matrix);
+	glm::mat4 mPataIzq02 = glm::mat4(1.0f);
+	mPataIzq02 = glm::translate(mPata, glm::vec3(0.5, 0.70, -0.8));
+	mPataIzq02 = glm::rotate(mPataIzq02, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataIzq02 = glm::rotate(mPataIzq02, 25.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataIzq02 = glm::rotate(mPataIzq02, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataIzq02.render(mPataIzq02, view_matrix, projection_matrix);
 
-	// glm::mat4 mPataIzq03 = glm::mat4(1.0f);
-	// mPataIzq03 = glm::translate(mPata, glm::vec3(0.1, 0.60, -0.8));
-	// mPataIzq03 = glm::rotate(mPataIzq03, 180.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataIzq03 = glm::rotate(mPataIzq03, 45.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPataIzq03 = glm::rotate(mPataIzq03, -30.0f, glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoPataIzq03.render(mPataIzq03, view_matrix, projection_matrix);
+	glm::mat4 mPataIzq03 = glm::mat4(1.0f);
+	mPataIzq03 = glm::translate(mPata, glm::vec3(0.1, 0.60, -0.8));
+	mPataIzq03 = glm::rotate(mPataIzq03, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataIzq03 = glm::rotate(mPataIzq03, 45.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPataIzq03 = glm::rotate(mPataIzq03, -30.0f, glm::vec3(1.0, 0.0, 0.0));
+	this->cangrejoPataIzq03.render(mPataIzq03, view_matrix, projection_matrix);
 
 
 

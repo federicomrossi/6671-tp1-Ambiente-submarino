@@ -58,8 +58,7 @@ void CangrejoCuerpo::create()
 {
 	// Cargamos la textura
 	this->loadAndInitTexture("textures/cangrejo-textura-01.jpg", 
-		"textures/cangrejo-normailmap-textura-01.png",
-		"textures/pez-cuerpo-spheremap-texture-03.jpg");
+		"textures/cangrejo-normailmap-textura-01.png");
 	
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -459,7 +458,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(150/ 255.0f,
+	glm::vec3 Ka = glm::vec3(100/ 255.0f,
 							 0 / 255.0f, 
 							 0 / 255.0f);
 	this->changeObjectColor(255, 0, 0);
@@ -467,7 +466,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 30.0;
+	float Shininess = 20.0;
 
 	// Fog
 	GLfloat FogMinDist = FOG_MIN_DISTANCE;

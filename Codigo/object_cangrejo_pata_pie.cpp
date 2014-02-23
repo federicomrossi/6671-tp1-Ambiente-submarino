@@ -67,8 +67,8 @@ void CangrejoPataPie::create()
 
 	// Puntos de control de la CURVA DE LA FORMA DEL ESQUELETO
 
-	float forma_pc0x = 0.0;
-	float forma_pc0y = 0.0;
+	float forma_pc0x = 0.0001;
+	float forma_pc0y = 0.0001;
 
 	float forma_pc1x = 1.0;
 	float forma_pc1y = 0.4;
@@ -88,21 +88,25 @@ void CangrejoPataPie::create()
 
 	// Puntos de control de la CURVA DE ANCHO DEL ESQUELETO
 
-	float curvatura_pc0x = 0.0;
-	float curvatura_pc0y = 0.0;
+	float curvatura_pc0x = 0.0001;
+	float curvatura_pc0y = 0.0001;
+	float curvatura_pc0z = 0.0001;
 
 	float curvatura_pc1x = 2.0;
 	float curvatura_pc1y = -0.5;
+	float curvatura_pc1z = 0.0001;
 
 	float curvatura_pc2x = 8.0;
 	float curvatura_pc2y = -0.2;
+	float curvatura_pc2z = 0.0001;
 
 	float curvatura_pc3x = 10.0;
-	float curvatura_pc3y = 0.0;
+	float curvatura_pc3y = 0.0001;
+	float curvatura_pc3z = 0.0001;
 
 	float curvatura_pcx[] = {curvatura_pc0x, curvatura_pc1x, curvatura_pc2x, curvatura_pc3x};
 	float curvatura_pcy[] = {curvatura_pc0y, curvatura_pc1y, curvatura_pc2y, curvatura_pc3y};
-
+	float curvatura_pcz[] = {curvatura_pc0z, curvatura_pc1z, curvatura_pc2z, curvatura_pc3z};
 
 
 
@@ -178,6 +182,9 @@ void CangrejoPataPie::create()
 		float curvatura = Matematica::curvaBezier((q * 1.0) / 
 			(this->ESTIRAMIENTO-1), curvatura_pcy);
 
+		// Matematica::vectorTangenteCurvaBSpline((q * 1.0) / (this->ESTIRAMIENTO-1), 
+		// 	curvatura_pcx, curvatura_pcy, curvatura_pcz, t_barrido);
+
 
 		// Puntos de control
 		float pc0x = 1.0 * forma;
@@ -227,9 +234,9 @@ void CangrejoPataPie::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx012, pcy012, pcz012, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = -t[0];
+			this->object_tangent_buffer[z++] = -t[1];
+			this->object_tangent_buffer[z++] = -t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -245,8 +252,8 @@ void CangrejoPataPie::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 1-2-3 de la curva
@@ -262,9 +269,9 @@ void CangrejoPataPie::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx123, pcy123, pcz123, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = -t[0];
+			this->object_tangent_buffer[z++] = -t[1];
+			this->object_tangent_buffer[z++] = -t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -280,8 +287,8 @@ void CangrejoPataPie::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -297,9 +304,9 @@ void CangrejoPataPie::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx230, pcy230, pcz230, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = -t[0];
+			this->object_tangent_buffer[z++] = -t[1];
+			this->object_tangent_buffer[z++] = -t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -315,8 +322,8 @@ void CangrejoPataPie::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -332,9 +339,9 @@ void CangrejoPataPie::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx301, pcy301, pcz301, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = -t[0];
+			this->object_tangent_buffer[z++] = -t[1];
+			this->object_tangent_buffer[z++] = -t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -350,8 +357,8 @@ void CangrejoPataPie::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 	}
 
@@ -424,10 +431,10 @@ void CangrejoPataPie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+	glm::vec3 Ka = glm::vec3(100/ 255.0f,
 							 0 / 255.0f, 
 							 0 / 255.0f);
-	this->changeObjectColor(200, 0, 0);
+	this->changeObjectColor(255, 0, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
