@@ -14,6 +14,8 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
+
+#include "config.h"
 #include "object_roca.h"
 
 
@@ -210,7 +212,7 @@ void Roca::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -252,7 +254,7 @@ void Roca::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -294,7 +296,7 @@ void Roca::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -337,7 +339,7 @@ void Roca::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -420,9 +422,9 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//////////////////////////////////////
 	// Bind Light Settings
 
-	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
-	glm::vec4 light_position = glm::vec4(-8.0f, -8.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ka = glm::vec3(90 / 255.0f,
@@ -432,15 +434,13 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
-	glm::vec3 Ks = glm::vec3(0.5f, 0.5f, 0.5f);
-	float Shininess = 1.0;
+	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
+	float Shininess = 20.0;
 
 	// Fog
-	float FogMinDist = 4.0;
-	float FogMaxDist = 10.0;
-	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
-								   36.0f / 255.0,
-								   60.0f / 255.0);
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
 
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, "LightIntensity");
@@ -538,7 +538,8 @@ void Roca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(model_matrix)));
+
 
 	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 

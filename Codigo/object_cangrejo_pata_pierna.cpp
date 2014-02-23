@@ -13,8 +13,9 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
- #include "lib_matematica.h"
+#include "lib_matematica.h"
 
+#include "config.h"
 #include "object_cangrejo_pata_pierna.h"
 
 
@@ -416,13 +417,12 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//
 	///////////////////////////////////////////
 
-
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ka = glm::vec3(85 / 255.0f,
@@ -433,7 +433,13 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 0.5;
+	float Shininess = 20.0;
+
+	// Fog
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
+
 
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
@@ -499,12 +505,36 @@ void CangrejoPataPierna::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess); 
+
+	// FogMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FogMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
+	
 	//
 	///////////////////////////////////////////
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(mPierna)));
 
 	// Bind Normal MAtrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 

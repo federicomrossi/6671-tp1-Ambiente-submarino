@@ -15,6 +15,7 @@
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
 
+#include "config.h"
 #include "object_pez_cuerpo.h"
 
 
@@ -256,7 +257,7 @@ void PezCuerpo::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx012, pcy012, pcz012, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = -t[0];
 			this->object_tangent_buffer[z++] = t[1];
 			this->object_tangent_buffer[z++] = t[2];
 
@@ -359,9 +360,9 @@ void PezCuerpo::create()
 			// Calculamos el vector tangente a la curva en el punto
 			float t[3];
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx301, pcy301, pcz301, t);
-
+			
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
+			this->object_tangent_buffer[z++] = -t[0];
 			this->object_tangent_buffer[z++] = t[1];
 			this->object_tangent_buffer[z++] = t[2];
 
@@ -451,10 +452,8 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	//////////////////////////////////////
 	// Bind Light Settings
 
-	glm::vec3 light_intensity = glm::vec3(0.8f, 0.8f, 1.0f);
-	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
-	// glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
-	// glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -468,13 +467,10 @@ void PezCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
 	float Shininess = 20.0;
 
-
 	// Fog
-	GLfloat FogMinDist = 0.0;
-	GLfloat FogMaxDist = 20.0;
-	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
-								   36.0f / 255.0,
-								   60.0f / 255.0);
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
 
 
 	// Light Intensity

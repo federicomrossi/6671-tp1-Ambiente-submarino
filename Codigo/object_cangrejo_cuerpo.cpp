@@ -14,6 +14,8 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
+
+#include "config.h"
 #include "object_cangrejo_cuerpo.h"
 
 
@@ -56,7 +58,8 @@ void CangrejoCuerpo::create()
 {
 	// Cargamos la textura
 	this->loadAndInitTexture("textures/cangrejo-textura-01.jpg", 
-		"textures/cangrejo-normailmap-textura-01.png");
+		"textures/cangrejo-normailmap-textura-01.png",
+		"textures/pez-cuerpo-spheremap-texture-03.jpg");
 	
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -64,54 +67,69 @@ void CangrejoCuerpo::create()
 
 
 	// Puntos de control de la CURVA DE ANCHURA
-	float ancho_pc0x = 0.0;
-	float ancho_pc0y = 0.0;
+	float ancho_pc0x = 0.0001;
+	float ancho_pc0y = 0.0001;
+	float ancho_pc0z = 0.0001;
 
 	float ancho_pc1x = 0.05;
 	float ancho_pc1y = 1.3;
+	float ancho_pc1z = 0.0001;
 
 	float ancho_pc2x = 7.0;
 	float ancho_pc2y = 1.3;
+	float ancho_pc2z = 0.0001;
 
 	float ancho_pc3x = 10.0;
-	float ancho_pc3y = 0.0;
+	float ancho_pc3y = 0.0001;
+	float ancho_pc3z = 0.0001;
 
 	float ancho_pcx[] = {ancho_pc0x, ancho_pc1x, ancho_pc2x, ancho_pc3x};
 	float ancho_pcy[] = {ancho_pc0y, ancho_pc1y, ancho_pc2y, ancho_pc3y};
+	float ancho_pcz[] = {ancho_pc0z, ancho_pc1z, ancho_pc2z, ancho_pc3z};
 
 
 	// Puntos de control de la CURVA SUPERIOR
-	float sup_pc0x = 0.0;
+	float sup_pc0x = 0.0001;
 	float sup_pc0y = 0.2;
+	float sup_pc0z = 0.0;
 
 	float sup_pc1x = 0.1;
 	float sup_pc1y = 0.5;
+	float sup_pc1z = 0.0;
 
 	float sup_pc2x = 9.0;
 	float sup_pc2y = 1.0;
+	float sup_pc2z = 0.0;
 
 	float sup_pc3x = 10.0;
 	float sup_pc3y = 0.3;
+	float sup_pc3z = 0.0;
 
 	float sup_pcx[] = {sup_pc0x, sup_pc1x, sup_pc2x, sup_pc3x};
 	float sup_pcy[] = {sup_pc0y, sup_pc1y, sup_pc2y, sup_pc3y};
+	float sup_pcz[] = {sup_pc0z, sup_pc1z, sup_pc2z, sup_pc3z};
 
 
 	// Puntos de control de la CURVA INFERIOR
-	float inf_pc0x = 0.0;
+	float inf_pc0x = 0.0001;
 	float inf_pc0y = -0.2;
+	float inf_pc0z = 0.0;
 
 	float inf_pc1x = 0.1;
 	float inf_pc1y = 0.5;
+	float inf_pc1z = 0.0;
 
 	float inf_pc2x = 9.0;
 	float inf_pc2y = 1.5;
+	float inf_pc2z = 0.0;
 
 	float inf_pc3x = 10.0;
 	float inf_pc3y = -0.3;
+	float inf_pc3z = 0.0;
 
 	float inf_pcx[] = {inf_pc0x, inf_pc1x, inf_pc2x, inf_pc3x};
 	float inf_pcy[] = {inf_pc0y, inf_pc1y, inf_pc2y, inf_pc3y};
+	float inf_pcz[] = {inf_pc0z, inf_pc1z, inf_pc2z, inf_pc3z};
 
 
 
@@ -170,9 +188,9 @@ void CangrejoCuerpo::create()
 
 	// Vector tangente correspondiente al barrido
 	float t_barrido[3];
-	t_barrido[0] = 0.0;
-	t_barrido[1] = 0.0;
-	t_barrido[2] = 1.0;
+	// t_barrido[0] = 1.0;
+	// t_barrido[1] = 0.0;
+	// t_barrido[2] = 0.0;
 
 
 	// Iteramos sobre cada nivel del objeto
@@ -190,6 +208,8 @@ void CangrejoCuerpo::create()
 		float inferior = Matematica::curvaBezier((q * 1.0) / 
 			(this->ESTIRAMIENTO-1),	inf_pcy);
 
+		Matematica::vectorTangenteCurvaBSpline((q * 1.0) / (this->ESTIRAMIENTO-1), 
+			inf_pcx, inf_pcy, inf_pcz, t_barrido);
 
 		// Puntos de control
 		float pc0x = 0.0;
@@ -239,53 +259,9 @@ void CangrejoCuerpo::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx012, pcy012, pcz012, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
-
-			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t_barrido, t);
-			float *n = Matematica::normalizar(temp);
-
-			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = -n[0];
-			this->object_normal_buffer[w++] = -n[1];
-			this->object_normal_buffer[w++] = -n[2];
-
-			// Cargamos puntos en el vertex buffer
-			this->object_vertex_buffer[i++] = ppx;
-			this->object_vertex_buffer[i++] = ppy;
-			this->object_vertex_buffer[i++] = ppz;
-
-			this->object_texture_buffer[y++] = (j * PASO);
-			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
-
-			// // Calculamos los vectores tangente, binormal y normal en el punto
-			// float t[3], b[3], n[3];
-			// Matematica::curvaBSplineVectores(j * PASO, pcx012, pcy012, pcz012, t, b, n);
-
-			// // Cargamos las coordenadas del vector normal en el buffer
-			// this->object_normal_buffer[w++] = n[0];
-			// this->object_normal_buffer[w++] = n[1];
-			// this->object_normal_buffer[w++] = n[2];
-		}
-
-		// Segmento 1-2-3 de la curva
-		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
-		{
-			// Calculamos los puntos
-			float ppx = q * 0.05f;
-			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
-			float ppz = Matematica::curvaBSpline(j * PASO, pcz123);
-
-			// Calculamos el vector tangente a la curva en el punto
-			float t[3];
-			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx123, pcy123, pcz123, t);
-
-			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -301,17 +277,43 @@ void CangrejoCuerpo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
+		}
 
-			// // Calculamos los vectores tangente, binormal y normal en el punto
-			// float t[3], b[3], n[3];
-			// Matematica::curvaBSplineVectores(j * PASO, pcx123, pcy123, pcz123, t, b, n);
+		// Segmento 1-2-3 de la curva
+		for(int j = 0; j < this->CANT_PUNTOS / CANT_CURVAS; j++) 
+		{
+			// Calculamos los puntos
+			float ppx = q * 0.05f;
+			float ppy = Matematica::curvaBSpline(j * PASO, pcy123);
+			float ppz = Matematica::curvaBSpline(j * PASO, pcz123);
 
-			// // Cargamos las coordenadas del vector normal en el buffer
-			// this->object_normal_buffer[w++] = n[0];
-			// this->object_normal_buffer[w++] = n[1];
-			// this->object_normal_buffer[w++] = n[2];
+			// Calculamos el vector tangente a la curva en el punto
+			float t[3];
+			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx123, pcy123, pcz123, t);
+
+			// Cargamos las coordenadas del vector tangente en el buffer
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
+
+			// Calculamos la normal con los vectores tangentes obtenidos
+			float *temp = Matematica::productoVectorial(t_barrido, t);
+			float *n = Matematica::normalizar(temp);
+
+			// Cargamos las coordenadas del vector normal en el buffer
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
+
+			// Cargamos puntos en el vertex buffer
+			this->object_vertex_buffer[i++] = ppx;
+			this->object_vertex_buffer[i++] = ppy;
+			this->object_vertex_buffer[i++] = ppz;
+
+			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 2-3-0 de la curva
@@ -327,9 +329,9 @@ void CangrejoCuerpo::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx230, pcy230, pcz230, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
@@ -345,17 +347,8 @@ void CangrejoCuerpo::create()
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
-
-			// // Calculamos los vectores tangente, binormal y normal en el punto
-			// float t[3], b[3], n[3];
-			// Matematica::curvaBSplineVectores(j * PASO, pcx230, pcy230, pcz230, t, b, n);
-
-			// // Cargamos las coordenadas del vector normal en el buffer
-			// this->object_normal_buffer[w++] = n[0];
-			// this->object_normal_buffer[w++] = n[1];
-			// this->object_normal_buffer[w++] = n[2];
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 
 		// Segmento 3-0-1 de la curva
@@ -371,35 +364,26 @@ void CangrejoCuerpo::create()
 			Matematica::vectorTangenteCurvaBSpline(j * PASO, pcx301, pcy301, pcz301, t);
 
 			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = t[0];
-			this->object_tangent_buffer[z++] = t[1];
-			this->object_tangent_buffer[z++] = t[2];
+			this->object_tangent_buffer[z++] = t_barrido[0];
+			this->object_tangent_buffer[z++] = t_barrido[1];
+			this->object_tangent_buffer[z++] = t_barrido[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
 			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = -n[0];
-			this->object_normal_buffer[w++] = -n[1];
-			this->object_normal_buffer[w++] = -n[2];
+			this->object_normal_buffer[w++] = n[0];
+			this->object_normal_buffer[w++] = n[1];
+			this->object_normal_buffer[w++] = n[2];
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = ppx;
 			this->object_vertex_buffer[i++] = ppy;
 			this->object_vertex_buffer[i++] = ppz;
 
-			this->object_texture_buffer[y++] = (j * PASO);
 			this->object_texture_buffer[y++] = ((q + (this->ESTIRAMIENTO / 2)) * 1.0) / this->ESTIRAMIENTO;
-
-			// // Calculamos los vectores tangente, binormal y normal en el punto
-			// float t[3], b[3], n[3];
-			// Matematica::curvaBSplineVectores(j * PASO, pcx301, pcy301, pcz301, t, b, n);
-
-			// // Cargamos las coordenadas del vector normal en el buffer
-			// this->object_normal_buffer[w++] = n[0];
-			// this->object_normal_buffer[w++] = n[1];
-			// this->object_normal_buffer[w++] = n[2];
+			this->object_texture_buffer[y++] = (j * PASO);
 		}
 	}
 
@@ -440,7 +424,6 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
 
-	this->changeObjectColor(255, 0, 0);
 	
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
@@ -471,20 +454,26 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(85 / 255.0f,
+	glm::vec3 Ka = glm::vec3(150/ 255.0f,
 							 0 / 255.0f, 
 							 0 / 255.0f);
-	this->changeObjectColor(200, 0, 0);
+	this->changeObjectColor(255, 0, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 0.5;
+	float Shininess = 30.0;
+
+	// Fog
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
+
 
 	// Light Intensity
 	GLuint location_light_intensity = glGetUniformLocation(this->programHandle, 
@@ -529,12 +518,12 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	GLuint location_kd = glGetUniformLocation(
-		this->programHandle, "Kd");
+	// // Kd
+	// GLuint location_kd = glGetUniformLocation(
+	// 	this->programHandle, "Kd");
 
-	if(location_kd >= 0) 
-		glUniform3fv( location_kd, 1, &Kd[0]); 
+	// if(location_kd >= 0) 
+	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -550,12 +539,39 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess); 
+
+
+
+	// FogMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FogMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
+
+
 	//
 	///////////////////////////////////////////
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(mCuerpo)));
 
 	// Bind Normal MAtrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
@@ -570,17 +586,6 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_model_matrix >= 0)
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&mCuerpo[0][0]); 
-
-
-
-	// // Set the Tex1 sampler uniform to refer to texture unit 0
-	// int loc = glGetUniformLocation(this->programHandle, "Tex1");
-
-	// if( loc >= 0 )
-	// 	// We indicate that Uniform Variable sampler2D "text" uses  Texture Unit 0 
-	// 	glUniform1i(loc, 0);
-	// else
-	// 	fprintf(stderr, "Uniform variable TexCangrejoCuerpo not found!\n");
 
 
 	// Set the Texture sampler uniform to refer to texture unit 0

@@ -14,6 +14,8 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
+
+#include "config.h"
 #include "object_superficie_agua.h"
 
 
@@ -302,8 +304,8 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// 							   60.0f / 255.0);
 
 
-	glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
-	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -318,11 +320,9 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	float Shininess = 20.0;
 
 	// Fog
-	GLfloat FogMinDist = 0.0;
-	GLfloat FogMaxDist = 20.0;
-	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
-								   36.0f / 255.0,
-								   60.0f / 255.0);
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
 
 	
 	// Light Intensity

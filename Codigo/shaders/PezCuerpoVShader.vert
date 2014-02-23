@@ -6,14 +6,15 @@
 uniform vec3 LightIntensity;		// A, D, D intensity
 uniform vec4 LightPosition;			// Light position in eye coords;
 
-//
-// VARYINGS
-//
 uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
 uniform mat3 NormalMatrix;
 uniform mat4 ProjectionMatrix;
 
+
+//
+// VARYINGS
+//
 varying vec3 Position;
 varying vec3 Tangent;
 varying vec3 Binormal;
@@ -31,7 +32,7 @@ void main()
 	Binormal = normalize(cross(Normal, Tangent)) * gl_Color.w;
 
 	// Get the position in eye coordinates
-	Position = vec3(ViewMatrix * ModelMatrix * gl_Vertex);
+	Position = vec3(ModelMatrix * gl_Vertex);
 
 	// Pass along the texture coordinate
 	TexCoord = gl_MultiTexCoord0.xy;
