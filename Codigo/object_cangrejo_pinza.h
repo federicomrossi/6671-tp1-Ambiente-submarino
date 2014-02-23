@@ -13,11 +13,11 @@
 #include "object_dibujable.h"
 
 #include "object_eje_coordenado.h"
-#include "object_spiralSphere.h"
+#include "object_cangrejo_pinza_munieca.h"
 #include "object_cangrejo_pinza_antebrazo.h"
 #include "object_cangrejo_pinza_brazo.h"
 #include "object_cangrejo_pinza_garra_superior.h"
- #include "object_cangrejo_pinza_garra_inferior.h"
+#include "object_cangrejo_pinza_garra_inferior.h"
 
 
 
@@ -43,7 +43,7 @@ private:
 	EjeCoordenado ejeCoordenado;			// Eje coordenado del objeto
 	CangrejoPinzaAntebrazo antebrazo;		// Antebrazo de la pinza
 	CangrejoPinzaBrazo brazo;				// Brazo de la pinza
-	SpiralSphere munieca;					// Munieca de la pinza
+	CangrejoPinzaMunieca munieca;			// Munieca de la pinza
 	CangrejoPinzaGarraSuperior garraSup;	// Garra superior de la pinza
 	CangrejoPinzaGarraInferior garraInf;	// Garra inferior de la pinza
 

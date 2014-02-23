@@ -75,14 +75,14 @@ void Pez::create()
 void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
-	// Dibujamos el eje coordenado
-	this->ejeCoordenado.render(model_matrix, view_matrix, 
-		projection_matrix);
+	// // Dibujamos el eje coordenado
+	// this->ejeCoordenado.render(model_matrix, view_matrix, 
+	// 	projection_matrix);
 
-	// Renderizamos el cuerpo del pez
-	glm::mat4 mCuerpo = glm::mat4(1.0f);
-	mCuerpo = glm::scale(model_matrix, glm::vec3(1.3, 1.3, 1.3));
-	this->pezCuerpo.render(mCuerpo, view_matrix, projection_matrix);
+	// // Renderizamos el cuerpo del pez
+	// glm::mat4 mCuerpo = glm::mat4(1.0f);
+	// mCuerpo = glm::scale(model_matrix, glm::vec3(1.3, 1.3, 1.3));
+	// this->pezCuerpo.render(mCuerpo, view_matrix, projection_matrix);
 
 	// Renderizamos los ojos del pez
 	glm::mat4 mOjoDer = glm::mat4(1.0f);

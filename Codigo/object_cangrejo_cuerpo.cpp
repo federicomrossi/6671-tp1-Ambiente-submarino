@@ -572,7 +572,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Normal Matrix
 	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(mCuerpo)));
 
-	// Bind Normal MAtrix
+	// Bind Normal Matrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
 		"NormalMatrix"); 
 	if( location_normal_matrix >= 0 ) 

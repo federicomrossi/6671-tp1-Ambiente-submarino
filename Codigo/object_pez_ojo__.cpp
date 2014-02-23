@@ -69,31 +69,31 @@ void PezOjo::create()
 	float ro = 1.0f;
 	int phi;
 	int tita;
-	int num_puntos = 8;
+	int num_puntos = 9;
 
-	this->ESTIRAMIENTO = num_puntos;
+	this->ESTIRAMIENTO = (num_puntos / 2) + 1;
 	this->CANT_PUNTOS = num_puntos;
 
 
 	if (this->object_vertex_buffer != NULL)
 		delete this->object_vertex_buffer;
 
-	this->object_vertex_buffer_size = DIMENSIONES * num_puntos * num_puntos;
+	this->object_vertex_buffer_size = DIMENSIONES * 45;
 	this->object_vertex_buffer = new GLfloat[this->object_vertex_buffer_size];
 
-	this->object_texture_buffer_size = DIMENSIONES_TEXTURA  * num_puntos * num_puntos; 
+	this->object_texture_buffer_size = DIMENSIONES_TEXTURA  * 45;
 	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
 
-	this->object_index_buffer_size = 2 * num_puntos * num_puntos;
+	this->object_index_buffer_size = 2 * 45;
 	this->object_index_buffer = new GLuint[this->object_index_buffer_size];
 
-	this->object_normal_buffer_size = DIMENSIONES * num_puntos * num_puntos;
+	this->object_normal_buffer_size = DIMENSIONES * 45;
 	this->object_normal_buffer = new GLfloat[this->object_normal_buffer_size];
 
-	this->object_tangent_buffer_size = DIMENSIONES * num_puntos * num_puntos;
+	this->object_tangent_buffer_size = DIMENSIONES * 45;
 	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
 
 
@@ -111,36 +111,41 @@ void PezOjo::create()
 	int y = 0;
 	int w = 0;
 	int z = 0;
+	int cont = 0;
 
-
-	for(phi = 0; phi < num_puntos; phi++)
+	for(phi = 0; phi < (num_puntos-1)/2 + 1; phi++)
 	{
+		std::cout << std::endl << "Phi: " << PI / num_puntos * phi << std::endl;
+
 		for(tita = 0; tita < num_puntos; tita++)
 		{
-			float vx = ro * std::sin(PI / num_puntos * phi) * std::cos(2 * PI / num_puntos * tita);
-			float vy = ro * std::sin(PI / num_puntos * phi) * std::sin(2 * PI / num_puntos * tita);
-			float vz = ro * std::cos(PI / num_puntos * phi);
+			cont++;
+			std::cout << "tita: " << 2 * PI / num_puntos * tita << std::endl;
+
+			float vx = ro * std::sin(2 * PI * phi / (num_puntos-1)) * std::cos(2 * PI * tita / (num_puntos-1));
+			float vy = ro * std::sin(2 * PI * phi / (num_puntos-1)) * std::sin(2 * PI * tita / (num_puntos-1));
+			float vz = ro * std::cos(2 * PI * phi / (num_puntos-1));
 
 			// Cargamos puntos en el vertex buffer
 			this->object_vertex_buffer[i++] = vx;
 			this->object_vertex_buffer[i++] = vy;
 			this->object_vertex_buffer[i++] = vz;
 
-			// Cargamos las coordenadas del vector normal en el buffer
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
-			this->object_normal_buffer[w++] = 1.0;
+			// // Cargamos las coordenadas del vector normal en el buffer
+			// this->object_normal_buffer[w++] = 1.0;
+			// this->object_normal_buffer[w++] = 1.0;
+			// this->object_normal_buffer[w++] = 1.0;
 
-			// Cargamos las coordenadas del vector tangente en el buffer
-			this->object_tangent_buffer[z++] = 0.0;
-			this->object_tangent_buffer[z++] = 0.0;
-			this->object_tangent_buffer[z++] = 1.0;
+			// // Cargamos las coordenadas del vector tangente en el buffer
+			// this->object_tangent_buffer[z++] = 0.0;
+			// this->object_tangent_buffer[z++] = 0.0;
+			// this->object_tangent_buffer[z++] = 1.0;
 
-			this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
-			this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
+			// this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
+			// this->object_texture_buffer[y++] = (std::cos(PI / num_puntos * phi) + 1) / 2;
 		}
 	}
-
+	std::cout << "CONT: " << cont << std::endl;
 
 	int sentido = 1;
 	int k = 0;

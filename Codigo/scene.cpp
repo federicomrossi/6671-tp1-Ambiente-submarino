@@ -311,12 +311,12 @@ void Scene::render(GLuint height, GLuint width)
 	// this->pezPosZ = 1.5;
 
 	// glm::mat4 mPez = glm::mat4(1.0f);
-	// mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY, this->pezPosZ));
-	// // mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
+	// // mPez = glm::translate(mPez, glm::vec3(this->pezPosX - 3.0, this->pezPosY, this->pezPosZ));
+	// mPez = glm::translate(mPez, glm::vec3(0.0, 0.0, 1.5));
 	// // mPez = glm::scale(mPez, glm::vec3(0.8, 0.8, 0.8));
-	// mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
-	// 	glm::vec3(0.0, 0.0, 1.0));
-	// // mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
+	// // mPez = glm::rotate(mPez, 90.0f + this->pezGradoRotacion * 360.0f / dosPi, 
+	// // 	glm::vec3(0.0, 0.0, 1.0));
+	// mPez = glm::rotate(mPez, this->grado, glm::vec3(0.0, 0.0, 1.0));
 	// this->pez.render(mPez, this->view_matrix, projection_matrix);
 
 	// // Dibujamos rocas

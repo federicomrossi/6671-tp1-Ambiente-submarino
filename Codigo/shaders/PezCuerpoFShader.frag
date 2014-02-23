@@ -93,8 +93,8 @@ void main()
 	LightDir = normalize(LightPosition.xyz - Position);
 	ViewDir = toObjectLocal * normalize(-Position);
 
-	// vec3 shadeColor = phongModel(nmToTBN, texColor.rgb + vec3(sm) * 0.5);
-	vec3 shadeColor = phongModel(nmToTBN, texColor.rgb);
+	vec3 shadeColor = phongModel(nmToTBN, texColor.rgb + vec3(sm) * 0.5);
+	// vec3 shadeColor = phongModel(nmToTBN, texColor.rgb);
 	vec3 color = mix(FogColor, shadeColor, fogFactor);
 
 	gl_FragColor =  vec4(color, 1.0);
