@@ -28,9 +28,13 @@ private:
 
 	GLfloat* object_vertex_buffer;
 	GLfloat* object_normal_buffer;
+	GLfloat* object_tangent_buffer;
+	GLfloat* object_texture_buffer;
 	GLuint* object_index_buffer;
 	unsigned int object_vertex_buffer_size;
 	unsigned int object_normal_buffer_size;
+	unsigned int object_tangent_buffer_size;
+	unsigned int object_texture_buffer_size;
 	unsigned int object_index_buffer_size;
 
 	// Caracteristicas del objeto

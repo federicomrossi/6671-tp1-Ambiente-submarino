@@ -67,8 +67,8 @@ void Cangrejo::create()
 	// // Creamos los ojos
 	// this->cangrejoOjo.create();
 
-	// // Creamos las pinzas
-	// this->cangrejoPinza.create();
+	// Creamos las pinzas
+	this->cangrejoPinza.create();
 
 
 	// Movimiento
@@ -182,21 +182,21 @@ void Cangrejo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 
-	// // Dibujamos las pinzas
-	// glm::mat4 mPinzaDer = glm::mat4(1.0f);
-	// mPinzaDer = glm::translate(model_matrix, glm::vec3(0.6, -0.5, 0.2 + this->cuerpoPosZ));
-	// mPinzaDer = glm::scale(mPinzaDer, glm::vec3(0.4, 0.4, 0.4));
-	// mPinzaDer = glm::rotate(mPinzaDer, -15.0f, glm::vec3(1.0, 0.0, 0.0));
-	// mPinzaDer = glm::rotate(mPinzaDer, 15.0f, glm::vec3(0.0, 1.0, 0.0));
-	// mPinzaDer = glm::rotate(mPinzaDer, 15.0f, glm::vec3(0.0, 0.0, 1.0));
-	// this->cangrejoPinza.render(mPinzaDer, view_matrix, projection_matrix);
+	// Dibujamos las pinzas
+	glm::mat4 mPinzaDer = glm::mat4(1.0f);
+	mPinzaDer = glm::translate(model_matrix, glm::vec3(0.6, -0.5, 0.2 + this->cuerpoPosZ));
+	mPinzaDer = glm::scale(mPinzaDer, glm::vec3(0.4, 0.4, 0.4));
+	mPinzaDer = glm::rotate(mPinzaDer, -15.0f, glm::vec3(1.0, 0.0, 0.0));
+	mPinzaDer = glm::rotate(mPinzaDer, 15.0f, glm::vec3(0.0, 1.0, 0.0));
+	mPinzaDer = glm::rotate(mPinzaDer, 15.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->cangrejoPinza.render(mPinzaDer, view_matrix, projection_matrix);
 
-	// glm::mat4 mPinzaIzq = glm::mat4(1.0f);
-	// mPinzaIzq = glm::translate(model_matrix, glm::vec3(0.6, 0.5, 0.2 + this->cuerpoPosZ));
-	// mPinzaIzq = glm::scale(mPinzaIzq, glm::vec3(0.4, 0.4, 0.4));
-	// mPinzaIzq = glm::rotate(mPinzaIzq, 180.0f, glm::vec3(0.0, 0.0, 1.0));
-	// mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(1.0, 0.0, 0.0));
-	// mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(0.0, 1.0, 0.0));
-	// mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(0.0, 0.0, 1.0));
-	// this->cangrejoPinza.render(mPinzaIzq, view_matrix, projection_matrix);
+	glm::mat4 mPinzaIzq = glm::mat4(1.0f);
+	mPinzaIzq = glm::translate(model_matrix, glm::vec3(0.6, 0.5, 0.2 + this->cuerpoPosZ));
+	mPinzaIzq = glm::scale(mPinzaIzq, glm::vec3(0.4, 0.4, 0.4));
+	mPinzaIzq = glm::rotate(mPinzaIzq, 180.0f, glm::vec3(0.0, 0.0, 1.0));
+	mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(1.0, 0.0, 0.0));
+	mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(0.0, 1.0, 0.0));
+	mPinzaIzq = glm::rotate(mPinzaIzq, -15.0f, glm::vec3(0.0, 0.0, 1.0));
+	this->cangrejoPinza.render(mPinzaIzq, view_matrix, projection_matrix);
 }

@@ -46,6 +46,7 @@ CangrejoPataPie::CangrejoPataPie()
 	this->object_normal_buffer = NULL;
 	this->object_tangent_buffer = NULL;
 	this->object_vertex_buffer = NULL;
+	this->object_texture_buffer = NULL;
 }
 
 
@@ -132,7 +133,6 @@ void CangrejoPataPie::create()
 	this->object_texture_buffer_size = DIMENSIONES_TEXTURA * this->CANT_PUNTOS 
 		* this->ESTIRAMIENTO; 
 	this->object_texture_buffer = new GLfloat[this->object_vertex_buffer_size];
-
 
 	if (this->object_index_buffer != NULL)
 		delete this->object_index_buffer;
