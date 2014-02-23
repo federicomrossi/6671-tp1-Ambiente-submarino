@@ -1,6 +1,6 @@
 /*  
  *  CLASS PEZ_OJO
- */
+ */  
 
 
 #ifndef OBJECT_PEZ_OJO_H
@@ -12,6 +12,8 @@
 #include <vector>
 #include "object_dibujable.h"
 
+// Objetos
+#include "object_spiralSphere.h"
 
 
 
@@ -24,15 +26,9 @@ class PezOjo : public ObjectDibujable
 {
 private:
 
-	GLfloat* sphere_vertex_buffer;
-	GLuint* sphere_index_buffer;
-	GLfloat* sphere_tangent_buffer;
-	GLfloat* sphere_texture_buffer;
-	std::vector<float> vertex_buffer;
-	std::vector<unsigned int> index_buffer;
-	std::vector<float> tangent_buffer;
-	std::vector<float> texture_buffer;
-
+	// Objetos
+	SpiralSphere spiralSphere;		// Esfera
+	
 public:
 
 	// Constructor
@@ -41,16 +37,13 @@ public:
 	// Destructor
 	~PezOjo();
 
-	// Crea un objeto.
-	// PRE: 'radius' es el radio de la esfera; 'loops' ...; 'segmentsPerLoop' .
-	// ... [Completar documentacion]
-	void create(const float radius, const unsigned int loops, 
-		const unsigned int segmentsPerLoop);
+	// Crea un objeto
+	virtual void create();
 
-	// Renderiza el cubo (lo dibuja).
+	// Renderiza el objeto (lo dibuja).
 	// PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 	// debe renderizarce el objeto.
-	void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
 };
 

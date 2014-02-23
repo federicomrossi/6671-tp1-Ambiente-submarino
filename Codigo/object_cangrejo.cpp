@@ -64,8 +64,8 @@ void Cangrejo::create()
 	this->cangrejoPataIzq02.setDelay(50.0);
 	this->cangrejoPataIzq03.create(1);
 
-	// // Creamos los ojos
-	// this->cangrejoOjo.create();
+	// Creamos los ojos
+	this->cangrejoOjo.create(0.2, 32, 32);
 
 	// Creamos las pinzas
 	this->cangrejoPinza.create();
@@ -123,16 +123,20 @@ void Cangrejo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 
-	// // Dibujamos los ojos
-	// glm::mat4 mOjoDer = glm::mat4(1.0f);
-	// mOjoDer = glm::translate(model_matrix, glm::vec3(0.9, -0.3, 0.3 + this->cuerpoPosZ));
-	// mOjoDer = glm::rotate(mOjoDer, 10.0f,glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoOjo.render(mOjoDer, view_matrix, projection_matrix);
+	// Dibujamos los ojos
+	glm::mat4 mOjoDer = glm::mat4(1.0f);
+	mOjoDer = glm::translate(model_matrix, glm::vec3(0.9, -0.3, 0.5 + this->cuerpoPosZ));
+	mOjoDer = glm::rotate(mOjoDer, 10.0f,glm::vec3(1.0, 0.0, 0.0));
+	mOjoDer = glm::rotate(mOjoDer, 180.0f,glm::vec3(0.0, 0.0, 1.0));
+	mOjoDer = glm::rotate(mOjoDer, 10.0f,glm::vec3(0.0, 1.0, 0.0));
+	this->cangrejoOjo.render(mOjoDer, view_matrix, projection_matrix);
 
-	// glm::mat4 mOjoIzq = glm::mat4(1.0f);
-	// mOjoIzq = glm::translate(model_matrix, glm::vec3(0.9, 0.3, 0.3 + this->cuerpoPosZ));
-	// mOjoIzq = glm::rotate(mOjoIzq, -10.0f,glm::vec3(1.0, 0.0, 0.0));
-	// this->cangrejoOjo.render(mOjoIzq, view_matrix, projection_matrix);
+	glm::mat4 mOjoIzq = glm::mat4(1.0f);
+	mOjoIzq = glm::translate(model_matrix, glm::vec3(0.9, 0.3, 0.5 + this->cuerpoPosZ));
+	mOjoIzq = glm::rotate(mOjoIzq, -10.0f,glm::vec3(1.0, 0.0, 0.0));
+	mOjoIzq = glm::rotate(mOjoIzq, 180.0f,glm::vec3(0.0, 0.0, 1.0));
+	mOjoIzq = glm::rotate(mOjoIzq, 10.0f,glm::vec3(0.0, 1.0, 0.0));
+	this->cangrejoOjo.render(mOjoIzq, view_matrix, projection_matrix);
 
 
 	// Escalamos la matriz inicial para las patas

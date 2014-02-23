@@ -46,12 +46,6 @@ CangrejoPinzaMunieca::CangrejoPinzaMunieca()
 	this->sphere_index_buffer = NULL;
 	this->sphere_tangent_buffer = NULL;
 	this->sphere_texture_buffer = NULL;
-
-	this->object_index_buffer = NULL;
-	this->object_normal_buffer = NULL;
-	this->object_tangent_buffer = NULL;
-	this->object_texture_buffer = NULL;
-	this->object_vertex_buffer = NULL;
 }
 
 
@@ -133,8 +127,8 @@ void CangrejoPinzaMunieca::create(const float radius, const unsigned int loops,
 		this->tangent_buffer.push_back(t[1]);
 		this->tangent_buffer.push_back(t[2]);
 
-		this->texture_buffer.push_back(0.0);
 		this->texture_buffer.push_back(loopSegmentNumber * 1.0 / (segmentsPerLoop-1));
+		this->texture_buffer.push_back(0.0);
 	}
 
 	for (unsigned int loopNumber = 0; loopNumber <= loops; ++loopNumber)
@@ -177,9 +171,8 @@ void CangrejoPinzaMunieca::create(const float radius, const unsigned int loops,
 			this->tangent_buffer.push_back(t[1]);
 			this->tangent_buffer.push_back(t[2]);
 
-
-			this->texture_buffer.push_back(loopNumber * 1.0 / loops);
 			this->texture_buffer.push_back(loopSegmentNumber * 1.0 / (segmentsPerLoop-1));
+			this->texture_buffer.push_back(loopNumber * 1.0 / loops);
 		}
 	}
 
@@ -298,7 +291,7 @@ void CangrejoPinzaMunieca::render(glm::mat4 model_matrix, glm::mat4 &view_matrix
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(100/ 255.0f,
+	glm::vec3 Ka = glm::vec3(150/ 255.0f,
 							 0 / 255.0f, 
 							 0 / 255.0f);
 	this->changeObjectColor(255, 0, 0);
