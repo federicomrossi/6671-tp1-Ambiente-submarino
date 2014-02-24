@@ -14,6 +14,8 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
+
+#include "config.h"
 #include "object_pez_aleta_dorsal.h"
 
 
@@ -27,7 +29,6 @@ namespace {
 	// Ruta del archivo del fragment shader
 	const std::string FILE_FRAG_SHADER = "shaders/PezAletaDorsalFShader.frag";
 }
-
 
 
 
@@ -58,16 +59,16 @@ PezAletaDorsal::~PezAletaDorsal() { }
 // Crea un objeto
 void PezAletaDorsal::create()
 {
-	// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-aleta-texture-03.jpg", 
-		"textures/pez-aleta-normalmap-texture-02.png");
+	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
+		"textures/pez-aleta-normalmap-texture-09.png",
+		"textures/pez-cuerpo-spheremap-texture-03.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
 							 FILE_FRAG_SHADER.c_str());
 
 	// Puntos de control de la CURVA SUPERIOR
-	float distancia_sup_pc0x = 0.0;
+	float distancia_sup_pc0x = 0.0001;
 	float distancia_sup_pc0y = -0.15;
 
 	float distancia_sup_pc1x = 2.0;
@@ -84,7 +85,7 @@ void PezAletaDorsal::create()
 
 
 	// Puntos de control de la CURVA INFERIOR
-	float distancia_inf_pc0x = 0.0;
+	float distancia_inf_pc0x = 0.0001;
 	float distancia_inf_pc0y = -0.15;
 
 	float distancia_inf_pc1x = 2.0;
@@ -156,8 +157,8 @@ void PezAletaDorsal::create()
 
 	// Vector tangente correspondiente al barrido
 	float t_barrido[3];
-	t_barrido[0] = 1.0;
-	t_barrido[1] = 0.0;
+	t_barrido[0] = 0.0;
+	t_barrido[1] = 1.0;
 	t_barrido[2] = 0.0;
 
 
@@ -202,8 +203,7 @@ void PezAletaDorsal::create()
 			this->object_vertex_buffer[i++] = ppy ;
 			this->object_vertex_buffer[i++] = ppz;
 			
-			this->object_texture_buffer[y++] = ((k * 1.0) 
-				/ (this->ESTIRAMIENTO-1));
+			this->object_texture_buffer[y++] = ((k * 1.0) / (this->ESTIRAMIENTO-1));
 			this->object_texture_buffer[y++] = (j * PASO);
 
 			// Calculamos el vector tangente dado por la curvatura de la hoja
@@ -216,7 +216,7 @@ void PezAletaDorsal::create()
 			this->object_tangent_buffer[z++] = t[2];
 
 			// Calculamos la normal con los vectores tangentes obtenidos
-			float *temp = Matematica::productoVectorial(t, t_barrido);
+			float *temp = Matematica::productoVectorial(t_barrido, t);
 			float *n = Matematica::normalizar(temp);
 
 			// Cargamos las coordenadas del vector normal en el buffer
@@ -266,7 +266,7 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Centramos la aleta en el centro del eje de coordenadas
 	glm::mat4 mAleta = glm::mat4(1.0f);
 	mAleta = glm::translate(model_matrix, glm::vec3(0.0, -0.75, 0.0));
-
+	
 
 	// Bind View Matrix
 	// ################t_motion +=0.01;t_motion +=0.01;
@@ -290,35 +290,25 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ka = glm::vec3(8 / 255.0f,
-	// 						 72 / 255.0f, 
-	// 						 56 / 255.0f);
-	// this->changeObjectColor(166, 224, 246);
-	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
-	// 						 this->G / 255.0f, 
-	// 						 this->B / 255.0f);
-	// glm::vec3 Ks = glm::vec3(0.6f, 0.6f, 0.6f);
-	// float Shininess = 1.0;
-
-	glm::vec3 light_intensity = glm::vec3(0.2f, 0.2f, 0.2f);
-	glm::vec4 light_position = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-	glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
+	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(8 / 255.0f,
-							 72 / 255.0f, 
-							 56 / 255.0f);
-	this->changeObjectColor(82, 103, 146);
+	glm::vec3 Ka = glm::vec3(0 / 255.0f,
+							 100 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(0, 171, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	float Shininess = 0.5;
+	float Shininess = 20.0;
+
+	// Fog
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
 
 
 	// Light Intensity
@@ -387,10 +377,34 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniform1f(location_shininess, Shininess);
 
 
+	// FogMaxDist
+	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
+		"FogMaxDist");
+
+	if(location_fogMaxDist >= 0)
+		glUniform1f(location_fogMaxDist, FogMaxDist);
+
+
+	// FogMinDist
+	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
+		"FogMinDist");
+
+	if(location_fogMinDist >= 0)
+		glUniform1f(location_fogMinDist, FogMinDist); 
+
+
+	// FogColor
+	GLuint location_FogColor = glGetUniformLocation(
+		this->programHandle, "FogColor");
+
+	if(location_FogColor >= 0) 
+		glUniform3fv(location_FogColor, 1, &FogColor[0]); 
+
 
 
 	// Normal Matrix
-	glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+	glm::mat3 normal_matrix = glm::transpose(glm::inverse(glm::mat3(mAleta)));
+
 
 	// Bind Normal MAtrix
 	GLuint location_normal_matrix = glGetUniformLocation(this->programHandle, 
@@ -408,26 +422,32 @@ void PezAletaDorsal::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	
 
-	// Set the Texture sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Texture");
-	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPezAletaDorsal not found!\n");
-
+	// // Set the Texture sampler uniform to refer to texture unit 0
+	// int loc = glGetUniformLocation(this->programHandle, "Texture");
+	// if(loc >= 0) glUniform1i(loc, 0);
+	// else fprintf(stderr, "Uniform variable TexPezAletaDorsal not found!\n");
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
 	else fprintf(stderr, "Uniform variable NormalMapTexPezAletaDorsal not found!\n");
 
-
+	// Set the SphereMapTex sampler uniform to refer to texture unit 2
+	int locSM = glGetUniformLocation(this->programHandle, "SphereMapTex");
+	if(locSM >= 0) glUniform1i(locSM, 2);
+	else fprintf(stderr, "Uniform variable SphereMapTexPezAletaDorsal not found!\n");
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
-
+	
 	// Activamos normal map
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
+	// Activamos enviroment map
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, this->spheremap_id);
 
 
 

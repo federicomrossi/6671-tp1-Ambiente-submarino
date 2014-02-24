@@ -24,10 +24,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/CangrejoVShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/PezOjoVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/CangrejoFShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/PezOjoFShader.frag";
 }
 
 
@@ -60,7 +60,7 @@ void PezOjoDer::create(const float radius, const unsigned int loops,
 	const unsigned int segmentsPerLoop)
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/cangrejo-ojo-texture-01.jpg");
+	this->loadAndInitTexture("textures/pez-ojo-der-texture-01.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -290,10 +290,10 @@ void PezOjoDer::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(150/ 255.0f,
-							 0 / 255.0f, 
-							 0 / 255.0f);
-	this->changeObjectColor(255, 0, 0);
+	glm::vec3 Ka = glm::vec3(200/ 255.0f,
+							 200 / 255.0f, 
+							 200 / 255.0f);
+	this->changeObjectColor(255, 255, 255);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
@@ -423,21 +423,9 @@ void PezOjoDer::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(loc >= 0) glUniform1i(loc, 0);
 	else fprintf(stderr, "Uniform variable TexPezOjoDer not found!\n");
 
-
-	// Set the NormalMapTex sampler uniform to refer to texture unit 1
-	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
-	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexPezOjoDer not found!\n");
-
-
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
-
-	// Activamos normal map
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
-
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);

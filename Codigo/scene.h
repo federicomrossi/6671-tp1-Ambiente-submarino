@@ -58,18 +58,23 @@ private:
 	GLfloat cameraTargetZ;
 	int aceleracionMax;
 	float velocidadMov;
+	float velocidadGiro;
 	bool movAdelante;
 	bool movAtras;
 	bool movDerecha;
 	bool movIzquierda;
 	bool movArriba;
 	bool movAbajo;
+	bool movGirarDerecha;
+	bool movGirarIzquierda;
 	int aceleracionAdelante;
 	int aceleracionAtras;
 	int aceleracionDerecha;
 	int aceleracionIzquierda;
 	int aceleracionArriba;
 	int aceleracionAbajo;
+	int aceleracionGiroDerecha;
+	int aceleracionGiroIzquierda;
 
 	// Objetos
 	// (Definir atributos relacionados con objetos AQUI)
@@ -86,6 +91,7 @@ private:
 
 	// Movimiento
 	float cangrejoPosY;
+	float cangrejoPosZ;
 	int cangrejoSentido;
 	float pezGradoRotacion;
 	float pezPosX;

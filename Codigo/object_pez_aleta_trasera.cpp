@@ -285,8 +285,7 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 {
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
 	glUseProgram(this->programHandle);
-
-	this->changeObjectColor(255, 255, 255);
+	
 
 	// Bind tiempo para variación de movimiento
 	// ########################################

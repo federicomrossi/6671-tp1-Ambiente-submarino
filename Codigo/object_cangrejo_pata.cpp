@@ -100,100 +100,100 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	this->gradoRotacion += 30.0;
 
-	// if(direccion == 1)
-	// {
-	// 	// Rotación para efecto de delantamiento
-	// 	this->gradoRotacion += 0.045;
-	// 	if(this->gradoRotacion >= 360.0) this->gradoRotacion = 0.0;
+	if(direccion == 1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion += 0.045;
+		if(this->gradoRotacion >= 360.0) this->gradoRotacion = 0.0;
 
-	// 	// Calculo de posiciones para el movimiento
-	// 	if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo < maxGradoMuslo - 5.0)
-	// 		{
-	// 			this->gradoMuslo += 0.65;
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
 				
-	// 		}
-	// 		else 
-	// 		{
-	// 			this->gradoMuslo += 0.3;
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
 				
-	// 			this->gradoPierna += 0.65;
-	// 			if(this->gradoPierna > this->maxGradoPierna)
-	// 				this->gradoPierna = this->maxGradoPierna;
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
 
-	// 			this->gradoPie += 0.65;
-	// 			if(this->gradoPie > this->maxGradoPie)
-	// 				this->gradoPie = this->maxGradoPie;
-	// 		}
-	// 	}
-	// 	else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo > minGradoMuslo + 5.0)
-	// 		{
-	// 			this->gradoMuslo -= 0.65;
-	// 		}
-	// 		else
-	// 		{
-	// 			this->gradoMuslo -= 0.3;	
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
 				
-	// 			this->gradoPierna -= 0.65;
-	// 			if(this->gradoPierna < this->minGradoPierna)
-	// 				this->gradoPierna = this->minGradoPierna;
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
 
-	// 			this->gradoPie -= 0.65;
-	// 			if(this->gradoPie < this->minGradoPie)
-	// 				this->gradoPie = this->minGradoPie;
-	// 		}
-	// 	}
-	// }
-	// else if(direccion == -1)
-	// {
-	// 	// Rotación para efecto de delantamiento
-	// 	this->gradoRotacion -= 0.045;
-	// 	if(this->gradoRotacion <= 0.0) this->gradoRotacion = 360.0;
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
+	else if(direccion == -1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion -= 0.045;
+		if(this->gradoRotacion <= 0.0) this->gradoRotacion = 360.0;
 
-	// 	// Calculo de posiciones para el movimiento
-	// 	if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo < maxGradoMuslo - 5.0)
-	// 		{
-	// 			this->gradoMuslo += 0.65;
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
 				
-	// 		}
-	// 		else 
-	// 		{
-	// 			this->gradoMuslo += 0.3;
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
 				
-	// 			this->gradoPierna += 0.65;
-	// 			if(this->gradoPierna > this->maxGradoPierna)
-	// 				this->gradoPierna = this->maxGradoPierna;
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
 
-	// 			this->gradoPie += 0.65;
-	// 			if(this->gradoPie > this->maxGradoPie)
-	// 				this->gradoPie = this->maxGradoPie;
-	// 		}
-	// 	}
-	// 	else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo > minGradoMuslo + 5.0)
-	// 		{
-	// 			this->gradoMuslo -= 0.65;
-	// 		}
-	// 		else
-	// 		{
-	// 			this->gradoMuslo -= 0.3;	
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
 				
-	// 			this->gradoPierna -= 0.65;
-	// 			if(this->gradoPierna < this->minGradoPierna)
-	// 				this->gradoPierna = this->minGradoPierna;
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
 
-	// 			this->gradoPie -= 0.65;
-	// 			if(this->gradoPie < this->minGradoPie)
-	// 				this->gradoPie = this->minGradoPie;
-	// 		}
-	// 	}
-	// }
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
 
 	// Verificamos el sentido
 	if(this->sentidoMuslo == 1 && this->gradoMuslo >= maxGradoMuslo)
