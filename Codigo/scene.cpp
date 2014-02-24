@@ -321,13 +321,13 @@ void Scene::render(GLuint height, GLuint width)
 	// Movimiento
 	if(this->cangrejoSentido == 1 && this->cangrejoPosY < 1.5)
 	{
-		this->cangrejoPosY += 0.003;
-		this->cangrejoPosZ += 0.0006;
+		this->cangrejoPosY += 0.0015;
+		this->cangrejoPosZ += 0.0003;
 	}
 	else if(this->cangrejoSentido == -1 && this->cangrejoPosY > 0.0)
 	{
-		this->cangrejoPosY -= 0.003;
-		this->cangrejoPosZ -= 0.0006;
+		this->cangrejoPosY -= 0.0015;
+		this->cangrejoPosZ -= 0.0003;
 	}
 
 	if(this->cangrejoPosY <= 0.0) this->cangrejoSentido = 1;

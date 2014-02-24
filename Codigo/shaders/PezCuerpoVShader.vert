@@ -38,7 +38,7 @@ void main()
 	TexCoord = gl_MultiTexCoord0.xy;
 
 
-	vec3 u = vec3(ViewMatrix * ModelMatrix * gl_Vertex);
+	vec3 u = vec3(ModelMatrix * gl_Vertex);
 	vec3 n = Normal;
 	vec3 r = reflect(u, n);
 	float m = 2.0 * sqrt( r.x*r.x + r.y*r.y + (r.z+1.0)*(r.z+1.0) );
