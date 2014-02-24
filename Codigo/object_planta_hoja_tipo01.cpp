@@ -476,14 +476,13 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(locNM >= 0) glUniform1i(locNM, 1);
 	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoCuerpo not found!\n");
 
-	// Activamos normal map
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
-
-
 	// // Activamos textura
 	// glActiveTexture(GL_TEXTURE0);
 	// glBindTexture(GL_TEXTURE_2D, this->texture_id);
+	
+	// Activamos normal map
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);

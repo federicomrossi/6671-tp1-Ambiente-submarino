@@ -55,7 +55,8 @@ void Pez::create()
 	this->pezCuerpo.create();
 
 	// Creamos el ojo del pez;
-	this->pezOjo.create(1.0, 32, 32);
+	this->pezOjoIzq.create(1.0, 16, 16);
+	this->pezOjoDer.create(1.0, 16, 16);
 
 	// Creamos la aleta trasera
 	this->pezAletaTrasera.create();
@@ -91,11 +92,11 @@ void Pez::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	mOjoIzq = glm::translate(model_matrix, glm::vec3(1.3, -0.06, 0.25));
 	mOjoDer = glm::scale(mOjoDer, glm::vec3(0.13, 0.13, 0.13));
 	mOjoIzq = glm::scale(mOjoIzq, glm::vec3(0.13, 0.13, 0.13));
-	mOjoDer = glm::rotate(mOjoDer, 180.0f, glm::vec3(0.0, 1.0, 0.0));
-	mOjoDer = glm::rotate(mOjoDer, 270.0f, glm::vec3(0.0, 0.0, 1.0));
+	// mOjoDer = glm::rotate(mOjoDer, 180.0f, glm::vec3(0.0, 1.0, 0.0));
+	// mOjoDer = glm::rotate(mOjoDer, 270.0f, glm::vec3(0.0, 0.0, 1.0));
 	mOjoIzq = glm::rotate(mOjoIzq, 90.0f, glm::vec3(0.0, 0.0, 1.0));
-	this->pezOjo.render(mOjoDer, view_matrix, projection_matrix);
-	this->pezOjo.render(mOjoIzq, view_matrix, projection_matrix);
+	this->pezOjoDer.render(mOjoDer, view_matrix, projection_matrix);
+	this->pezOjoIzq.render(mOjoIzq, view_matrix, projection_matrix);
 
 	// Renderizamos la aleta trasera del pez
 	glm::mat4 mAletaTrasera = glm::mat4(1.0f);

@@ -15,7 +15,8 @@
 // Objetos
 #include "object_eje_coordenado.h"
 #include "object_pez_cuerpo.h"
-#include "object_pez_ojo.h"
+#include "object_pez_ojo_izq.h"
+#include "object_pez_ojo_der.h"
 #include "object_pez_aleta_trasera.h"
 #include "object_pez_aleta_dorsal.h"
 #include "object_pez_aleta_lateral.h"
@@ -34,7 +35,8 @@ private:
 
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
 	PezCuerpo pezCuerpo;				// Cuerpo del pez
-	PezOjo pezOjo;						// Ojo
+	PezOjoIzq pezOjoIzq;				// Ojo izquierdo
+	PezOjoDer pezOjoDer;				// Ojo derecho
 	PezAletaTrasera pezAletaTrasera;	// Aleta trasera
 	PezAletaDorsal pezAletaDorsal;		// Aleta dorsal
 	PezAletaLateral pezAletaLateralDer;	// Aleta lateral derecha

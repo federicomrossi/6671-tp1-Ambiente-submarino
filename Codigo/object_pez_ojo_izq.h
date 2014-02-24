@@ -1,10 +1,10 @@
 /*  
- *  CLASS PEZ_OJO
+ *  CLASS PEZ_OJO_IZQ
  */
 
 
-#ifndef OBJECT_PEZ_OJO_H
-#define OBJECT_PEZ_OJO_H
+#ifndef OBJECT_PEZ_OJO_IZQ_H
+#define OBJECT_PEZ_OJO_IZQ_H
 
 
 #include <glm/glm.hpp> 
@@ -20,7 +20,7 @@
  * ***************************************************************************/
 
 
-class PezOjo : public ObjectDibujable
+class PezOjoIzq : public ObjectDibujable
 {
 private:
 
@@ -36,10 +36,10 @@ private:
 public:
 
 	// Constructor
-	PezOjo();
+	PezOjoIzq();
 
 	// Destructor
-	~PezOjo();
+	~PezOjoIzq();
 
 	// Crea un objeto.
 	// PRE: 'radius' es el radio de la esfera; 'loops' ...; 'segmentsPerLoop' .

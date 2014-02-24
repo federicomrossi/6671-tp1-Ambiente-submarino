@@ -14,6 +14,8 @@
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
 #include "lib_matematica.h"
+
+#include "config.h"
 #include "object_pez_aleta_lateral.h"
 
 
@@ -27,6 +29,7 @@ namespace {
 	// Ruta del archivo del fragment shader
 	const std::string FILE_FRAG_SHADER = "shaders/PezAletaLateralFShader.frag";
 }
+
 
 
 
@@ -68,12 +71,14 @@ void PezAletaLateral::create(int orientacion)
 	// Creamos el eje coordenado
 	// this->ejeCoordenado.create(3);
 
-	// Cargamos la textura
-	this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg", 
-		"textures/pez-aleta-normalmap-texture-01.png");
+	// // Cargamos la textura
+	// this->loadAndInitTexture("textures/pez-aleta-texture-02.jpg", 
+	// 	"textures/pez-aleta-normalmap-texture-01.png");
 
-	// 	// Cargamos las texturas del cube map
-	// this->loadAndInitReflectionTexture("textures/pez-cuerpo-cubemap-texture");
+	// Cargamos la textura
+	this->loadAndInitTexture("textures/pez-cuerpo-texture-01.jpg", 
+		"textures/pez-aleta-normalmap-texture-08.png",
+		"textures/pez-cuerpo-spheremap-texture-03.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -347,30 +352,25 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	glm::vec3 light_intensity = glm::vec3(0.8f, 0.8f, 1.0f);
-	glm::vec4 light_position = glm::vec4(10.0f, 0.0f, 4.0f, 1.0f);
-	// glm::vec3 light_intensity = glm::vec3(0.0f, 0.0f, -5.0f);
-	// glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 6.0f, 0.0f);
+	glm::vec3 light_intensity = LIGHT_INTENSITY;
+	glm::vec4 light_position = LIGHT_POSITION;
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
 	glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 Ka = glm::vec3(8 / 255.0f,
-							 72 / 255.0f, 
-							 56 / 255.0f);
-	this->changeObjectColor(166, 224, 246);
+	glm::vec3 Ka = glm::vec3(0 / 255.0f,
+							 100 / 255.0f, 
+							 0 / 255.0f);
+	this->changeObjectColor(0, 171, 0);
 	glm::vec3 Kd = glm::vec3(this->R / 255.0f,
 							 this->G / 255.0f, 
 							 this->B / 255.0f);
 	glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
 	float Shininess = 20.0;
 
-
 	// Fog
-	GLfloat FogMinDist = 3.0;
-	GLfloat FogMaxDist = 15.0;
-	glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
-								   36.0f / 255.0,
-								   60.0f / 255.0);
+	GLfloat FogMinDist = FOG_MIN_DISTANCE;
+	GLfloat FogMaxDist = FOG_MAX_DISTANCE;
+	glm::vec3 FogColor = FOG_COLOR;
 
 
 	// Light Intensity
@@ -483,26 +483,32 @@ void PezAletaLateral::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// Set the Texture sampler uniform to refer to texture unit 0
-	int loc = glGetUniformLocation(this->programHandle, "Texture");
-	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPezAletaLateral not found!\n");
-
+	// // Set the Texture sampler uniform to refer to texture unit 0
+	// int loc = glGetUniformLocation(this->programHandle, "Texture");
+	// if(loc >= 0) glUniform1i(loc, 0);
+	// else fprintf(stderr, "Uniform variable TexPezAletaLateral not found!\n");
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
 	else fprintf(stderr, "Uniform variable NormalMapTexPezAletaLateral not found!\n");
 
-
+	// Set the SphereMapTex sampler uniform to refer to texture unit 2
+	int locSM = glGetUniformLocation(this->programHandle, "SphereMapTex");
+	if(locSM >= 0) glUniform1i(locSM, 2);
+	else fprintf(stderr, "Uniform variable SphereMapTexPezAletaLateral not found!\n");
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
-
+	
 	// Activamos normal map
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
+
+	// Activamos enviroment map
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, this->spheremap_id);
 
 
 

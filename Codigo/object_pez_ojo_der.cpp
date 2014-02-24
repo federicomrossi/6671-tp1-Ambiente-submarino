@@ -1,5 +1,5 @@
 /*  
- *  CLASS PEZ_OJO
+ *  CLASS PEZ_OJO_DER
  */
 
 
@@ -16,7 +16,7 @@
 #include "lib_matematica.h"
 
 #include "config.h"
-#include "object_pez_ojo.h"
+#include "object_pez_ojo_der.h"
 
 
 
@@ -40,7 +40,7 @@ namespace {
 
 
 // Constructor
-PezOjo::PezOjo()
+PezOjoDer::PezOjoDer()
 {
 	this->sphere_vertex_buffer = NULL;
 	this->sphere_index_buffer = NULL;
@@ -50,18 +50,17 @@ PezOjo::PezOjo()
 
 
 // Destructor
-PezOjo::~PezOjo() { }
+PezOjoDer::~PezOjoDer() { }
 
 
 // Crea un objeto.
 // PRE: 'radius' es el radio de la esfera; 'loops' ...; 'segmentsPerLoop' ....
 // [Completar documentacion]
-void PezOjo::create(const float radius, const unsigned int loops, 
+void PezOjoDer::create(const float radius, const unsigned int loops, 
 	const unsigned int segmentsPerLoop)
 {
 	// Cargamos la textura
-	this->loadAndInitTexture("textures/cangrejo-ojo-texture-01.jpg", 
-		"textures/cangrejo-ojo-normalmap-texture-01.png");
+	this->loadAndInitTexture("textures/cangrejo-ojo-texture-01.jpg");
 
 	// Cargamos los shaders del objeto
 	this->loadShaderPrograms(FILE_VERT_SHADER.c_str(),
@@ -258,7 +257,7 @@ void PezOjo::create(const float radius, const unsigned int loops,
 // Renderiza el objeto (lo dibuja).
 // PRE: 'model_matrix' es la matriz que contiene los datos de cómo
 // debe renderizarce el objeto.
-void PezOjo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
+void PezOjoDer::render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 	glm::mat4 &projection_matrix)
 {
 	glBindTexture(GL_TEXTURE_2D, this->texture_id);
@@ -422,13 +421,13 @@ void PezOjo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPezOjo not found!\n");
+	else fprintf(stderr, "Uniform variable TexPezOjoDer not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexPezOjo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexPezOjoDer not found!\n");
 
 
 	// Activamos textura
