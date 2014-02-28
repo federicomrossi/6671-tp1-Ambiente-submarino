@@ -1,22 +1,20 @@
-README
-=======
-
-AUTOR:	Federico M. Rossi
-EMAIL:	federicomrossi@gmail.com
-AÑO:	2014
-
-GITHUB: https://github.com/federicomrossi/6671-tp1-Ambiente-submarino
+# README
 
 
+###### AUTOR: Federico M. Rossi
+###### EMAIL: federicomrossi@gmail.com
+###### AÑO: 2014
 
-Descripción
------------
+###### GITHUB: https://github.com/federicomrossi/6671-tp1-Ambiente-submarino
+
+
+
+## Descripción
 
 Version 1.0 del simulador de un ambiente submarino en OpenGL.
 
 
-COMPILACIÓN
------------
+### Compilación
 
 Para compilar la aplicación, posiciónese en el directorio raíz del programa desde la terminal y ejecute el siguiente comando:
 
@@ -30,8 +28,7 @@ Puede realizarse una limpieza de los archivos producto de la compilación ejecut
 Tenga en cuenta que al hacer esto se eliminarán todos los archivos objetos y el ejecutable generado, por lo que, en caso de desear ejecutar el simulador, deberá volver a compilar la aplicación.
 
 
-EJECUTAR EL SIMULADOR
------------
+### Ejecutar el simulador
 
 Para ejecutar el simulador, una vez compilado y estando posicionado en el directorio raiz del programa con la terminal, ejecute la siguiente directiva:
 
@@ -41,8 +38,7 @@ Una forma alternativa de ejecutar el simulador es simplemente correr el ejecutab
 
 
 
-TECLAS DE DESPLAZAMIENTO
------------
+### Teclas de desplazamiento
 
 El simulador posee un conjunto de teclas que permiten el desplazamiento
 de la cámara a través de la escena. Podrá notar el usuario que al realizar
@@ -60,8 +56,7 @@ Las teclas son:
 	-: Giro hacia la izquierda;
 
 
-TECLAS GENERALES
------------
+### Teclas generales
 
 Existen además teclas de propósito genera, a saber:
 
