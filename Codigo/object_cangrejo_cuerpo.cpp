@@ -187,9 +187,6 @@ void CangrejoCuerpo::create()
 
 	// Vector tangente correspondiente al barrido
 	float t_barrido[3];
-	// t_barrido[0] = 1.0;
-	// t_barrido[1] = 0.0;
-	// t_barrido[2] = 0.0;
 
 
 	// Iteramos sobre cada nivel del objeto
@@ -387,6 +384,7 @@ void CangrejoCuerpo::create()
 	}
 
 
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -428,7 +426,6 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glm::mat4 mCuerpo = glm::mat4(1.0f);
 	mCuerpo = glm::translate(model_matrix, glm::vec3(-1.25, 0.0, 0.0));
 
-	
 
 	///////////////////////////////////////////
 	// Bind View Matrix
@@ -451,7 +448,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Bind Light Settings
-	// ###################
+	///////////////////////////////////////////
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -481,33 +478,13 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_intensity >= 0) 
 		glUniform3fv( location_light_intensity, 1, &light_intensity[0]); 
 
+
 	// Light Position
 	GLuint location_light_position = glGetUniformLocation(this->programHandle, 
 		"LightPosition");
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
-
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
 
 
 	// Ka
@@ -516,13 +493,7 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
-	
-	// // Kd
-	// GLuint location_kd = glGetUniformLocation(
-	// 	this->programHandle, "Kd");
 
-	// if(location_kd >= 0) 
-	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -538,7 +509,6 @@ void CangrejoCuerpo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess); 
-
 
 
 	// FogMaxDist

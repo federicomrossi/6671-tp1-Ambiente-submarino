@@ -13,7 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform2.hpp> 
 #include <glm/gtx/projection.hpp>
-#include "SOIL.h"
+#include "libs/SOIL.h"
 
 #include "object_dibujable.h"
 
@@ -311,9 +311,4 @@ void ObjectDibujable::loadAndInitTexture(const char* filename, const char* norma
 		this->spheremap_buffer);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	// glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	// glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	// glEnable(GL_TEXTURE_GEN_S);
-	// glEnable(GL_TEXTURE_GEN_T);
 }

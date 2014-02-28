@@ -84,8 +84,6 @@ void CangrejoPataPie::create()
 	float forma_pcy[] = {forma_pc0y, forma_pc1y, forma_pc2y, forma_pc3y};
 
 
-	
-
 
 	// Puntos de control de la CURVA DE ANCHO DEL ESQUELETO
 
@@ -362,6 +360,8 @@ void CangrejoPataPie::create()
 		}
 	}
 
+
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -424,7 +424,7 @@ void CangrejoPataPie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Bind Light Settings
-	// ###################
+	///////////////////////////////////////////
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -460,28 +460,6 @@ void CangrejoPataPie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
-
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
 
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
@@ -560,13 +538,13 @@ void CangrejoPataPie::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable TexCangrejoPataPie not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPataPie not found!\n");
 
 
 	// Activamos textura

@@ -191,6 +191,7 @@ void SuperficieAgua::create(int ancho)
 	}
 
 
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -215,24 +216,6 @@ void SuperficieAgua::create(int ancho)
 			sentido = 1;
 		}
 	}
-
-
-
-	// // NORMALES
-
-	// k = 0;
-
-	// for(int i=0; i <= (this->ESTIRAMIENTO-1); i++) {
-	// 	for(int j=0; j <= (this->CANT_PUNTOS-1); j++)
-	// 	{
-			
-
-	// 		// Cargamos las coordenadas en el buffer
-	// 		this->object_normal_buffer[k++] = 1.0;
-	// 		this->object_normal_buffer[k++] = 1.0;
-	// 		this->object_normal_buffer[k++] = 1.0;
-	// 	}
-	// }
 }
 
 
@@ -281,29 +264,6 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Bind Light Settings
 	// ###################
 
-	// glm::vec3 light_intensity = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec4 light_position = glm::vec4(1.0f, 1.0f, -1.0f, 1.0f);
-	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ka = glm::vec3(12 / 255.0f,
-	// 						 12 / 255.0f, 
-	// 						 99 / 255.0f);
-	// this->changeObjectColor(121,121,212);
-	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
-	// 						 this->G / 255.0f, 
-	// 						 this->B / 255.0f);
-	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	// float Shininess = 1.0;
-
-	// // Fog
-	// float FogMinDist = 0.0;
-	// float FogMaxDist = 2.0;
-	// glm::vec3 FogColor = glm::vec3(0.0f / 255.0, 
-	// 							   36.0f / 255.0,
-	// 							   60.0f / 255.0);
-
-
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
 	glm::vec3 La = glm::vec3(0.1f, 0.1f, 0.2f);
@@ -339,28 +299,6 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -382,15 +320,12 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ks >= 0) 
 		glUniform3fv( location_ks, 1, &Ks[0]); 
 
-
 	// Shininess
 	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
 		"Shininess");
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess);
-
-
 
 	// FoxMaxDist
 	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
@@ -399,14 +334,12 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
-
 	// FoxMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
 	if(location_fogMinDist >= 0)
 		glUniform1f(location_fogMinDist, FogMinDist); 
-
 
 	// FogColor
 	GLuint location_FogColor = glGetUniformLocation(
@@ -438,7 +371,7 @@ void SuperficieAgua::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexPlantaHojaTipo01 not found!\n");
+	else fprintf(stderr, "Uniform variable TexSuperficieAgua not found!\n");
 
 	// Activamos textura
 	glActiveTexture(GL_TEXTURE0);

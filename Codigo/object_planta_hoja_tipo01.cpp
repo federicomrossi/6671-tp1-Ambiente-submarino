@@ -1,5 +1,5 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS PLANTA_HOJA_TIPO_01
  */
 
 
@@ -27,10 +27,10 @@
 namespace {
 	
 	// Ruta del archivo del vertex shader
-	const std::string FILE_VERT_SHADER = "shaders/PhongModel.NormalMap.VShader.vert";
+	const std::string FILE_VERT_SHADER = "shaders/HojaPlantaVShader.vert";
 	
 	// Ruta del archivo del fragment shader
-	const std::string FILE_FRAG_SHADER = "shaders/PhongModel.NormalMap.FShader.frag";
+	const std::string FILE_FRAG_SHADER = "shaders/HojaPlantaFShader.frag";
 }
 
 
@@ -249,9 +249,7 @@ void PlantaHojaTipo01::create()
 	}
 
 
-	// Tejemos los puntos insertandolos en el index buffer para crear
-	// la superficie del objeto
-
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -299,7 +297,7 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Bind View Matrix
-	// ################t_motion +=0.01;t_motion +=0.01;
+	// ################
 	GLuint location_view_matrix = glGetUniformLocation(this->programHandle,
 		"ViewMatrix"); 
 
@@ -319,21 +317,6 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 	// Bind Light Settings
 	// ###################
-
-	// glm::vec3 light_intensity = glm::vec3(0.7f, 0.7f, 0.7f);
-	// glm::vec4 light_position = glm::vec4(8.0f, 8.0f, 2.0f, 1.0f);
-	// glm::vec3 La = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ld = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ls = glm::vec3(1.0f, 1.0f, 1.0f);
-	// glm::vec3 Ka = glm::vec3(0 / 255.0f,
-	// 						 85 / 255.0f, 
-	// 						 0 / 255.0f);
-	// this->changeObjectColor(0, 255, 0);
-	// glm::vec3 Kd = glm::vec3(this->R / 255.0f,
-	// 						 this->G / 255.0f, 
-	// 						 this->B / 255.0f);
-	// glm::vec3 Ks = glm::vec3(1.0f, 1.0f, 1.0f);
-	// float Shininess = 1.0;
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -370,28 +353,6 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -413,14 +374,12 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ks >= 0) 
 		glUniform3fv( location_ks, 1, &Ks[0]); 
 
-
 	// Shininess
 	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
 		"Shininess");
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess); 
-
 
 	// FogMaxDist
 	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
@@ -429,14 +388,12 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
-
 	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
 	if(location_fogMinDist >= 0)
 		glUniform1f(location_fogMinDist, FogMinDist); 
-
 
 	// FogColor
 	GLuint location_FogColor = glGetUniformLocation(
@@ -466,20 +423,12 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&model_matrix[0][0]);
 
 
-	// // Set the Texture sampler uniform to refer to texture unit 0
-	// int loc = glGetUniformLocation(this->programHandle, "Texture");
-	// if(loc >= 0) glUniform1i(loc, 0);
-	// else fprintf(stderr, "Uniform variable TexPlantaHojaTipo01 not found!\n");
-
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoCuerpo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexPlantaHojaTipo01 not found!\n");
 
-	// // Activamos textura
-	// glActiveTexture(GL_TEXTURE0);
-	// glBindTexture(GL_TEXTURE_2D, this->texture_id);
-	
+
 	// Activamos normal map
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, this->normalmap_id);
@@ -501,20 +450,4 @@ void PlantaHojaTipo01::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-}
-
-
-// Permite setear la amplitud de la hoja. Debe setearse antes de crear
-// el objeto.
-void PlantaHojaTipo01::setAmplitud(float amplitud)
-{
-	
-}
-
-
-// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
-// antes de crear el objeto.
-void PlantaHojaTipo01::setVelocidad(float velocidad)
-{
-
 }

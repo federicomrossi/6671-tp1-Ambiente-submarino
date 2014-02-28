@@ -84,9 +84,6 @@ void CangrejoPinzaGarraSuperior::create()
 	float forma_pcy[] = {forma_pc0y, forma_pc1y, forma_pc2y, forma_pc3y};
 
 
-	
-
-
 	// Puntos de control de la CURVATURA SUPERIOR
 	float curvatura_sup_pc0x = 0.0001;
 	float curvatura_sup_pc0y = 0.0001;
@@ -119,7 +116,6 @@ void CangrejoPinzaGarraSuperior::create()
 
 	float curvatura_inf_pcx[] = {curvatura_inf_pc0x, curvatura_inf_pc1x, curvatura_inf_pc2x, curvatura_inf_pc3x};
 	float curvatura_inf_pcy[] = {curvatura_inf_pc0y, curvatura_inf_pc1y, curvatura_inf_pc2y, curvatura_inf_pc3y};
-
 
 
 
@@ -197,7 +193,6 @@ void CangrejoPinzaGarraSuperior::create()
 		// Calculamos la curva de bezier que da la curvatura del pie
 		float curvaturaInf = Matematica::curvaBezier((q * 1.0) / 
 			(this->ESTIRAMIENTO-1), curvatura_inf_pcy);
-
 
 
 		// Puntos de control
@@ -376,6 +371,8 @@ void CangrejoPinzaGarraSuperior::create()
 		}
 	}
 
+
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -433,7 +430,7 @@ void CangrejoPinzaGarraSuperior::render(glm::mat4 model_matrix, glm::mat4 &view_
 
 
 	// Bind Light Settings
-	// ###################
+	///////////////////////////////////////////
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -470,28 +467,6 @@ void CangrejoPinzaGarraSuperior::render(glm::mat4 model_matrix, glm::mat4 &view_
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -513,7 +488,6 @@ void CangrejoPinzaGarraSuperior::render(glm::mat4 model_matrix, glm::mat4 &view_
 	if(location_ks >= 0) 
 		glUniform3fv( location_ks, 1, &Ks[0]); 
 
-
 	// Shininess
 	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
 		"Shininess");
@@ -528,14 +502,12 @@ void CangrejoPinzaGarraSuperior::render(glm::mat4 model_matrix, glm::mat4 &view_
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
-
 	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
 	if(location_fogMinDist >= 0)
 		glUniform1f(location_fogMinDist, FogMinDist); 
-
 
 	// FogColor
 	GLuint location_FogColor = glGetUniformLocation(
@@ -568,13 +540,13 @@ void CangrejoPinzaGarraSuperior::render(glm::mat4 model_matrix, glm::mat4 &view_
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable TexCangrejoPinzaGarraSuperior not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPataMuslo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPinzaGarraSuperior not found!\n");
 
 
 	// Activamos textura

@@ -30,7 +30,7 @@ protected:
 	GLuint fragShader;					// Fragment shader
 	GLuint texture_id;					// ID de la textura
 	GLuint normalmap_id;				// ID de la textura de mapa de normales
-	GLuint spheremap_id;					// ID de la textura del mapa esférico
+	GLuint spheremap_id;				// ID de la textura del mapa esférico
 	GLuint cubemap_id;					// ID de la textura del mapa de reflexión
 
 	unsigned char* image_buffer;

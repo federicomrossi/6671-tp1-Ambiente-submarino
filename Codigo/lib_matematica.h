@@ -1,5 +1,5 @@
 /*
- * CLASS LIB_FACTORIAL
+ * CLASS LIB_MATEMATICA
  */
 
 

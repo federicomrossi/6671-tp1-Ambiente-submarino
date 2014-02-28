@@ -227,6 +227,7 @@ void PezAletaDorsal::create()
 	}
 
 
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 

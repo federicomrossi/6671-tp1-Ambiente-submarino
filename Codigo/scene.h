@@ -75,10 +75,9 @@ private:
 	int aceleracionAbajo;
 	int aceleracionGiroDerecha;
 	int aceleracionGiroIzquierda;
+	GLfloat grado;						// Grado de giro
 
 	// Objetos
-	// (Definir atributos relacionados con objetos AQUI)
-
 	EjeCoordenado ejeCoordenado;
 	Grid grid;
 	Superficie superficie;
@@ -98,10 +97,6 @@ private:
 	float pezPosY;
 	float pezPosZ;
 
-	// TEMPORAL
-	GLfloat grado;
-	// FIN TEMPORAL
-
 public:
 
 	// Constructor
@@ -120,12 +115,6 @@ public:
 
 	// Redimensiona la escena.
 	void resize(int width, int height);
-
-	// Establece la posicion de la camara de la escena.
-	void setCameraPosition();
-
-	// Devuelve la posicion de la camara de la escena.
-	void getCameraPosition();
 
 	// Manejador del evento de tecla presionada.
 	void onKeyDown(int nKey, char cAscii);

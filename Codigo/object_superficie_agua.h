@@ -16,11 +16,6 @@
 #include "object_eje_coordenado.h"
 
 
-// DEBUG
-#include "object_vector.h"
-// END DEBUG
- 
-
 
 /* ****************************************************************************
  * DECLARACIÓN DE LA CLASE
@@ -52,10 +47,6 @@ private:
 
 	// Objetos
 	EjeCoordenado ejeCoordenado;		// Eje coordenado del objeto
-
-	// DEBUG
-	Vector vector;
-	// END DEBUG
 	
 public:
 

@@ -20,7 +20,7 @@ class myWindow : public cwc::glutWindow
 
 private:
 
-	Scene scene;					// Escena
+	Scene scene; // Escena
 
 public:
 

@@ -98,6 +98,8 @@ object_superficie: object_superficie.cpp object_superficie.h
 object_superficie_agua: object_superficie_agua.cpp object_superficie_agua.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_superficie_agua.cpp
 
+
+
 object_pez: object_pez.cpp object_pez.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_pez.cpp
 
@@ -119,8 +121,12 @@ object_pez_aleta_dorsal: object_pez_aleta_dorsal.cpp object_pez_aleta_dorsal.h
 object_pez_aleta_lateral: object_pez_aleta_lateral.cpp object_pez_aleta_lateral.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_pez_aleta_lateral.cpp
 
+
+
 object_roca: object_roca.cpp object_roca.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_roca.cpp
+
+
 
 object_planta_acuatica: object_planta_acuatica.cpp object_planta_acuatica.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_acuatica.cpp
@@ -131,10 +137,8 @@ object_planta_hoja_tipo01: object_planta_hoja_tipo01.cpp object_planta_hoja_tipo
 object_planta_hoja_tipo02: object_planta_hoja_tipo02.cpp object_planta_hoja_tipo02.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_hoja_tipo02.cpp
 
-
 object_planta_hoja_tipo03: object_planta_hoja_tipo03.cpp object_planta_hoja_tipo03.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c object_planta_hoja_tipo03.cpp
-
 
 
 
@@ -142,11 +146,17 @@ object_planta_hoja_tipo03: object_planta_hoja_tipo03.cpp object_planta_hoja_tipo
 scene: scene.cpp scene.h
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c scene.cpp
 
+
+
 lib_matematica: lib_matematica.cpp lib_matematica.h
 	g++ -c lib_matematica.cpp
 
+
+
 main: main.cpp lib_matematica myWindow myApplication scene object_dibujable object_eje_coordenado object_vector object_cube object_grid object_spiralSphere object_superficie object_superficie_agua object_cangrejo object_cangrejo_cuerpo object_cangrejo_pata object_cangrejo_pata_muslo object_cangrejo_pata_pierna object_cangrejo_pata_pie object_cangrejo_ojo object_cangrejo_pinza object_cangrejo_pinza_antebrazo object_cangrejo_pinza_brazo object_cangrejo_pinza_munieca object_cangrejo_pinza_garra_superior object_cangrejo_pinza_garra_inferior object_pez object_pez_cuerpo object_pez_ojo_izq object_pez_ojo_der object_pez_aleta_trasera object_pez_aleta_dorsal object_pez_aleta_lateral object_roca object_planta_acuatica object_planta_hoja_tipo01 object_planta_hoja_tipo02 object_planta_hoja_tipo03
 	g++ -DFREEGLUT_STATIC -DGLEW_STATIC -c main.cpp
+
+
 
 run:
 	./$(target)

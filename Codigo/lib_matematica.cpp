@@ -1,5 +1,5 @@
 /*
- * CLASS LIB_FACTORIAL
+ * CLASS LIB_MATEMATICA
  */
 
 #include <iostream>
@@ -451,6 +451,7 @@ void Matematica::vectorTangenteCurvaBSpline(float u, float px[3], float py[3],
 }
 
 
+// Devuelve el float mas cercano al double pasado por parámetro
 float Matematica::nextFloat(double a) {
    union { float a; int b; } c = { .a = a };
    c.b += 1;

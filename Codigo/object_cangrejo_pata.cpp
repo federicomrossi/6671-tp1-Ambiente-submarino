@@ -98,114 +98,108 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Dibujamos el eje coordenado
 	// this->ejeCoordenado.render(model_matrix, view_matrix, projection_matrix);
 
-	// this->gradoRotacion += 30.0;
+	this->gradoRotacion += 30.0;
 
-	// if(direccion == 1)
-	// {
-	// 	// Rotación para efecto de delantamiento
-	// 	this->gradoRotacion += 0.045;
-	// 	if(this->gradoRotacion >= 360.0) this->gradoRotacion = 0.0;
+	if(direccion == 1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion += 0.045;
+		if(this->gradoRotacion >= 360.0) this->gradoRotacion = 0.0;
 
-	// 	// Calculo de posiciones para el movimiento
-	// 	if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo < maxGradoMuslo - 5.0)
-	// 		{
-	// 			this->gradoMuslo += 0.65;
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
 				
-	// 		}
-	// 		else 
-	// 		{
-	// 			this->gradoMuslo += 0.3;
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
 				
-	// 			this->gradoPierna += 0.65;
-	// 			if(this->gradoPierna > this->maxGradoPierna)
-	// 				this->gradoPierna = this->maxGradoPierna;
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
 
-	// 			this->gradoPie += 0.65;
-	// 			if(this->gradoPie > this->maxGradoPie)
-	// 				this->gradoPie = this->maxGradoPie;
-	// 		}
-	// 	}
-	// 	else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo > minGradoMuslo + 5.0)
-	// 		{
-	// 			this->gradoMuslo -= 0.65;
-	// 		}
-	// 		else
-	// 		{
-	// 			this->gradoMuslo -= 0.3;	
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
 				
-	// 			this->gradoPierna -= 0.65;
-	// 			if(this->gradoPierna < this->minGradoPierna)
-	// 				this->gradoPierna = this->minGradoPierna;
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
 
-	// 			this->gradoPie -= 0.65;
-	// 			if(this->gradoPie < this->minGradoPie)
-	// 				this->gradoPie = this->minGradoPie;
-	// 		}
-	// 	}
-	// }
-	// else if(direccion == -1)
-	// {
-	// 	// Rotación para efecto de delantamiento
-	// 	this->gradoRotacion -= 0.045;
-	// 	if(this->gradoRotacion <= 0.0) this->gradoRotacion = 360.0;
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
+	else if(direccion == -1)
+	{
+		// Rotación para efecto de delantamiento
+		this->gradoRotacion -= 0.045;
+		if(this->gradoRotacion <= 0.0) this->gradoRotacion = 360.0;
 
-	// 	// Calculo de posiciones para el movimiento
-	// 	if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo < maxGradoMuslo - 5.0)
-	// 		{
-	// 			this->gradoMuslo += 0.65;
+		// Calculo de posiciones para el movimiento
+		if(this->sentidoMuslo == 1 && this->gradoMuslo < maxGradoMuslo)
+		{
+			if(this->gradoMuslo < maxGradoMuslo - 5.0)
+			{
+				this->gradoMuslo += 0.65;
 				
-	// 		}
-	// 		else 
-	// 		{
-	// 			this->gradoMuslo += 0.3;
+			}
+			else 
+			{
+				this->gradoMuslo += 0.3;
 				
-	// 			this->gradoPierna += 0.65;
-	// 			if(this->gradoPierna > this->maxGradoPierna)
-	// 				this->gradoPierna = this->maxGradoPierna;
+				this->gradoPierna += 0.65;
+				if(this->gradoPierna > this->maxGradoPierna)
+					this->gradoPierna = this->maxGradoPierna;
 
-	// 			this->gradoPie += 0.65;
-	// 			if(this->gradoPie > this->maxGradoPie)
-	// 				this->gradoPie = this->maxGradoPie;
-	// 		}
-	// 	}
-	// 	else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
-	// 	{
-	// 		if(this->gradoMuslo > minGradoMuslo + 5.0)
-	// 		{
-	// 			this->gradoMuslo -= 0.65;
-	// 		}
-	// 		else
-	// 		{
-	// 			this->gradoMuslo -= 0.3;	
+				this->gradoPie += 0.65;
+				if(this->gradoPie > this->maxGradoPie)
+					this->gradoPie = this->maxGradoPie;
+			}
+		}
+		else if(this->sentidoMuslo == -1 && this->gradoMuslo > minGradoMuslo)
+		{
+			if(this->gradoMuslo > minGradoMuslo + 5.0)
+			{
+				this->gradoMuslo -= 0.65;
+			}
+			else
+			{
+				this->gradoMuslo -= 0.3;	
 				
-	// 			this->gradoPierna -= 0.65;
-	// 			if(this->gradoPierna < this->minGradoPierna)
-	// 				this->gradoPierna = this->minGradoPierna;
+				this->gradoPierna -= 0.65;
+				if(this->gradoPierna < this->minGradoPierna)
+					this->gradoPierna = this->minGradoPierna;
 
-	// 			this->gradoPie -= 0.65;
-	// 			if(this->gradoPie < this->minGradoPie)
-	// 				this->gradoPie = this->minGradoPie;
-	// 		}
-	// 	}
-	// }
+				this->gradoPie -= 0.65;
+				if(this->gradoPie < this->minGradoPie)
+					this->gradoPie = this->minGradoPie;
+			}
+		}
+	}
 
-	// // Verificamos el sentido
-	// if(this->sentidoMuslo == 1 && this->gradoMuslo >= maxGradoMuslo)
-	// 	this->sentidoMuslo = -1;
-	// else if(this->sentidoMuslo == -1 && this->gradoMuslo <= minGradoMuslo)
-	// 	this->sentidoMuslo = 1;
-
-
-	// Coloreamos objetos
-	this->muslo.changeObjectColor(126, 241, 95);
-	this->pierna.changeObjectColor(0, 0, 0);
-	this->pie.changeObjectColor(126, 241, 95);
+	// Verificamos el sentido
+	if(this->sentidoMuslo == 1 && this->gradoMuslo >= maxGradoMuslo)
+		this->sentidoMuslo = -1;
+	else if(this->sentidoMuslo == -1 && this->gradoMuslo <= minGradoMuslo)
+		this->sentidoMuslo = 1;
 
 	// Matriz de traslasión
 	glm::mat4 m = glm::mat4(1.0f);
@@ -213,10 +207,6 @@ void CangrejoPata::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Damos forma al objeto y la renderizamos
 	glm::mat4 mMuslo = glm::mat4(1.0f);
 	m = glm::rotate(model_matrix, 100.0f, glm::vec3(1.0, 0.0, 0.0));
-	// m = glm::rotate(model_matrix, this->gradoMuslo * 1.0f, 
-	// 	glm::vec3(1.0, 0.0, 0.0));
-	// m = glm::translate(m, glm::vec3(0.0, 0.05 * cos(this->gradoRotacion), 
-	// 	0.05 * sin(this->gradoRotacion)));
 	this->muslo.render(m, view_matrix, projection_matrix);
 
 	// // Reposicionamos

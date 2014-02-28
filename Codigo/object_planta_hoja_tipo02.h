@@ -1,5 +1,5 @@
 /*  
- *  CLASS PEZ_ALETA_DORSAL
+ *  CLASS PLANTA_HOJA_TIPO_02
  */  
 
 
@@ -64,14 +64,6 @@ public:
 	// debe renderizarce el objeto.
 	virtual void render(glm::mat4 model_matrix, glm::mat4 &view_matrix, 
 		glm::mat4 &projection_matrix);
-
-	// Permite setear la amplitud de la hoja. Debe setearse antes de crear
-	// el objeto.
-	void setAmplitud(float amplitud);
-
-	// Permite setear la velocidad de movimiento de la hoja. Debe setearse 
-	// antes de crear el objeto.
-	void setVelocidad(float velocidad);
 };
 
 #endif

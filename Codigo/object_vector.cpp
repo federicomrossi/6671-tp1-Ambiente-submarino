@@ -126,7 +126,6 @@ void Vector::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 			&projection_matrix[0][0]); 
 
 
-
 	// Bind Light Settings
 	// ###################
 

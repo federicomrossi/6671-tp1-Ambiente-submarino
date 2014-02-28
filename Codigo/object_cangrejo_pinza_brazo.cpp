@@ -1,5 +1,5 @@
 /*  
- *  CLASS CANGREJO_PATA_MUSLO
+ *  CLASS CANGREJO_PINZA_BRAZO
  */
 
 
@@ -100,7 +100,6 @@ void CangrejoPinzaBrazo::create()
 
 	float ancho_pcx[] = {ancho_pc0x, ancho_pc1x, ancho_pc2x, ancho_pc3x};
 	float ancho_pcy[] = {ancho_pc0y, ancho_pc1y, ancho_pc2y, ancho_pc3y};
-
 
 
 
@@ -351,6 +350,8 @@ void CangrejoPinzaBrazo::create()
 		}
 	}
 
+
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -408,7 +409,7 @@ void CangrejoPinzaBrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 
 
 	// Bind Light Settings
-	// ###################
+	///////////////////////////////////////////
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -445,41 +446,12 @@ void CangrejoPinzaBrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
 
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
-	
-	// // Kd
-	// GLuint location_kd = glGetUniformLocation(
-	// 	this->programHandle, "Kd");
-
-	// if(location_kd >= 0) 
-	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
 
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
@@ -504,14 +476,12 @@ void CangrejoPinzaBrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
-
 	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
 	if(location_fogMinDist >= 0)
 		glUniform1f(location_fogMinDist, FogMinDist); 
-
 
 	// FogColor
 	GLuint location_FogColor = glGetUniformLocation(

@@ -365,6 +365,7 @@ void CangrejoPataMuslo::create()
 		}
 	}
 
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -404,7 +405,6 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	// Ponemos el objeto en el centro del eje coordenado
 	glm::mat4 mMuslo = glm::mat4(1.0f);
 	mMuslo = glm::translate(model_matrix, glm::vec3(0.0, 0.0, 0.0));
-	// mMuslo = glm::translate(mMuslo, glm::vec3(0.0, 0.0, 0.0));
 
 
 	///////////////////////////////////////////
@@ -465,28 +465,6 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -494,13 +472,6 @@ void CangrejoPataMuslo::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// // Kd
-	// GLuint location_kd = glGetUniformLocation(
-	// 	this->programHandle, "Kd");
-
-	// if(location_kd >= 0) 
-	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
-
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
 		this->programHandle, "Ks");

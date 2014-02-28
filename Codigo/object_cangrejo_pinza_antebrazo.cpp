@@ -326,6 +326,8 @@ void CangrejoPinzaAntebrazo::create()
 		}
 	}
 
+
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -383,7 +385,7 @@ void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matr
 
 
 	// Bind Light Settings
-	// ###################
+	///////////////////////////////////////////
 
 	glm::vec3 light_intensity = LIGHT_INTENSITY;
 	glm::vec4 light_position = LIGHT_POSITION;
@@ -420,28 +422,6 @@ void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matr
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-	// // La
-	// GLuint location_la = glGetUniformLocation(
-	// 	this->programHandle, "La");
-
-	// if(location_la >= 0) 
-	// 	glUniform3fv( location_la, 1, &La[0]); 
-	
-	// // Ld
-	// GLuint location_ld = glGetUniformLocation(
-	// 	this->programHandle, "Ld");
-
-	// if(location_ld >= 0) 
-	// 	glUniform3fv( location_ld, 1, &Ld[0]); 
-
-	// // Ls
-	// GLuint location_ls = glGetUniformLocation(
-	// 	this->programHandle, "Ls");
-
-	// if(location_ls >= 0) 
-	// 	glUniform3fv( location_ls, 1, &Ls[0]); 
-
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -449,13 +429,6 @@ void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matr
 	if(location_ka >= 0) 
 		glUniform3fv( location_ka, 1, &Ka[0]); 
 	
-	// Kd
-	// GLuint location_kd = glGetUniformLocation(
-	// 	this->programHandle, "Kd");
-
-	// if(location_kd >= 0) 
-	// 	glUniform3fv( location_kd, 1, &Kd[0]); 
-
 	// Ks
 	GLuint location_ks = glGetUniformLocation(
 		this->programHandle, "Ks");
@@ -478,7 +451,6 @@ void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matr
 
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
-
 
 	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
@@ -520,13 +492,13 @@ void CangrejoPinzaAntebrazo::render(glm::mat4 model_matrix, glm::mat4 &view_matr
 	// Set the Texture sampler uniform to refer to texture unit 0
 	int loc = glGetUniformLocation(this->programHandle, "Texture");
 	if(loc >= 0) glUniform1i(loc, 0);
-	else fprintf(stderr, "Uniform variable TexCangrejoCuerpo not found!\n");
+	else fprintf(stderr, "Uniform variable TexCangrejoPinzaAntebrazo not found!\n");
 
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
 	if(locNM >= 0) glUniform1i(locNM, 1);
-	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoCuerpo not found!\n");
+	else fprintf(stderr, "Uniform variable NormalMapTexCangrejoPinzaAntebrazo not found!\n");
 
 
 	// Activamos textura

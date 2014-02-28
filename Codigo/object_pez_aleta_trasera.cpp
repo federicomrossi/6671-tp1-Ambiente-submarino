@@ -161,6 +161,7 @@ void PezAletaTrasera::create()
 		* this->ESTIRAMIENTO;
 	this->object_tangent_buffer = new GLfloat[this->object_tangent_buffer_size];
 
+
 	// Unimos los puntos
 	int malla[this->ESTIRAMIENTO][this->CANT_PUNTOS];
 
@@ -250,6 +251,7 @@ void PezAletaTrasera::create()
 	}
 
 
+	// Tejemos los vértices
 	int sentido = 1;
 	int k = 0;
 
@@ -354,7 +356,6 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_light_position >= 0) 
 		glUniform4fv( location_light_position, 1, &light_position[0]); 
 
-
 	// Ka
 	GLuint location_ka = glGetUniformLocation(
 		this->programHandle, "Ka");
@@ -369,14 +370,12 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_ks >= 0) 
 		glUniform3fv( location_ks, 1, &Ks[0]); 
 
-
 	// Shininess
 	GLfloat location_shininess = glGetUniformLocation(this->programHandle,
 		"Shininess");
 
 	if(location_shininess >= 0)
 		glUniform1f(location_shininess, Shininess);
-
 
 	// FogMaxDist
 	GLfloat location_fogMaxDist = glGetUniformLocation(this->programHandle,
@@ -385,14 +384,12 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 	if(location_fogMaxDist >= 0)
 		glUniform1f(location_fogMaxDist, FogMaxDist);
 
-
 	// FogMinDist
 	GLfloat location_fogMinDist = glGetUniformLocation(this->programHandle,
 		"FogMinDist");
 
 	if(location_fogMinDist >= 0)
 		glUniform1f(location_fogMinDist, FogMinDist); 
-
 
 	// FogColor
 	GLuint location_FogColor = glGetUniformLocation(
@@ -420,12 +417,6 @@ void PezAletaTrasera::render(glm::mat4 model_matrix, glm::mat4 &view_matrix,
 		glUniformMatrix4fv( location_model_matrix, 1, GL_FALSE, 
 			&model_matrix[0][0]);
 
-
-
-	// // Set the Texture sampler uniform to refer to texture unit 0
-	// int loc = glGetUniformLocation(this->programHandle, "Texture");
-	// if(loc >= 0) glUniform1i(loc, 0);
-	// else fprintf(stderr, "Uniform variable TexPezAletaTrasera not found!\n");
 
 	// Set the NormalMapTex sampler uniform to refer to texture unit 1
 	int locNM = glGetUniformLocation(this->programHandle, "NormalMapTex");
