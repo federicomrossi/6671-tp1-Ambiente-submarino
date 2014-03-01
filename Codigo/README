@@ -18,6 +18,17 @@ Version 1.0 del simulador de un ambiente submarino en OpenGL.
 
 
 #
+# REQUERIMIENTOS
+#
+
+- OpenGL 3.0
+- GLSL 1.10
+- Glew
+- FreeGlut
+- GLM
+
+
+#
 # COMPILACIÓN
 #
 

@@ -14,6 +14,15 @@
 Version 1.0 del simulador de un ambiente submarino en OpenGL.
 
 
+### Requerimientos
+
+- OpenGL 3.0
+- GLSL 1.10
+- Glew
+- FreeGlut
+- GLM
+
+
 ### Compilación
 
 Para compilar la aplicación, posiciónese en el directorio raíz del programa desde la terminal y ejecute el siguiente comando:
